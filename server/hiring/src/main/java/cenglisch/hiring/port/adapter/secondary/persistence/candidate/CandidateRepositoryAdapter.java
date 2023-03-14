@@ -35,11 +35,7 @@ public class CandidateRepositoryAdapter implements CandidateRepository {
 
     @Override
     public void remove(Candidate candidate) {
-
-    }
-
-    public String generateId() {
-        return CandidateRepository.super.generateId();
+        throw new RuntimeException("not implemented");
     }
 
     @Override

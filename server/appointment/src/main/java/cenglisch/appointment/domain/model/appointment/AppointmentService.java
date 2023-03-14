@@ -4,7 +4,6 @@ import cenglisch.appointment.domain.model.appointment.date.AppointmentDate;
 import cenglisch.appointment.domain.model.appointment.exception.AppointmentNotFoundException;
 import cenglisch.appointment.domain.model.appointment.event.*;
 import cenglisch.appointment.domain.model.participant.ParticipantId;
-import cenglisch.appointment.domain.appointment.event.*;
 import cenglisch.domain.model.EventHandler;
 import org.jmolecules.ddd.annotation.Service;
 

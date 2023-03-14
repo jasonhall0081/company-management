@@ -1,9 +1,10 @@
 package cenglisch.hiring.port.adapter.secondary.persistence.job;
 
 import cenglisch.Default;
-import cenglisch.hiring.port.adapter.secondary.persistence.person.PersonEntity;
 
+import cenglisch.domain.model.PersonId;
 import jakarta.persistence.*;
+
 import java.util.Collection;
 
 @Entity
@@ -28,12 +29,13 @@ public class JobEntity {
             joinColumns = @JoinColumn(name = "job_id"),
             inverseJoinColumns = @JoinColumn(name = "responsible_employee_id")
     )
-    private Collection<PersonEntity> responsibleEmployees;
+
+    private Collection<PersonId> responsibleEmployees;
 
     public JobEntity() {}
 
     @Default
-    public JobEntity(String id, String jobName, int neededCapacities, boolean published, Collection<PersonEntity> responsibleEmployees) {
+    public JobEntity(String id, String jobName, int neededCapacities, boolean published, Collection<PersonId> responsibleEmployees) {
         this.id = id;
         this.jobName = jobName;
         this.neededCapacities = neededCapacities;
@@ -57,7 +59,7 @@ public class JobEntity {
         return published;
     }
 
-    public Collection<PersonEntity> getResponsibleEmployees() {
+    public Collection<PersonId> getResponsibleEmployees() {
         return responsibleEmployees;
     }
 }

@@ -1,9 +1,8 @@
 package cenglisch.hiring.port.adapter.secondary.persistence.job;
 
+import cenglisch.domain.model.PersonId;
 import cenglisch.hiring.domain.model.job.Job;
 import cenglisch.hiring.domain.model.job.ResponsibleEmployee;
-import cenglisch.hiring.port.adapter.secondary.persistence.person.PersonEntity;
-import cenglisch.hiring.port.adapter.secondary.persistence.person.PersonJpaRepository;
 import org.mapstruct.*;
 
 import java.util.Collection;
@@ -18,24 +17,14 @@ public interface JobMapper {
     Job mapToJob(JobEntity jobEntity);
 
     @Mapping(source = "jobId.id", target = "id")
-    @Mapping(source = "responsibleEmployees", target = "responsibleEmployees", qualifiedByName = "mapResponsibleEmployeeToPersonEntity")
-    JobEntity mapToJobEntity(Job job, @Context PersonJpaRepository personRepository);
+    @Mapping(source = "responsibleEmployees", target = "responsibleEmployees")
+    JobEntity mapToJobEntity(Job job);
 
     @Named("mapPersonEntityToResponsibleEmployee")
-    default List<ResponsibleEmployee> mapPersonEntityToResponsibleEmployee(Collection<PersonEntity> personEntities) {
+    default List<ResponsibleEmployee> mapPersonEntityToResponsibleEmployee(Collection<PersonId> personEntities) {
         return personEntities.stream()
-                .map(PersonEntity::getId)
+                .map(PersonId::getId)
                 .map(ResponsibleEmployee::new)
-                .collect(Collectors.toList());
-    }
-
-    @Named("mapResponsibleEmployeeToPersonEntity")
-    default Collection<PersonEntity> mapResponsibleEmployeeToPersonEntity(Collection<ResponsibleEmployee> responsibleEmployees, @Context PersonJpaRepository personRepository) {
-        return responsibleEmployees.stream()
-                .map(ResponsibleEmployee::getId)
-                .map(personRepository::findById)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
                 .collect(Collectors.toList());
     }
 }

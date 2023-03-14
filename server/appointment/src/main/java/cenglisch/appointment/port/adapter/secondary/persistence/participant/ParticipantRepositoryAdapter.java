@@ -22,7 +22,9 @@ public class ParticipantRepositoryAdapter implements ParticipantRepository {
     }
 
     public Participant save(Participant participant) {
-        participant.setParticipantId(new ParticipantId(generateId()));
+        if (participant.getParticipantId() == null){
+            participant.setParticipantId(new ParticipantId(generateId()));
+        }
         ParticipantEntity participantEntity = participantMapper.toParticipantEntity(participant);
         participantJpaRepository.saveAndFlush(participantEntity);
         return participantMapper.toParticipant(participantEntity);

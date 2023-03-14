@@ -6,13 +6,13 @@ package cenglisch.domain.model;
  */
 public class PersonId {
 
-    private final String personId;
+    private final String id;
 
-    public PersonId(String personId) {
-        this.personId = personId;
+    public PersonId(String id) {
+        this.id = id;
     }
 
-    public String getPersonId() {
-        return personId;
+    public String getId() {
+        return id;
     }
 }
