@@ -1,13 +1,15 @@
 package cenglisch.hiring.domain.model.job;
 
-public class ResponsibleEmployee {
-    private final String id;
+import cenglisch.domain.model.PersonId;
 
-    public ResponsibleEmployee(String id) {
-        this.id = id;
+public class ResponsibleEmployee {
+    private final PersonId person;
+
+    public ResponsibleEmployee(PersonId personId) {
+        this.person = personId;
     }
 
-    public String getId() {
-        return id;
+    public PersonId getPerson() {
+        return person;
     }
 }

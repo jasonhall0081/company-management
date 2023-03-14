@@ -1,6 +1,7 @@
 package cenglisch.hiring.domain.model.job;
 
 import cenglisch.domain.model.EventHandler;
+import cenglisch.domain.model.PersonId;
 import cenglisch.hiring.domain.model.job.event.AddedResponsibleEmployee;
 import cenglisch.hiring.domain.model.job.event.JobCapacitiesReduced;
 import cenglisch.hiring.domain.model.job.event.NoMoreCapacitiesAvailable;
@@ -67,7 +68,7 @@ public class JobServiceTest {
 
         Job job = optionalJob.get();
         assertEquals(0, job.getResponsibleEmployees().size());
-        jobService.addResponsibleEmployee(new JobId("dasdasd"), new ResponsibleEmployee("1231"));
+        jobService.addResponsibleEmployee(new JobId("dasdasd"), new ResponsibleEmployee(new PersonId("1231")));
         assertEquals(1, job.getResponsibleEmployees().size());
 
         verify(jobRepository).save(any(Job.class));

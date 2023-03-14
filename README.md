@@ -32,20 +32,25 @@ Danach wurde aus der Sicht des Entwicklers Code geschrieben, welcher sich aber n
 ![System-Architecture-Backend-Architecture.png](docs/System-Architecture-Backend-Architecture.png)
 
 Austauschbarkeit der Infrastruktur:<br>
-Nicht nur Frameworks oder Bibliotheken, sondern auch Technologien also sollen ohne Probleme austauschbar sein.<br>
+Nicht nur Frameworks oder Bibliotheken, sondern auch Technologien sollen ohne Probleme austauschbar sein.<br>
 Bei der Infrastruktur wird dies durch technische Definition in den einzelnen Subordnern und den deren resultierenden Docker Containern gewährleistet.<br>
 <br>
-Von den Containern werden services wie gateway oder auch queue bereitgestellt, hier wurde sich gegen eine<br> 
-Benamung wie die direkte software entschieden also Kong oder RabbitMQ.<br>
+Von den Containern werden Services wie gateway oder auch queue bereitgestellt, hier wurde sich gegen eine<br>
+direkte Benamung der Software entschieden also Kong oder RabbitMQ.<br>
+Damit sollten daraus resultierende feste Abhängigkeiten an Services unterbunden werden.
 <br>
-Im backend, wird dann für die Austauschbarkeit eine hexagonale Architektur verwendet.<br> 
-Das hat den Charm, dass ich auch auf Frameworks wie Micronaut oder Quarkus ausweichen kann.<br>
+Im Backend, wird eine hexagonale Architektur verwendet. Das hat den Charm, dass ich auch auf Frameworks wie Micronaut oder Quarkus ausweichen kann.<br>
 In der Zukunft ist auch geplant die genannten Rahmenwerke auszutauschen und einen Performancetest durchzuführen.<br>
 
 ## DDD
-Um keine Unterscheidung zwischen technischer Sprache und fachlicher Sprache zu erzeugen, wurde auf Basis von DDD entwickelt.
-Alle Commands die in das System implementiert wurden, sind gleich mit den Befehlen in der fachlichen Abteilung, siehe Eventstorming.
+Um keine Unterscheidung zwischen technischer Sprache und fachlicher Sprache zu gewährleisten, wurde auf Basis von DDD entwickelt.<br>
+Alle Commands die in das System implementiert wurden, sind gleich mit den Befehlen in der fachlichen Abteilung, siehe Event-Storming.
 
+## Grobe Erklärung der Module nach Fachlichkeit
+appointment = Verwaltung von internem Terminkalender
+document = Ablage von Dokumenten wie z.B. Bewerbungsunterlagen
+hiring = Abbildung des Geschäftsprozesses einer Bewerber Einstellung
+management = Verwaltung von Personalinformationen
 
 Es gab auch Services, welche ein Teil eines Schulprojekts waren. <br>
 Diese Präsentation kann man ebenfalls unter dem docs Ordner finden.<br>
