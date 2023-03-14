@@ -3,11 +3,13 @@
 ## Table of Contents:
 <!-- TOC -->
 * [Company Management](#company-management)
+  * [Table of Contents:](#table-of-contents-)
   * [Einleitung](#einleitung)
 * [Infrastructure](#infrastructure)
 * [Architektur](#architektur)
   * [Hexagonal](#hexagonal)
   * [DDD](#ddd)
+  * [Grobe Erklärung der Module nach Fachlichkeit](#grobe-erklärung-der-module-nach-fachlichkeit)
 <!-- TOC -->
 
 The following description is written in German, but the code and other dependencies are based on the English language. It will be worth to translate the following text into English ;) P.S. use deepl.com
