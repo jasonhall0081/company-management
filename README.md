@@ -47,10 +47,14 @@ Um keine Unterscheidung zwischen technischer Sprache und fachlicher Sprache zu g
 Alle Commands die in das System implementiert wurden, sind gleich mit den Befehlen in der fachlichen Abteilung, siehe Event-Storming.
 
 ## Grobe Erklärung der Module nach Fachlichkeit
-appointment = Verwaltung von internem Terminkalender
-document = Ablage von Dokumenten wie z.B. Bewerbungsunterlagen
-hiring = Abbildung des Geschäftsprozesses einer Bewerber Einstellung
-management = Verwaltung von Personalinformationen
+* appointment 
+  * Verwaltung von internem Terminkalender
+* document
+  * Ablage von Dokumenten wie z.B. Bewerbungsunterlagen
+* hiring 
+  * Abbildung des Geschäftsprozesses einer Bewerber Einstellung
+* management 
+  * Verwaltung von Personalinformationen
 
 Es gab auch Services, welche ein Teil eines Schulprojekts waren. <br>
 Diese Präsentation kann man ebenfalls unter dem docs Ordner finden.<br>
