@@ -43,7 +43,8 @@ Das hat den Charm, dass ich auch auf Frameworks wie Micronaut oder Quarkus auswe
 In der Zukunft ist auch geplant die genannten Rahmenwerke auszutauschen und einen Performancetest durchzuführen.<br>
 
 ## DDD
-Um keine unterscheidung 
+Um keine Unterscheidung zwischen technischer Sprache und fachlicher Sprache zu erzeugen, wurde auf Basis von DDD entwickelt.
+Alle Commands die in das System implementiert wurden, sind gleich mit den Befehlen in der fachlichen Abteilung, siehe Eventstorming.
 
 
 Es gab auch Services, welche ein Teil eines Schulprojekts waren. <br>
