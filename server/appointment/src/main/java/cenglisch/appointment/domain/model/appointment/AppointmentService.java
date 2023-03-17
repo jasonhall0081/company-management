@@ -3,8 +3,8 @@ package cenglisch.appointment.domain.model.appointment;
 import cenglisch.appointment.domain.model.appointment.date.AppointmentDate;
 import cenglisch.appointment.domain.model.appointment.exception.AppointmentNotFoundException;
 import cenglisch.appointment.domain.model.appointment.event.*;
-import cenglisch.appointment.domain.model.participant.ParticipantId;
 import cenglisch.domain.model.EventHandler;
+import cenglisch.domain.model.PersonId;
 import org.jmolecules.ddd.annotation.Service;
 
 import java.util.Optional;
@@ -26,14 +26,14 @@ public class AppointmentService {
         return appointmentRepository.find(appointmentId);
     }
 
-    public AppointmentId initializeAppointment(ParticipantId participantId) {
-        Appointment appointment = appointmentRepository.save(new Appointment(participantId));
+    public AppointmentId initializeAppointment(PersonId participant) {
+        Appointment appointment = appointmentRepository.save(new Appointment(participant));
         return appointment.getAppointmentId();
     }
 
     public void appointmentRegistration(
             AppointmentId appointmentId,
-            ParticipantId schedulingParticipant,
+            PersonId schedulingParticipant,
             AppointmentDate appointmentDate,
             AppointmentType appointmentType,
             AppointmentInformation appointmentInformation
@@ -90,11 +90,11 @@ public class AppointmentService {
         );
     }
 
-    public void addParticipant(AppointmentId appointmentId, ParticipantId participantId) {
+    public void addParticipant(AppointmentId appointmentId, PersonId participant) {
         manageAppointment(
                 appointmentId,
-                appointment -> appointment.addParticipant(participantId),
-                new ParticipantAddedToAppointment(appointmentId, participantId)
+                appointment -> appointment.addParticipant(participant),
+                new ParticipantAddedToAppointment(appointmentId, participant)
         );
     }
 

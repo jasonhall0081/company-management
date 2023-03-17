@@ -4,7 +4,6 @@ import cenglisch.appointment.domain.model.appointment.AppointmentInformation;
 import cenglisch.appointment.domain.model.appointment.AppointmentState;
 import cenglisch.appointment.domain.model.appointment.AppointmentType;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.date.AppointmentDateEntity;
-import cenglisch.appointment.port.adapter.secondary.persistence.participant.ParticipantEntity;
 import cenglisch.Default;
 
 import jakarta.persistence.*;
@@ -18,16 +17,9 @@ public class AppointmentEntity {
     @Column(name = "id", nullable = false)
     private String id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private ParticipantEntity schedulingParticipant;
+    private String schedulingParticipant;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "appointment_participant",
-            joinColumns = @JoinColumn(name = "appointment_id"),
-            inverseJoinColumns = @JoinColumn(name = "participant_id")
-    )
-    private Collection<ParticipantEntity> participants;
+    private Collection<String> participants;
 
     @OneToOne(fetch = FetchType.LAZY)
     private AppointmentDateEntity publishedAppointmentDate;
@@ -46,7 +38,7 @@ public class AppointmentEntity {
     public AppointmentEntity(){}
 
     @Default
-    public AppointmentEntity(String id, ParticipantEntity schedulingParticipant, Collection<ParticipantEntity> participants, AppointmentDateEntity publishedAppointmentDate, AppointmentType appointmentType, AppointmentState appointmentState, AppointmentInformation appointmentInformation) {
+    public AppointmentEntity(String id, String schedulingParticipant, Collection<String> participants, AppointmentDateEntity publishedAppointmentDate, AppointmentType appointmentType, AppointmentState appointmentState, AppointmentInformation appointmentInformation) {
         this.id = id;
         this.schedulingParticipant = schedulingParticipant;
         this.participants = participants;
@@ -60,11 +52,11 @@ public class AppointmentEntity {
         return id;
     }
 
-    public ParticipantEntity getSchedulingParticipant() {
+    public String getSchedulingParticipant() {
         return schedulingParticipant;
     }
 
-    public Collection<ParticipantEntity> getParticipants() {
+    public Collection<String> getParticipants() {
         return participants;
     }
 

@@ -5,7 +5,6 @@ import cenglisch.appointment.domain.model.commitment.Commitment;
 import cenglisch.appointment.domain.model.commitment.CommitmentId;
 import cenglisch.appointment.domain.model.commitment.CommitmentRepository;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentJpaRepository;
-import cenglisch.appointment.port.adapter.secondary.persistence.participant.ParticipantJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +16,6 @@ public class CommitmentRepositoryAdapter implements CommitmentRepository {
 
     @Autowired
     private CommitmentJpaRepository commitmentJpaRepository;
-
-    @Autowired
-    private ParticipantJpaRepository participantJpaRepository;
 
     @Autowired
     private AppointmentJpaRepository appointmentJpaRepository;
@@ -41,7 +37,7 @@ public class CommitmentRepositoryAdapter implements CommitmentRepository {
         if (commitment.getCommitmentId() == null){
             commitment.setCommitmentId(new CommitmentId(generateId()));
         }
-        commitmentJpaRepository.save(commitmentMapper.toCommitmentEntity(commitment, appointmentJpaRepository, participantJpaRepository));
+        commitmentJpaRepository.save(commitmentMapper.toCommitmentEntity(commitment, appointmentJpaRepository));
         return commitment;
     }
 

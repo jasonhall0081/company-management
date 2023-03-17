@@ -1,7 +1,7 @@
 package cenglisch.appointment.domain.model.appointment.event;
 
 import cenglisch.appointment.domain.model.appointment.AppointmentId;
-import cenglisch.appointment.domain.model.participant.ParticipantId;
+import cenglisch.domain.model.PersonId;
 
-public record ParticipantAddedToAppointment(AppointmentId appointmentId, ParticipantId participantId) implements AppointmentEvent {
+public record ParticipantAddedToAppointment(AppointmentId appointmentId, PersonId personId) implements AppointmentEvent {
 }

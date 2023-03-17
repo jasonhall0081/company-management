@@ -4,11 +4,11 @@ import cenglisch.appointment.domain.model.appointment.AppointmentId;
 import cenglisch.appointment.domain.model.appointment.AppointmentInformation;
 import cenglisch.appointment.domain.model.appointment.AppointmentType;
 import cenglisch.appointment.domain.model.appointment.date.AppointmentDate;
-import cenglisch.appointment.domain.model.participant.ParticipantId;
+import cenglisch.domain.model.PersonId;
 
 public record AppointmentRegistration(
         AppointmentId appointmentId,
-        ParticipantId schedulingParticipant,
+        PersonId schedulingParticipant,
         AppointmentDate appointmentDate,
         AppointmentType appointmentType,
         AppointmentInformation appointmentInformation

@@ -6,19 +6,15 @@ import cenglisch.appointment.domain.model.appointment.event.AppointmentAccepted;
 import cenglisch.appointment.domain.model.appointment.event.AppointmentFinished;
 import cenglisch.appointment.domain.model.appointment.event.AppointmentLaunched;
 import cenglisch.appointment.domain.model.appointment.interview.AppointmentInterviewService;
-import cenglisch.appointment.domain.model.participant.ParticipantService;
 import cenglisch.domain.model.EventHandler;
 
 public class AppointmentCommandInterviewApplicationPort {
-
-    private final ParticipantService participantService;
 
     private final AppointmentInterviewService appointmentInterviewService;
 
     private final AppointmentService appointmentService;
 
-    public AppointmentCommandInterviewApplicationPort(ParticipantService participantService, AppointmentInterviewService appointmentInterviewService, AppointmentService appointmentService, EventHandler eventHandler) {
-        this.participantService = participantService;
+    public AppointmentCommandInterviewApplicationPort(AppointmentInterviewService appointmentInterviewService, AppointmentService appointmentService, EventHandler eventHandler) {
         this.appointmentInterviewService = appointmentInterviewService;
         this.appointmentService = appointmentService;
 
@@ -31,9 +27,7 @@ public class AppointmentCommandInterviewApplicationPort {
         appointmentInterviewService.generateAppointmentInterview(
                 generateInterviewAppointment.interviewId(),
                 appointmentService.initializeAppointment(
-                        participantService.newParticipant(
-                                generateInterviewAppointment.personId()
-                        )
+                    generateInterviewAppointment.personId()
                 )
         );
     }

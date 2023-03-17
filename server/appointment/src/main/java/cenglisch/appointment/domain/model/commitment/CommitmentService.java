@@ -3,8 +3,8 @@ package cenglisch.appointment.domain.model.commitment;
 import cenglisch.appointment.domain.model.appointment.AppointmentId;
 import cenglisch.appointment.domain.model.commitment.event.ConfirmedCommitment;
 import cenglisch.appointment.domain.model.commitment.event.RejectedCommitment;
-import cenglisch.appointment.domain.model.participant.ParticipantId;
 import cenglisch.domain.model.EventHandler;
+import cenglisch.domain.model.PersonId;
 
 import java.util.Collection;
 
@@ -31,8 +31,8 @@ public class CommitmentService {
         return true;
     }
 
-    public void giveCommitment(AppointmentId appointmentId, ParticipantId participantId, CommitmentState commitmentState) {
-        Commitment commitment = commitmentRepository.save(new Commitment(appointmentId, participantId, commitmentState));
+    public void giveCommitment(AppointmentId appointmentId, PersonId participant, CommitmentState commitmentState) {
+        Commitment commitment = commitmentRepository.save(new Commitment(appointmentId, participant, commitmentState));
         eventHandler.publish(
                 commitment.isCommitmentStateConfirmed()
                         ? new ConfirmedCommitment(appointmentId, commitment.getCommitmentId())

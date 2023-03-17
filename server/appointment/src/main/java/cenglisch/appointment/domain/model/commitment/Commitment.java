@@ -1,8 +1,8 @@
 package cenglisch.appointment.domain.model.commitment;
 
 import cenglisch.appointment.domain.model.appointment.AppointmentId;
-import cenglisch.appointment.domain.model.participant.ParticipantId;
 import cenglisch.Default;
+import cenglisch.domain.model.PersonId;
 import org.jmolecules.ddd.annotation.Entity;
 import org.jmolecules.ddd.annotation.Identity;
 
@@ -11,16 +11,16 @@ public class Commitment {
     @Identity
     private CommitmentId commitmentId;
     private AppointmentId appointmentId;
-    private ParticipantId participantId;
+    private PersonId participant;
     private CommitmentState commitmentState;
 
     public Commitment(
             final AppointmentId appointmentId,
-            final ParticipantId participantId,
+            final PersonId participant,
             final CommitmentState CommitmentState
     ) {
         setAppointmentId(appointmentId);
-        setParticipantId(participantId);
+        setParticipant(participant);
         setCommitmentState(CommitmentState);
     }
 
@@ -28,12 +28,12 @@ public class Commitment {
     public Commitment(
             final CommitmentId commitmentId,
             final AppointmentId appointmentId,
-            final ParticipantId participantId,
+            final PersonId participant,
             final CommitmentState commitmentState
     ) {
         setCommitmentId(commitmentId);
         setAppointmentId(appointmentId);
-        setParticipantId(participantId);
+        setParticipant(participant);
         setCommitmentState(commitmentState);
     }
 
@@ -41,8 +41,8 @@ public class Commitment {
         this.commitmentId = commitmentId;
     }
 
-    public void setParticipantId(ParticipantId participantId) {
-        this.participantId = participantId;
+    public void setParticipant(PersonId participant) {
+        this.participant = participant;
     }
 
     public void setAppointmentId(AppointmentId appointmentId) {
@@ -53,9 +53,8 @@ public class Commitment {
         this.commitmentState = commitmentState;
     }
 
-
-    public ParticipantId getParticipantId() {
-        return participantId;
+    public PersonId getParticipant() {
+        return participant;
     }
 
     public boolean isCommitmentStateRejected() {

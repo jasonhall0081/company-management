@@ -1,9 +1,7 @@
 package cenglisch.appointment.port.adapter.secondary.persistence.commitment;
 
-
 import cenglisch.appointment.domain.model.commitment.CommitmentState;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentEntity;
-import cenglisch.appointment.port.adapter.secondary.persistence.participant.ParticipantEntity;
 import cenglisch.Default;
 
 import jakarta.persistence.*;
@@ -16,8 +14,8 @@ public class CommitmentEntity {
     private String id;
     @ManyToOne(fetch = FetchType.LAZY)
     private AppointmentEntity appointment;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private ParticipantEntity participant;
+    @Column
+    private String participant;
     @Enumerated(EnumType.STRING)
     @Column
     private CommitmentState commitmentState;
@@ -27,7 +25,7 @@ public class CommitmentEntity {
     }
 
     @Default
-    public CommitmentEntity(String id, AppointmentEntity appointment, ParticipantEntity participant, CommitmentState commitmentState) {
+    public CommitmentEntity(String id, AppointmentEntity appointment, String participant, CommitmentState commitmentState) {
         this.id = id;
         this.appointment = appointment;
         this.participant = participant;
@@ -43,7 +41,7 @@ public class CommitmentEntity {
         return appointment;
     }
 
-    public ParticipantEntity getParticipant() {
+    public String getParticipant() {
         return participant;
     }
 

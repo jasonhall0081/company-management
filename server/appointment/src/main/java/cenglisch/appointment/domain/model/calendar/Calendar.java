@@ -1,7 +1,7 @@
 package cenglisch.appointment.domain.model.calendar;
 
 import cenglisch.appointment.domain.model.appointment.AppointmentId;
-import cenglisch.appointment.domain.model.participant.ParticipantId;
+import cenglisch.domain.model.PersonId;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,17 +10,17 @@ public class Calendar {
 
     private CalendarId calendarId;
 
-    private ParticipantId participantId;
+    private PersonId participant;
 
     private Collection<AppointmentId> appointmentIds;
 
-    public Calendar(final ParticipantId participantId) {
-        setParticipantId(participantId);
+    public Calendar(final PersonId participant) {
+        setParticipant(participant);
         appointmentIds = new ArrayList<>();
     }
 
-    public Calendar(final ParticipantId participantId, final Collection<AppointmentId> appointmentIds) {
-        setParticipantId(participantId);
+    public Calendar(final PersonId participant, final Collection<AppointmentId> appointmentIds) {
+        setParticipant(participant);
         setAppointmentIds(appointmentIds);
     }
 
@@ -32,8 +32,8 @@ public class Calendar {
         this.calendarId = calendarId;
     }
 
-    private void setParticipantId(ParticipantId participantId) {
-        this.participantId = participantId;
+    private void setParticipant(PersonId participant) {
+        this.participant = participant;
     }
 
     private void setAppointmentIds(Collection<AppointmentId> appointmentIds) {
@@ -44,8 +44,8 @@ public class Calendar {
         return calendarId;
     }
 
-    public ParticipantId getParticipantId() {
-        return participantId;
+    public PersonId getParticipant() {
+        return participant;
     }
 
     public Collection<AppointmentId> getAppointmentIds() {

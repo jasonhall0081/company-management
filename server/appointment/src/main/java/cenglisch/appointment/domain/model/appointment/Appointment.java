@@ -2,8 +2,8 @@ package cenglisch.appointment.domain.model.appointment;
 
 import cenglisch.appointment.domain.model.appointment.date.AppointmentDate;
 import cenglisch.appointment.domain.model.appointment.exception.AppointmentException;
-import cenglisch.appointment.domain.model.participant.ParticipantId;
 import cenglisch.Default;
+import cenglisch.domain.model.PersonId;
 import org.jmolecules.ddd.annotation.AggregateRoot;
 import org.jmolecules.ddd.annotation.Identity;
 
@@ -14,8 +14,8 @@ import java.util.Collection;
 public class Appointment {
     @Identity
     private AppointmentId appointmentId;
-    private ParticipantId schedulingParticipant;
-    private Collection<ParticipantId> participants;
+    private PersonId schedulingParticipant;
+    private Collection<PersonId> participants;
     private AppointmentDate appointmentDate;
     private AppointmentType appointmentType;
     private AppointmentState appointmentState;
@@ -24,8 +24,8 @@ public class Appointment {
     @Default
     public Appointment(
             AppointmentId appointmentId,
-            ParticipantId schedulingParticipant,
-            Collection<ParticipantId> participants,
+            PersonId schedulingParticipant,
+            Collection<PersonId> participants,
             AppointmentDate appointmentDate,
             AppointmentType appointmentType,
             AppointmentState appointmentState,
@@ -41,7 +41,7 @@ public class Appointment {
     }
 
     public Appointment(
-            final ParticipantId participant,
+            final PersonId participant,
             final AppointmentDate appointmentDate,
             final AppointmentType appointmentType,
             final AppointmentInformation appointmentInformation
@@ -54,10 +54,7 @@ public class Appointment {
         setAppointmentInformation(appointmentInformation);
     }
 
-    /**
-     * this constructor gets called by interview message bus
-     */
-    public Appointment(ParticipantId participantId){
+    public Appointment(PersonId participantId){
         setAppointmentState(AppointmentState.PENDING);
         setAppointmentType(AppointmentType.COMPULSORY_ATTENDANCE);
         setSchedulingParticipant(participantId);
@@ -105,7 +102,7 @@ public class Appointment {
         setAppointmentState(AppointmentState.FINISHED);
     }
 
-    public void addParticipant(ParticipantId participantId) {
+    public void addParticipant(PersonId participantId) {
         if (!isPending()) {
             throw new AppointmentException("appointment is not in a valid state for adding more participants");
         }
@@ -144,7 +141,7 @@ public class Appointment {
         this.appointmentId = appointmentId;
     }
 
-    private void setSchedulingParticipant(ParticipantId schedulingParticipant) {
+    private void setSchedulingParticipant(PersonId schedulingParticipant) {
         this.schedulingParticipant = schedulingParticipant;
     }
 
@@ -168,11 +165,11 @@ public class Appointment {
         return appointmentId;
     }
 
-    public ParticipantId getSchedulingParticipant() {
+    public PersonId getSchedulingParticipant() {
         return schedulingParticipant;
     }
 
-    public Collection<ParticipantId> getParticipants() {
+    public Collection<PersonId> getParticipants() {
         return participants;
     }
 
