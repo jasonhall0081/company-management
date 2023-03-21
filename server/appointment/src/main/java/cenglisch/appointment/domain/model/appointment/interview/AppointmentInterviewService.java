@@ -29,8 +29,8 @@ public class AppointmentInterviewService {
                                                                                   .orElseThrow(AppointmentInterviewNotFoundException::new);
         eventHandler.publish(
                 AppointmentInterviewEventFactory.make(
-                        appointmentState,
-                        appointmentInterview.getAppointmentInterviewId()
+                        appointmentInterview.getAppointmentInterviewId(),
+                        appointmentState
                 )
         );
     }

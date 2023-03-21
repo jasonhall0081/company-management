@@ -64,14 +64,14 @@ public class Appointment {
         participants = new ArrayList<>();
     }
 
-    public void rescheduleAppointment(AppointmentDate pAppointmentDate) {
+    public void rescheduleAppointment(AppointmentDate appointmentDate) {
         if (isLaunched() || isFinished()){
             throw new AppointmentException("invalid state change for appointment");
         }
-        if (pAppointmentDate.equals(appointmentDate)) {
+        if (appointmentDate.equals(this.appointmentDate)) {
             return;
         }
-        setAppointmentDate(appointmentDate);
+        setAppointmentDate(this.appointmentDate);
     }
 
     public void acceptAppointment(){
@@ -102,14 +102,14 @@ public class Appointment {
         setAppointmentState(AppointmentState.FINISHED);
     }
 
-    public void addParticipant(PersonId participantId) {
+    public void addParticipant(PersonId participant) {
         if (!isPending()) {
             throw new AppointmentException("appointment is not in a valid state for adding more participants");
         }
-        if (participants.contains(participantId)) {
+        if (participants.contains(participant)) {
             throw new AppointmentException("participant already added to appointment");
         }
-        participants.add(participantId);
+        participants.add(participant);
     }
 
 

@@ -12,9 +12,7 @@ import java.util.function.Consumer;
 
 @Service
 public class AppointmentService {
-
     private final AppointmentRepository appointmentRepository;
-
     private final EventHandler eventHandler;
 
     public AppointmentService(AppointmentRepository appointmentRepository, EventHandler eventHandler) {
@@ -22,7 +20,7 @@ public class AppointmentService {
         this.eventHandler = eventHandler;
     }
 
-    public Optional<Appointment> find(AppointmentId appointmentId) {
+    public Optional<Appointment> pickUpAppointment(AppointmentId appointmentId) {
         return appointmentRepository.find(appointmentId);
     }
 
@@ -99,7 +97,7 @@ public class AppointmentService {
     }
 
     private void manageAppointment(AppointmentId appointmentId, Consumer<Appointment> appointmentConsumer, AppointmentEvent appointmentEvent) {
-        Appointment appointment = find(appointmentId).orElseThrow(AppointmentNotFoundException::new);
+        Appointment appointment = pickUpAppointment(appointmentId).orElseThrow(AppointmentNotFoundException::new);
         appointmentConsumer.accept(appointment);
         appointmentRepository.save(appointment);
         eventHandler.publish(appointmentEvent);

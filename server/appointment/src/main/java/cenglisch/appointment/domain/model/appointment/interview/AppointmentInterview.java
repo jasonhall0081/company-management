@@ -3,8 +3,11 @@ package cenglisch.appointment.domain.model.appointment.interview;
 import cenglisch.appointment.domain.model.appointment.AppointmentId;
 import cenglisch.Default;
 
+/**
+ * Appointment Interview is a Proxy class for appointment.
+ * It is needed to determine if a foreign system creates an appointment
+*/
 @org.jmolecules.ddd.annotation.Entity
-/** is a class for notation of foreign system id */
 public class AppointmentInterview {
     private final AppointmentInterviewId appointmentInterviewId;
 

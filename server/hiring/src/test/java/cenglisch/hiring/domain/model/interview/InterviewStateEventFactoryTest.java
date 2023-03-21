@@ -25,14 +25,14 @@ public class InterviewStateEventFactoryTest {
         );
     }
 
-    public void eventAssertion(InterviewStateEventHiring expectedEvent, InterviewStateEventHiring builtEvent){
+    public void eventAssertion(InterviewStateEventHiring expectedEvent, InterviewStateEventHiring buildEvent){
         assertEquals(
                 expectedEvent.getClass(),
-                builtEvent.getClass()
+                buildEvent.getClass()
         );
         assertEquals(
                 expectedEvent.interviewId(),
-                builtEvent.interviewId()
+                buildEvent.interviewId()
         );
     }
 }

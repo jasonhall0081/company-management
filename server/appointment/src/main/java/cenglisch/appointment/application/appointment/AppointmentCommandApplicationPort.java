@@ -41,7 +41,7 @@ public class AppointmentCommandApplicationPort {
     }
 
     public void acceptAppointment(AcceptAppointment acceptAppointment) {
-        Appointment appointment = appointmentService.find(acceptAppointment.appointmentId()).orElseThrow(AppointmentNotFoundException::new);
+        Appointment appointment = appointmentService.pickUpAppointment(acceptAppointment.appointmentId()).orElseThrow(AppointmentNotFoundException::new);
         if(!commitmentService.allParticipantAcceptedCommitment(acceptAppointment.appointmentId(), appointment.getParticipants().size())){
             return;
         }
