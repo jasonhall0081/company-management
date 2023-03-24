@@ -1,5 +1,5 @@
 group = 'cenglisch'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0-SNAPSHOT'
 sourceCompatibility = '17'
 targetCompatibility = '17'
 
@@ -15,6 +15,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.15'
 	implementation 'org.jmolecules:jmolecules-ddd:1.4.0'
+
+	implementation 'org.springframework.cloud:spring-cloud-config-server:4.0.1'
+	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:4.0.1'
 
 	implementation 'org.springframework.boot:spring-boot-starter-amqp'
 	implementation 'com.rabbitmq:amqp-client:5.10.0'

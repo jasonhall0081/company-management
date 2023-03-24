@@ -1,0 +1,17 @@
+spring:
+  banner:
+    location: banner/banner.txt
+  application:
+    name: hiring-application
+  profiles:
+    active: ${profiles:composite}
+  cloud:
+    config:
+      server:
+        encrypt:
+          enabled: true
+        prefix: /config
+        composite:
+          - type: native
+            search-locations: file:./config/
+        bootstrap: true
