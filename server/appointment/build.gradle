@@ -1,38 +1,41 @@
 group = ' cenglisch'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0-SNAPSHOT'
 sourceCompatibility = '17'
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 configurations {
-	mapstruct
+    mapstruct
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	implementation 'org.jmolecules:jmolecules-ddd'
+    implementation 'org.jmolecules:jmolecules-ddd:1.6.0'
 
-	implementation 'org.springframework.boot:spring-boot-starter-amqp'
-	implementation 'com.rabbitmq:amqp-client'
+    implementation 'org.springframework.cloud:spring-cloud-config-server:4.0.1'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:4.0.1'
 
+    implementation 'org.springframework.cloud:spring-cloud-starter-stream-rabbit:4.0.1'
+    implementation 'org.springframework.cloud:spring-cloud-stream:4.0.1'
+    implementation 'com.rabbitmq:amqp-client:5.16.0'
 
-	implementation 'org.liquibase:liquibase-core'
-	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.liquibase:liquibase-core'
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.0'
-	testImplementation 'org.junit.jupiter:junit-jupiter-params:5.3.0'
-	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.3.0'
-	testImplementation 'org.mockito:mockito-junit-jupiter:2.27.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.3.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.3.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:2.27.0'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 
