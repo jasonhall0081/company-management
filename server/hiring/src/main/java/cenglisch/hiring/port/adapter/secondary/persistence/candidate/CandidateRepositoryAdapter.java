@@ -45,6 +45,6 @@ public class CandidateRepositoryAdapter implements CandidateRepository {
 
     @Override
     public boolean existsByPersonIdAndJobId(PersonId personId, JobId jobId) {
-        return candidateRepository.existsByPersonIdAndJobId(personId.getId(), jobId.getId());
+        return candidateRepository.existsByPersonIdAndJobId(personId.id(), jobId.getId());
     }
 }

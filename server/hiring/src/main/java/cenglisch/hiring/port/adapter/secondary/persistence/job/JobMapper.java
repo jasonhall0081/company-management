@@ -3,8 +3,10 @@ package cenglisch.hiring.port.adapter.secondary.persistence.job;
 import cenglisch.domain.model.PersonId;
 import cenglisch.hiring.domain.model.job.Job;
 import cenglisch.hiring.domain.model.job.ResponsibleEmployee;
+import cenglisch.hiring.port.adapter.secondary.persistence.job.responsible.employee.ResponsibleEmployeeEntity;
 import org.mapstruct.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -13,18 +15,34 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface JobMapper {
     @Mapping(source = "id", target = "jobId.id")
-    @Mapping(source = "responsibleEmployees", target = "responsibleEmployees", qualifiedByName = "mapPersonEntityToResponsibleEmployee")
+    @Mapping(source = "responsibleEmployees", target = "responsibleEmployees", qualifiedByName = "mapToResponsibleEmployee")
     Job mapToJob(JobEntity jobEntity);
 
     @Mapping(source = "jobId.id", target = "id")
-    @Mapping(source = "responsibleEmployees", target = "responsibleEmployees")
+    @Mapping(source = "responsibleEmployees", target = "responsibleEmployees", qualifiedByName = "mapToResponsibleEmployeeEntity")
     JobEntity mapToJobEntity(Job job);
 
-    @Named("mapPersonEntityToResponsibleEmployee")
-    default List<ResponsibleEmployee> mapPersonEntityToResponsibleEmployee(Collection<PersonId> personEntities) {
-        return personEntities.stream()
-                .map(PersonId::getId)
-                .map(ResponsibleEmployee::new)
-                .collect(Collectors.toList());
+    @Named("mapToResponsibleEmployee")
+    default List<ResponsibleEmployee> mapToResponsibleEmployee(List<ResponsibleEmployeeEntity> responsibleEmployeeEntities) {
+        List<ResponsibleEmployee> responsibleEmployees = new ArrayList<>();
+        for (ResponsibleEmployeeEntity entity : responsibleEmployeeEntities) {
+            ResponsibleEmployee responsibleEmployee = new ResponsibleEmployee(new PersonId(entity.getPersonId()));
+            responsibleEmployees.add(responsibleEmployee);
+        }
+        return responsibleEmployees;
+    }
+
+    @Named("mapToResponsibleEmployeeEntity")
+    default List<ResponsibleEmployeeEntity> mapToResponsibleEmployeeEntity(List<ResponsibleEmployee> responsibleEmployees) {
+        List<ResponsibleEmployeeEntity> responsibleEmployeeEntities = new ArrayList<>();
+        for (ResponsibleEmployee responsibleEmployee : responsibleEmployees) {
+            ResponsibleEmployeeEntity responsibleEmployeeEntity = new ResponsibleEmployeeEntity(
+                    responsibleEmployee.getPerson().id(),
+                    null
+                    //new JobEntity(job.getJobId().getId())
+            );
+            responsibleEmployeeEntities.add(responsibleEmployeeEntity);
+        }
+        return responsibleEmployeeEntities;
     }
 }

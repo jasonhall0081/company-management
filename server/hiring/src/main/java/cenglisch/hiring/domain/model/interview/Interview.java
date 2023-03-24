@@ -6,7 +6,9 @@ import cenglisch.hiring.domain.model.candidate.CandidateId;
 import cenglisch.hiring.domain.model.interview.exception.InterviewException;
 import cenglisch.hiring.domain.model.interview.state.InterviewState;
 import cenglisch.hiring.domain.model.interview.type.InterviewType;
+import org.jmolecules.ddd.annotation.AggregateRoot;
 
+@AggregateRoot
 public class Interview extends Entity {
 
     private InterviewId interviewId;

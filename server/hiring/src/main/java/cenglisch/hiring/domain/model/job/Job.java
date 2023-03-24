@@ -3,10 +3,12 @@ package cenglisch.hiring.domain.model.job;
 import cenglisch.Default;
 import cenglisch.hiring.domain.model.Entity;
 import cenglisch.hiring.domain.model.job.exception.JobException;
+import org.jmolecules.ddd.annotation.AggregateRoot;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
+@AggregateRoot
 public class Job extends Entity {
 
     private JobId jobId;
@@ -17,13 +19,17 @@ public class Job extends Entity {
 
     private boolean published;
 
-    private Collection<ResponsibleEmployee> responsibleEmployees;
+    private final List<ResponsibleEmployee> responsibleEmployees;
+
+    private Job(){
+        this.responsibleEmployees = new ArrayList<>();
+    }
 
     public Job(final String pJobName, final int pNeededCapacities) {
+        this();
         setJobName(pJobName);
         setNeededCapacities(pNeededCapacities);
         setPublished(pNeededCapacities > 0);
-        this.responsibleEmployees = new ArrayList<>();
     }
 
     public Job(
@@ -32,11 +38,11 @@ public class Job extends Entity {
         final int neededCapacities,
         final boolean published
     ) {
+        this();
         setJobId(jobId);
         setJobName(jobName);
         setNeededCapacities(neededCapacities);
         setPublished(published);
-        this.responsibleEmployees = new ArrayList<>();
     }
 
     @Default
@@ -45,7 +51,7 @@ public class Job extends Entity {
             final String jobName,
             final int neededCapacities,
             final boolean published,
-            final Collection<ResponsibleEmployee> responsibleEmployees
+            final List<ResponsibleEmployee> responsibleEmployees
     ) {
         setJobId(jobId);
         setJobName(jobName);
@@ -121,7 +127,7 @@ public class Job extends Entity {
         return published;
     }
 
-    public Collection<ResponsibleEmployee> getResponsibleEmployees() {
+    public List<ResponsibleEmployee> getResponsibleEmployees() {
         return responsibleEmployees;
     }
 }

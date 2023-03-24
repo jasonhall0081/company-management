@@ -51,7 +51,10 @@ public class JobCommandApplicationPort {
         if (jobAlreadyHasApplicants(addResponsibleEmployee.jobId())) {
             throw new JobException("job already has applicants");
         }
-        jobService.addResponsibleEmployee(addResponsibleEmployee.jobId(), addResponsibleEmployee.responsibleEmployee());
+        jobService.addResponsibleEmployee(
+            addResponsibleEmployee.jobId(),
+            addResponsibleEmployee.responsibleEmployee()
+        );
     }
 
     public void removeResponsibleEmployee(RemoveResponsibleEmployee removeResponsibleEmployee) {

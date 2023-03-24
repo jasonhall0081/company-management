@@ -5,7 +5,10 @@ import cenglisch.domain.model.PersonId;
 import cenglisch.hiring.domain.model.Entity;
 import cenglisch.hiring.domain.model.candidate.exception.CandidateException;
 import cenglisch.hiring.domain.model.job.JobId;
+import org.jmolecules.ddd.annotation.AggregateRoot;
 
+
+@AggregateRoot
 public class Candidate extends Entity {
     private CandidateId candidateId;
     private PersonId personId;

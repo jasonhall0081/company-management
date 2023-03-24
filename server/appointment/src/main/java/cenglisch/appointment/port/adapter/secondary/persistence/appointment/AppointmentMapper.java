@@ -37,6 +37,6 @@ public interface AppointmentMapper {
     }
 
     default Collection<String> mapFromParticipantCollection(Collection<PersonId> personIds) {
-        return personIds.stream().map(PersonId::getId).collect(Collectors.toList());
+        return personIds.stream().map(PersonId::id).collect(Collectors.toList());
     }
 }

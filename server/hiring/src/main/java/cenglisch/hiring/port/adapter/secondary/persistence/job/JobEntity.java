@@ -2,10 +2,10 @@ package cenglisch.hiring.port.adapter.secondary.persistence.job;
 
 import cenglisch.Default;
 
-import cenglisch.domain.model.PersonId;
+import cenglisch.hiring.port.adapter.secondary.persistence.job.responsible.employee.ResponsibleEmployeeEntity;
 import jakarta.persistence.*;
 
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "job")
@@ -23,19 +23,17 @@ public class JobEntity {
     @Column
     private boolean published;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "responsible_employees",
-            joinColumns = @JoinColumn(name = "job_id"),
-            inverseJoinColumns = @JoinColumn(name = "responsible_employee_id")
-    )
-
-    private Collection<PersonId> responsibleEmployees;
+    @OneToMany(mappedBy = "job")
+    private List<ResponsibleEmployeeEntity> responsibleEmployees;
 
     public JobEntity() {}
 
+    public JobEntity(String id) {
+        this.id = id;
+    }
+
     @Default
-    public JobEntity(String id, String jobName, int neededCapacities, boolean published, Collection<PersonId> responsibleEmployees) {
+    public JobEntity(String id, String jobName, int neededCapacities, boolean published, List<ResponsibleEmployeeEntity> responsibleEmployees) {
         this.id = id;
         this.jobName = jobName;
         this.neededCapacities = neededCapacities;
@@ -59,7 +57,7 @@ public class JobEntity {
         return published;
     }
 
-    public Collection<PersonId> getResponsibleEmployees() {
+    public List<ResponsibleEmployeeEntity> getResponsibleEmployees() {
         return responsibleEmployees;
     }
 }
