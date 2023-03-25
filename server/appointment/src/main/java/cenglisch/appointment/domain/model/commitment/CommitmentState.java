@@ -1,9 +1,6 @@
 package cenglisch.appointment.domain.model.commitment;
 
-
-import org.jmolecules.ddd.annotation.ValueObject;
-
-@ValueObject
+@org.jmolecules.ddd.annotation.ValueObject
 public enum CommitmentState {
     CONFIRM,
     REJECTED,

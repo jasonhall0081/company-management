@@ -1,18 +1,16 @@
 package cenglisch.appointment.domain.model.calendar;
 
-import cenglisch.appointment.application.appointment.CancelAppointment;
 import cenglisch.appointment.domain.model.commitment.CommitmentId;
 import cenglisch.appointment.domain.model.commitment.event.ConfirmedCommitment;
 import cenglisch.domain.model.EventHandler;
-import org.jmolecules.ddd.annotation.Service;
 
-@Service
+@org.jmolecules.ddd.annotation.Service
 public class CalendarService {
 
     private final CalendarRepository calendarRepository;
     private final EventHandler eventHandler;
 
-    public CalendarService(CalendarRepository calendarRepository, EventHandler eventHandler) {
+    public CalendarService(final CalendarRepository calendarRepository, final EventHandler eventHandler) {
         this.calendarRepository = calendarRepository;
         this.eventHandler = eventHandler;
 
@@ -25,7 +23,7 @@ public class CalendarService {
         });*/
     }
 
-    public void createCalendarEntry(CommitmentId commitmentId) {
+    public void createCalendarEntry(final CommitmentId commitmentId) {
 
     }
 

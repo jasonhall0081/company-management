@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class AppointmentRepositoryAdapter implements AppointmentRepository {
+public final class AppointmentRepositoryAdapter implements AppointmentRepository {
 
     @Autowired
     private AppointmentJpaRepository appointmentJpaRepository;
@@ -18,22 +18,25 @@ public class AppointmentRepositoryAdapter implements AppointmentRepository {
     private AppointmentMapper appointmentMapper;
 
     @Override
-    public Optional<Appointment> find(AppointmentId appointmentId) {
-        Optional<AppointmentEntity> optionalAppointment = appointmentJpaRepository.findById(appointmentId.getId());
+    public Optional<Appointment> find(final AppointmentId appointmentId) {
+        Optional<AppointmentEntity> optionalAppointment = appointmentJpaRepository.findById(appointmentId.id());
         return optionalAppointment.map(appointmentEntity -> appointmentMapper.mapToAppointment(appointmentEntity));
     }
 
     @Override
-    public Appointment save(Appointment appointment) {
-        if(appointment.getAppointmentId() == null){
+    public Appointment save(final Appointment appointment) {
+        if (appointment.getAppointmentId() == null) {
             appointment.setAppointmentId(new AppointmentId(generateId()));
         }
-        AppointmentEntity appointmentEntity = appointmentMapper.mapToAppointmentEntity(appointment, appointmentJpaRepository);
+        final AppointmentEntity appointmentEntity = appointmentMapper.mapToAppointmentEntity(
+                appointment,
+                appointmentJpaRepository
+        );
         return appointmentMapper.mapToAppointment(appointmentJpaRepository.save(appointmentEntity));
     }
 
     @Override
-    public void remove(Appointment appointment) {
-
+    public void remove(final Appointment appointment) {
+        throw new RuntimeException("not implemented");
     }
 }

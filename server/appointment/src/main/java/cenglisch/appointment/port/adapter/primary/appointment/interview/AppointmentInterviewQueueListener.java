@@ -14,7 +14,7 @@ public class AppointmentInterviewQueueListener {
     private AppointmentCommandInterviewApplicationPort appointmentCommandInterviewApplicationPort;
 
     @RabbitListener(queues = "hiring.interview.state.generated")
-    public void generateAppointmentInterview(GenerateInterviewAppointment generateInterviewAppointment){
+    public final void generateAppointmentInterview(final GenerateInterviewAppointment generateInterviewAppointment) {
         appointmentCommandInterviewApplicationPort.generateAppointmentInterview(generateInterviewAppointment);
     }
 

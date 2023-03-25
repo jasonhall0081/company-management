@@ -1,18 +1,16 @@
 package cenglisch.appointment.domain.model.appointment;
 
-import cenglisch.appointment.domain.model.appointment.date.AppointmentDate;
-import cenglisch.appointment.domain.model.appointment.exception.AppointmentException;
 import cenglisch.Default;
-import cenglisch.domain.model.PersonId;
-import org.jmolecules.ddd.annotation.AggregateRoot;
-import org.jmolecules.ddd.annotation.Identity;
-
+import cenglisch.appointment.domain.model.appointment.date.AppointmentDate;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@AggregateRoot
-public class Appointment {
-    @Identity
+import cenglisch.appointment.domain.model.appointment.exception.AppointmentException;
+import cenglisch.domain.model.PersonId;
+
+@org.jmolecules.ddd.annotation.AggregateRoot
+public final class Appointment {
+    @org.jmolecules.ddd.annotation.Identity
     private AppointmentId appointmentId;
     private PersonId schedulingParticipant;
     private Collection<PersonId> participants;
@@ -23,13 +21,13 @@ public class Appointment {
 
     @Default
     public Appointment(
-            AppointmentId appointmentId,
-            PersonId schedulingParticipant,
-            Collection<PersonId> participants,
-            AppointmentDate appointmentDate,
-            AppointmentType appointmentType,
-            AppointmentState appointmentState,
-            AppointmentInformation appointmentInformation
+            final AppointmentId appointmentId,
+            final PersonId schedulingParticipant,
+            final Collection<PersonId> participants,
+            final AppointmentDate appointmentDate,
+            final AppointmentType appointmentType,
+            final AppointmentState appointmentState,
+            final AppointmentInformation appointmentInformation
     ) {
         this.appointmentId = appointmentId;
         this.schedulingParticipant = schedulingParticipant;
@@ -54,7 +52,7 @@ public class Appointment {
         setAppointmentInformation(appointmentInformation);
     }
 
-    public Appointment(PersonId participantId){
+    public Appointment(final PersonId participantId) {
         setAppointmentState(AppointmentState.PENDING);
         setAppointmentType(AppointmentType.COMPULSORY_ATTENDANCE);
         setSchedulingParticipant(participantId);
@@ -64,8 +62,8 @@ public class Appointment {
         participants = new ArrayList<>();
     }
 
-    public void rescheduleAppointment(AppointmentDate appointmentDate) {
-        if (isLaunched() || isFinished()){
+    public void rescheduleAppointment(final AppointmentDate appointmentDate) {
+        if (isLaunched() || isFinished()) {
             throw new AppointmentException("invalid state change for appointment");
         }
         if (appointmentDate.equals(this.appointmentDate)) {
@@ -74,7 +72,7 @@ public class Appointment {
         setAppointmentDate(this.appointmentDate);
     }
 
-    public void acceptAppointment(){
+    public void acceptAppointment() {
         if (!isPending()) {
             throw new AppointmentException("invalid state change for appointment");
         }
@@ -102,9 +100,11 @@ public class Appointment {
         setAppointmentState(AppointmentState.FINISHED);
     }
 
-    public void addParticipant(PersonId participant) {
+    public void addParticipant(final PersonId participant) {
         if (!isPending()) {
-            throw new AppointmentException("appointment is not in a valid state for adding more participants");
+            throw new AppointmentException(
+                    "appointment is not in a valid state for adding more participants"
+            );
         }
         if (participants.contains(participant)) {
             throw new AppointmentException("participant already added to appointment");
@@ -137,27 +137,27 @@ public class Appointment {
         return appointmentState == AppointmentState.FINISHED;
     }
 
-    public void setAppointmentId(AppointmentId appointmentId) {
+    public void setAppointmentId(final AppointmentId appointmentId) {
         this.appointmentId = appointmentId;
     }
 
-    private void setSchedulingParticipant(PersonId schedulingParticipant) {
+    private void setSchedulingParticipant(final PersonId schedulingParticipant) {
         this.schedulingParticipant = schedulingParticipant;
     }
 
-    private void setAppointmentDate(AppointmentDate appointmentDate) {
+    private void setAppointmentDate(final AppointmentDate appointmentDate) {
         this.appointmentDate = appointmentDate;
     }
 
-    private void setAppointmentType(AppointmentType appointmentType) {
+    private void setAppointmentType(final AppointmentType appointmentType) {
         this.appointmentType = appointmentType;
     }
 
-    private void setAppointmentState(AppointmentState appointmentState) {
+    private void setAppointmentState(final AppointmentState appointmentState) {
         this.appointmentState = appointmentState;
     }
 
-    private void setAppointmentInformation(AppointmentInformation appointmentInformation) {
+    private void setAppointmentInformation(final AppointmentInformation appointmentInformation) {
         this.appointmentInformation = appointmentInformation;
     }
 

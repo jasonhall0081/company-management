@@ -6,13 +6,21 @@ import cenglisch.appointment.domain.model.appointment.AppointmentType;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.date.AppointmentDateEntity;
 import cenglisch.Default;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 import java.util.Collection;
 
 @Entity
 @Table(name = "appointment")
-public class AppointmentEntity {
+public final class AppointmentEntity {
     @Id
     @Column(name = "id", nullable = false)
     private String id;
@@ -35,10 +43,20 @@ public class AppointmentEntity {
     @Embedded
     private AppointmentInformation appointmentInformation;
 
-    public AppointmentEntity(){}
+    public AppointmentEntity() {
+
+    }
 
     @Default
-    public AppointmentEntity(String id, String schedulingParticipant, Collection<String> participants, AppointmentDateEntity publishedAppointmentDate, AppointmentType appointmentType, AppointmentState appointmentState, AppointmentInformation appointmentInformation) {
+    public AppointmentEntity(
+        final String id,
+        final String schedulingParticipant,
+        final Collection<String> participants,
+        final AppointmentDateEntity publishedAppointmentDate,
+        final AppointmentType appointmentType,
+        final AppointmentState appointmentState,
+        final AppointmentInformation appointmentInformation
+    ) {
         this.id = id;
         this.schedulingParticipant = schedulingParticipant;
         this.participants = participants;

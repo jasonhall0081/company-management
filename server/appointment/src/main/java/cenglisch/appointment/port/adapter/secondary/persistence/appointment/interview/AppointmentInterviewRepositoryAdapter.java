@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class AppointmentInterviewRepositoryAdapter implements AppointmentInterviewRepository {
+public final class AppointmentInterviewRepositoryAdapter implements AppointmentInterviewRepository {
 
     @Autowired
     private AppointmentInterviewJpaRepository appointmentInterviewJpaRepository;
@@ -19,25 +19,34 @@ public class AppointmentInterviewRepositoryAdapter implements AppointmentIntervi
     private AppointmentInterviewMapper appointmentInterviewMapper;
 
     @Override
-    public Optional<AppointmentInterview> find(AppointmentInterviewId appointmentInterviewId) {
-        Optional<AppointmentInterviewEntity> optionalAppointment = appointmentInterviewJpaRepository.findById(appointmentInterviewId.getId());
-        return optionalAppointment.map(appointmentEntity -> appointmentInterviewMapper.toAppointmentInterview(appointmentEntity));
+    public Optional<AppointmentInterview> find(final AppointmentInterviewId appointmentInterviewId) {
+        Optional<AppointmentInterviewEntity> optionalAppointment = appointmentInterviewJpaRepository.findById(
+                appointmentInterviewId.id()
+        );
+        return optionalAppointment.map(
+                appointmentEntity -> appointmentInterviewMapper.toAppointmentInterview(appointmentEntity)
+        );
     }
 
     @Override
-    public Optional<AppointmentInterview> findByAppointmentId(AppointmentId appointmentId) {
-        Optional<AppointmentInterviewEntity> optionalAppointment = appointmentInterviewJpaRepository.findByAppointmentId(appointmentId.getId());
-        return optionalAppointment.map(appointmentEntity -> appointmentInterviewMapper.toAppointmentInterview(appointmentEntity));
+    public Optional<AppointmentInterview> findByAppointmentId(final AppointmentId appointmentId) {
+        Optional<AppointmentInterviewEntity> optionalAppointment = appointmentInterviewJpaRepository
+                .findByAppointmentId(appointmentId.id());
+        return optionalAppointment.map(
+                appointmentEntity -> appointmentInterviewMapper.toAppointmentInterview(appointmentEntity)
+        );
     }
 
     @Override
-    public AppointmentInterview save(AppointmentInterview appointmentInterview) {
-        AppointmentInterviewEntity appointmentInterviewEntity = appointmentInterviewJpaRepository.save(appointmentInterviewMapper.toAppointmentInterviewEntity(appointmentInterview));
+    public AppointmentInterview save(final AppointmentInterview appointmentInterview) {
+        AppointmentInterviewEntity appointmentInterviewEntity = appointmentInterviewJpaRepository.save(
+                appointmentInterviewMapper.toAppointmentInterviewEntity(appointmentInterview)
+        );
         return appointmentInterviewMapper.toAppointmentInterview(appointmentInterviewEntity);
     }
 
     @Override
-    public void remove(AppointmentInterview appointmentInterview) {
-
+    public void remove(final AppointmentInterview appointmentInterview) {
+        throw new RuntimeException("not implemented");
     }
 }

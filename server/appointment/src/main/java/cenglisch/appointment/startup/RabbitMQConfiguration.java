@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RabbitMQConfiguration {
+public final class RabbitMQConfiguration {
     @Bean
     public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
@@ -23,7 +23,7 @@ public class RabbitMQConfiguration {
     }
 
     @Bean
-    public Queue interviewGeneratedQueue(){
+    public Queue interviewGeneratedQueue() {
         return new Queue("hiring.interview.state.generated", true);
     }
 }

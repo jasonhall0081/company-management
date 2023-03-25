@@ -8,17 +8,21 @@ import cenglisch.domain.model.PersonId;
 
 import java.util.Collection;
 
-public class CommitmentService {
+@org.jmolecules.ddd.annotation.Service
+public final class CommitmentService {
 
     private final CommitmentRepository commitmentRepository;
     private final EventHandler eventHandler;
 
-    public CommitmentService(CommitmentRepository commitmentRepository, EventHandler eventHandler) {
+    public CommitmentService(
+            final CommitmentRepository commitmentRepository,
+            final EventHandler eventHandler
+    ) {
         this.commitmentRepository = commitmentRepository;
         this.eventHandler = eventHandler;
     }
 
-    public boolean allParticipantAcceptedCommitment(AppointmentId appointmentId, int numberOfParticipants) {
+    public boolean allParticipantAcceptedCommitment(final AppointmentId appointmentId, final int numberOfParticipants) {
         Collection<Commitment> commitments = commitmentRepository.findByAppointmentId(appointmentId);
         if (commitments.size() != numberOfParticipants) {
             return false;
@@ -31,7 +35,11 @@ public class CommitmentService {
         return true;
     }
 
-    public void giveCommitment(AppointmentId appointmentId, PersonId participant, CommitmentState commitmentState) {
+    public void giveCommitment(
+            final AppointmentId appointmentId,
+            final PersonId participant,
+            final CommitmentState commitmentState
+    ) {
         Commitment commitment = commitmentRepository.save(new Commitment(appointmentId, participant, commitmentState));
         eventHandler.publish(
                 commitment.isCommitmentStateConfirmed()

@@ -3,12 +3,10 @@ package cenglisch.appointment.domain.model.commitment;
 import cenglisch.appointment.domain.model.appointment.AppointmentId;
 import cenglisch.Default;
 import cenglisch.domain.model.PersonId;
-import org.jmolecules.ddd.annotation.Entity;
-import org.jmolecules.ddd.annotation.Identity;
 
-@Entity
-public class Commitment {
-    @Identity
+@org.jmolecules.ddd.annotation.Entity
+public final class Commitment {
+    @org.jmolecules.ddd.annotation.Identity
     private CommitmentId commitmentId;
     private AppointmentId appointmentId;
     private PersonId participant;
@@ -17,11 +15,11 @@ public class Commitment {
     public Commitment(
             final AppointmentId appointmentId,
             final PersonId participant,
-            final CommitmentState CommitmentState
+            final CommitmentState commitmentState
     ) {
         setAppointmentId(appointmentId);
         setParticipant(participant);
-        setCommitmentState(CommitmentState);
+        setCommitmentState(commitmentState);
     }
 
     @Default
@@ -37,19 +35,19 @@ public class Commitment {
         setCommitmentState(commitmentState);
     }
 
-    public void setCommitmentId(CommitmentId commitmentId) {
+    public void setCommitmentId(final CommitmentId commitmentId) {
         this.commitmentId = commitmentId;
     }
 
-    public void setParticipant(PersonId participant) {
+    public void setParticipant(final PersonId participant) {
         this.participant = participant;
     }
 
-    public void setAppointmentId(AppointmentId appointmentId) {
+    public void setAppointmentId(final AppointmentId appointmentId) {
         this.appointmentId = appointmentId;
     }
 
-    public void setCommitmentState(CommitmentState commitmentState) {
+    public void setCommitmentState(final CommitmentState commitmentState) {
         this.commitmentState = commitmentState;
     }
 

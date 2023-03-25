@@ -3,14 +3,19 @@ package cenglisch.appointment.port.adapter.secondary.persistence.appointment.dat
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentEntity;
 import cenglisch.Default;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 import java.sql.Date;
 import java.sql.Time;
 
 @Entity
 @Table(name = "appointment_date")
-public class AppointmentDateEntity {
+public final class AppointmentDateEntity {
     @Id
     @Column(name = "id", nullable = false)
     private String id;
@@ -28,12 +33,18 @@ public class AppointmentDateEntity {
     @Column
     private Time endTime;
 
-    public AppointmentDateEntity(){
+    public AppointmentDateEntity() {
 
     }
 
     @Default
-    public AppointmentDateEntity(String id, AppointmentEntity appointment, Date date, Time startTime, Time endTime) {
+    public AppointmentDateEntity(
+            final String id,
+            final AppointmentEntity appointment,
+            final Date date,
+            final Time startTime,
+            final Time endTime
+    ) {
         this.id = id;
         this.appointment = appointment;
         this.date = date;

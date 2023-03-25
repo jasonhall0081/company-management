@@ -1,40 +1,49 @@
 package cenglisch.appointment.domain.model.appointment;
 
 import cenglisch.appointment.domain.model.appointment.date.AppointmentDate;
+import cenglisch.appointment.domain.model.appointment.event.AppointmentAccepted;
+import cenglisch.appointment.domain.model.appointment.event.AppointmentCanceled;
+import cenglisch.appointment.domain.model.appointment.event.AppointmentCreated;
+import cenglisch.appointment.domain.model.appointment.event.AppointmentEvent;
+import cenglisch.appointment.domain.model.appointment.event.AppointmentFinished;
+import cenglisch.appointment.domain.model.appointment.event.AppointmentLaunched;
+import cenglisch.appointment.domain.model.appointment.event.AppointmentRescheduled;
+import cenglisch.appointment.domain.model.appointment.event.ParticipantAddedToAppointment;
 import cenglisch.appointment.domain.model.appointment.exception.AppointmentNotFoundException;
-import cenglisch.appointment.domain.model.appointment.event.*;
 import cenglisch.domain.model.EventHandler;
 import cenglisch.domain.model.PersonId;
-import org.jmolecules.ddd.annotation.Service;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 
-@Service
-public class AppointmentService {
+@org.jmolecules.ddd.annotation.Service
+public final class AppointmentService {
     private final AppointmentRepository appointmentRepository;
     private final EventHandler eventHandler;
 
-    public AppointmentService(AppointmentRepository appointmentRepository, EventHandler eventHandler) {
+    public AppointmentService(
+            final AppointmentRepository appointmentRepository,
+            final EventHandler eventHandler
+    ) {
         this.appointmentRepository = appointmentRepository;
         this.eventHandler = eventHandler;
     }
 
-    public Optional<Appointment> pickUpAppointment(AppointmentId appointmentId) {
+    public Optional<Appointment> pickUpAppointment(final AppointmentId appointmentId) {
         return appointmentRepository.find(appointmentId);
     }
 
-    public AppointmentId initializeAppointment(PersonId participant) {
+    public AppointmentId initializeAppointment(final PersonId participant) {
         Appointment appointment = appointmentRepository.save(new Appointment(participant));
         return appointment.getAppointmentId();
     }
 
     public void appointmentRegistration(
-            AppointmentId appointmentId,
-            PersonId schedulingParticipant,
-            AppointmentDate appointmentDate,
-            AppointmentType appointmentType,
-            AppointmentInformation appointmentInformation
+        final AppointmentId appointmentId,
+        final PersonId schedulingParticipant,
+        final AppointmentDate appointmentDate,
+        final AppointmentType appointmentType,
+        final AppointmentInformation appointmentInformation
     ) {
         Appointment appointment = new Appointment(
                 schedulingParticipant,
@@ -42,14 +51,14 @@ public class AppointmentService {
                 appointmentType,
                 appointmentInformation
         );
-        if(appointmentId != null){
+        if (appointmentId != null) {
             appointment.setAppointmentId(appointmentId);
         }
         appointmentRepository.save(appointment);
         eventHandler.publish(new AppointmentCreated(appointment.getAppointmentId()));
     }
 
-    public void rescheduleAppointment(AppointmentId appointmentId, AppointmentDate appointmentDate) {
+    public void rescheduleAppointment(final AppointmentId appointmentId, final AppointmentDate appointmentDate) {
         manageAppointment(
                 appointmentId,
                 appointment -> appointment.rescheduleAppointment(appointmentDate),
@@ -57,14 +66,14 @@ public class AppointmentService {
         );
     }
 
-    public void cancelAppointment(AppointmentId appointmentId) {
+    public void cancelAppointment(final AppointmentId appointmentId) {
         manageAppointment(
                 appointmentId,
                 Appointment::cancelAppointment,
                 new AppointmentCanceled(appointmentId)
         );
     }
-    public void acceptAppointment(AppointmentId appointmentId){
+    public void acceptAppointment(final AppointmentId appointmentId) {
         manageAppointment(
                 appointmentId,
                 Appointment::acceptAppointment,
@@ -72,7 +81,7 @@ public class AppointmentService {
         );
     }
 
-    public void launchAppointment(AppointmentId appointmentId) {
+    public void launchAppointment(final AppointmentId appointmentId) {
         manageAppointment(
                 appointmentId,
                 Appointment::launchAppointment,
@@ -80,7 +89,7 @@ public class AppointmentService {
         );
     }
 
-    public void finishAppointment(AppointmentId appointmentId) {
+    public void finishAppointment(final AppointmentId appointmentId) {
         manageAppointment(
                 appointmentId,
                 Appointment::finishAppointment,
@@ -88,7 +97,7 @@ public class AppointmentService {
         );
     }
 
-    public void addParticipant(AppointmentId appointmentId, PersonId participant) {
+    public void addParticipant(final AppointmentId appointmentId, final PersonId participant) {
         manageAppointment(
                 appointmentId,
                 appointment -> appointment.addParticipant(participant),
@@ -96,7 +105,11 @@ public class AppointmentService {
         );
     }
 
-    private void manageAppointment(AppointmentId appointmentId, Consumer<Appointment> appointmentConsumer, AppointmentEvent appointmentEvent) {
+    private void manageAppointment(
+            final AppointmentId appointmentId,
+            final Consumer<Appointment> appointmentConsumer,
+            final AppointmentEvent appointmentEvent
+    ) {
         Appointment appointment = pickUpAppointment(appointmentId).orElseThrow(AppointmentNotFoundException::new);
         appointmentConsumer.accept(appointment);
         appointmentRepository.save(appointment);

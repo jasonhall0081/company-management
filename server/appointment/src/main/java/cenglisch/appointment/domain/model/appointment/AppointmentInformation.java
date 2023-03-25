@@ -1,8 +1,6 @@
 package cenglisch.appointment.domain.model.appointment;
 
-import org.jmolecules.ddd.annotation.Entity;
-
-@Entity
+@org.jmolecules.ddd.annotation.Entity
 public class AppointmentInformation {
     private String caption;
 
