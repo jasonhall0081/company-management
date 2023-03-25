@@ -8,7 +8,7 @@ public interface Determination {
 
     DocumentType getDocumentType();
 
-    static Collection<Determination> getDeterminationPool(){
+    static Collection<Determination> getDeterminationPool() {
         var collection = new ArrayList<Determination>();
         collection.add(new AnschreibenDetermination());
         collection.add(new LebenslaufDetermination());

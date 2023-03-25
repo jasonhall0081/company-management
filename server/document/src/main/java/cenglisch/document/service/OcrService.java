@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 
 @Service
-public class OcrService {
+public final class OcrService {
 
     @Autowired
     private Tesseract tesseract;
 
-    public String extractTextFromFile(File file) {
+    public String extractTextFromFile(final File file) {
         try {
             return tesseract.doOCR(file);
         } catch (TesseractException e) {
