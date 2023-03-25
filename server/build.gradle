@@ -8,7 +8,7 @@ buildscript {
         springBootStarterWebVersion = '3.0.1'
         springBootStarterDataJpaVersion = '3.0.1'
         mariadbJavaClientVersion = '2.7.3'
-        springDocVersion = '1.6.15'
+        springDocVersion = '2.0.4'
     }
     repositories {
         mavenCentral()

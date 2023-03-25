@@ -3,6 +3,7 @@ package cenglisch.hiring.port.adapter.primary.job;
 import cenglisch.hiring.application.job.JobCommandApplicationPort;
 import cenglisch.hiring.application.job.NewJobPosting;
 import cenglisch.hiring.application.job.PublishJobPosting;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("v1/job")
+@Tag(name = "Job", description = "APIs für die Jobverwaltung.")
 public final class JobV1RestAdapter {
 
     @Autowired

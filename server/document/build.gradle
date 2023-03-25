@@ -11,6 +11,9 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa:${parent.springBootStarterDataJpaVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-web:${parent.springBootStarterWebVersion}"
 
+	// SpringDoc
+	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${parent.springDocVersion}"
+
 	// Tesseract
 	implementation 'net.sourceforge.tess4j:tess4j:4.4.1'
 
