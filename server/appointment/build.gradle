@@ -1,4 +1,4 @@
-group = ' cenglisch'
+group = 'cenglisch'
 version = '1.0.0-SNAPSHOT'
 sourceCompatibility = '17'
 
@@ -11,23 +11,33 @@ configurations {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // Spring Boot
+    implementation "org.springframework.boot:spring-boot-starter-web:${parent.springBootStarterWebVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${parent.springBootStarterDataJpaVersion}"
 
-    implementation 'org.jmolecules:jmolecules-ddd:1.6.0'
+    // jmolecules
+    implementation "org.jmolecules:jmolecules-ddd:${parent.jmoleculesVersion}"
 
-    implementation 'org.springframework.cloud:spring-cloud-config-server:4.0.1'
-    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:4.0.1'
+    // Spring Cloud
+    implementation "org.springframework.cloud:spring-cloud-config-server:${parent.springCloudVersion}"
+    implementation "org.springframework.cloud:spring-cloud-starter-bootstrap:${parent.springCloudVersion}"
 
-    implementation 'org.springframework.cloud:spring-cloud-starter-stream-rabbit:4.0.1'
-    implementation 'org.springframework.cloud:spring-cloud-stream:4.0.1'
-    implementation 'com.rabbitmq:amqp-client:5.16.0'
+    // Spring Cloud Stream Rabbit
+    implementation "org.springframework.cloud:spring-cloud-starter-stream-rabbit:${parent.springCloudVersion}"
+    implementation "org.springframework.cloud:spring-cloud-stream:${parent.springCloudVersion}"
+    implementation "com.rabbitmq:amqp-client:${parent.rabbitMQVersion}"
 
+    // Liquibase
     implementation 'org.liquibase:liquibase-core'
-    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
+    // MapStruct
+    implementation "org.mapstruct:mapstruct:${parent.mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${parent.mapstructVersion}"
+
+    // MariaDB
+    runtimeOnly "org.mariadb.jdbc:mariadb-java-client:${parent.mariadbJavaClientVersion}"
+
+    // Tests
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.3.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.3.0'
@@ -37,5 +47,3 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-
-

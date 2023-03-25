@@ -1,20 +1,24 @@
-group = ' cenglisch'
+group = 'cenglisch'
 version = '1.0.0-SNAPSHOT'
 sourceCompatibility = '17'
 
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
-    implementation 'org.jmolecules:jmolecules-ddd:1.4.0'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    // Spring Boot
+    implementation "org.springframework.boot:spring-boot-starter-web:${parent.springBootStarterWebVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${parent.springBootStarterDataJpaVersion}"
+
+    // MapStruct
+    implementation "org.mapstruct:mapstruct:${parent.mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${parent.mapstructVersion}"
+
+    // jmolecules
+    implementation "org.jmolecules:jmolecules-ddd:${parent.jmoleculesVersion}"
+
+    // MariaDB
+    runtimeOnly "org.mariadb.jdbc:mariadb-java-client:${parent.mariadbJavaClientVersion}"
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
-
-
-

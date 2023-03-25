@@ -1,6 +1,14 @@
 buildscript {
     ext {
         springBootVersion = '3.0.1'
+        mapstructVersion = '1.5.3.Final'
+        jmoleculesVersion = '1.4.0'
+        rabbitMQVersion = '5.10.0'
+        springCloudVersion = '4.0.1'
+        springBootStarterWebVersion = '3.0.1'
+        springBootStarterDataJpaVersion = '3.0.1'
+        mariadbJavaClientVersion = '2.7.3'
+        springDocVersion = '1.6.15'
     }
     repositories {
         mavenCentral()
