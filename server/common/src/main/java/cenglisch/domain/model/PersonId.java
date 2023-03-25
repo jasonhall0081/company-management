@@ -4,4 +4,6 @@ package cenglisch.domain.model;
 /**
  * This Identity provides value from sso user
  */
-public record PersonId(String id) {}
+public record PersonId(String id) {
+
+}

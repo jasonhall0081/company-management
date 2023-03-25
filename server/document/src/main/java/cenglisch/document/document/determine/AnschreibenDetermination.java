@@ -1,7 +1,8 @@
 package cenglisch.document.document.determine;
 
-public class AnschreibenDetermination implements Determination{
-    public boolean determine(String fileContent) {
+public final class AnschreibenDetermination implements Determination {
+
+    public boolean determine(final String fileContent) {
         return fileContent.contains("BEWERBUNG") || fileContent.contains("ANSCHREIBEN");
     }
 

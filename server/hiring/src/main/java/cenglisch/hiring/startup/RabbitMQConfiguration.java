@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RabbitMQConfiguration {
+public final class RabbitMQConfiguration {
     @Bean
     public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
@@ -45,17 +45,17 @@ public class RabbitMQConfiguration {
     }
 
     @Bean
-    public Binding acceptInterviewBinding(Queue acceptInterviewQueue, DirectExchange directExchange) {
+    public Binding acceptInterviewBinding(final Queue acceptInterviewQueue, final DirectExchange directExchange) {
         return BindingBuilder.bind(acceptInterviewQueue).to(directExchange).with("appointment.interview.accepted");
     }
 
     @Bean
-    public Binding launchInterviewBinding(Queue launchInterviewQueue, DirectExchange directExchange) {
+    public Binding launchInterviewBinding(final Queue launchInterviewQueue, final DirectExchange directExchange) {
         return BindingBuilder.bind(launchInterviewQueue).to(directExchange).with("appointment.interview.launched");
     }
 
     @Bean
-    public Binding generateInterviewBinding(Queue generateInterviewQueue, DirectExchange directExchange) {
+    public Binding generateInterviewBinding(final Queue generateInterviewQueue, final DirectExchange directExchange) {
         return BindingBuilder.bind(generateInterviewQueue).to(directExchange).with("appointment.interview.generated");
     }
 }

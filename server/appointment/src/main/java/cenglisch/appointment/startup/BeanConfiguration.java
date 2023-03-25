@@ -23,20 +23,24 @@ public class BeanConfiguration {
     private AppointmentRepositoryAdapter appointmentRepositoryAdapter;
 
     @Bean
-    public AppointmentService appointmentService(){
+    public final AppointmentService appointmentService() {
         return new AppointmentService(appointmentRepositoryAdapter, jmsEventPublisherAdapter);
     }
 
     @Bean
-    public AppointmentCommandApplicationPort appointmentApplicationPort(){
-        return new AppointmentCommandApplicationPort(appointmentService(), commitmentService(), jmsEventPublisherAdapter);
+    public final AppointmentCommandApplicationPort appointmentApplicationPort() {
+        return new AppointmentCommandApplicationPort(
+                appointmentService(),
+                commitmentService(),
+                jmsEventPublisherAdapter
+        );
     }
 
     @Autowired
     private CommitmentRepositoryAdapter commitmentRepositoryAdapter;
 
     @Bean
-    public CommitmentService commitmentService(){
+    public final CommitmentService commitmentService() {
         return new CommitmentService(commitmentRepositoryAdapter, jmsEventPublisherAdapter);
     }
 
@@ -44,12 +48,16 @@ public class BeanConfiguration {
     private AppointmentInterviewRepositoryAdapter appointmentInterviewRepositoryAdapter;
 
     @Bean
-    public AppointmentInterviewService appointmentInterviewService(){
+    public final AppointmentInterviewService appointmentInterviewService() {
         return new AppointmentInterviewService(appointmentInterviewRepositoryAdapter, jmsEventPublisherAdapter);
     }
 
     @Bean
-    public AppointmentCommandInterviewApplicationPort appointmentInterviewApplicationPort(){
-        return new AppointmentCommandInterviewApplicationPort(appointmentInterviewService(), appointmentService(), jmsEventPublisherAdapter);
+    public final AppointmentCommandInterviewApplicationPort appointmentInterviewApplicationPort() {
+        return new AppointmentCommandInterviewApplicationPort(
+                appointmentInterviewService(),
+                appointmentService(),
+                jmsEventPublisherAdapter
+        );
     }
 }

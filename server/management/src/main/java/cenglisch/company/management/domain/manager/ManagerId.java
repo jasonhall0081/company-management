@@ -1,14 +1,5 @@
 package cenglisch.company.management.domain.manager;
 
-public class ManagerId {
+public record ManagerId(String id) {
 
-    private String id;
-
-    public ManagerId(String id) {
-        this.id = id;
-    }
-
-    public String getId() {
-        return id;
-    }
 }

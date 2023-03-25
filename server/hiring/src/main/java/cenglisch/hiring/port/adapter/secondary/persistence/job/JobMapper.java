@@ -4,26 +4,36 @@ import cenglisch.domain.model.PersonId;
 import cenglisch.hiring.domain.model.job.Job;
 import cenglisch.hiring.domain.model.job.ResponsibleEmployee;
 import cenglisch.hiring.port.adapter.secondary.persistence.job.responsible.employee.ResponsibleEmployeeEntity;
-import org.mapstruct.*;
+import org.mapstruct.InjectionStrategy;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface JobMapper {
     @Mapping(source = "id", target = "jobId.id")
-    @Mapping(source = "responsibleEmployees", target = "responsibleEmployees", qualifiedByName = "mapToResponsibleEmployee")
+    @Mapping(
+        source = "responsibleEmployees",
+        target = "responsibleEmployees",
+        qualifiedByName = "mapToResponsibleEmployee"
+    )
     Job mapToJob(JobEntity jobEntity);
 
     @Mapping(source = "jobId.id", target = "id")
-    @Mapping(source = "responsibleEmployees", target = "responsibleEmployees", qualifiedByName = "mapToResponsibleEmployeeEntity")
+    @Mapping(
+        source = "responsibleEmployees",
+        target = "responsibleEmployees",
+        qualifiedByName = "mapToResponsibleEmployeeEntity"
+    )
     JobEntity mapToJobEntity(Job job);
 
     @Named("mapToResponsibleEmployee")
-    default List<ResponsibleEmployee> mapToResponsibleEmployee(List<ResponsibleEmployeeEntity> responsibleEmployeeEntities) {
+    default List<ResponsibleEmployee> mapToResponsibleEmployee(
+            List<ResponsibleEmployeeEntity> responsibleEmployeeEntities
+    ) {
         List<ResponsibleEmployee> responsibleEmployees = new ArrayList<>();
         for (ResponsibleEmployeeEntity entity : responsibleEmployeeEntities) {
             ResponsibleEmployee responsibleEmployee = new ResponsibleEmployee(new PersonId(entity.getPersonId()));
@@ -33,7 +43,9 @@ public interface JobMapper {
     }
 
     @Named("mapToResponsibleEmployeeEntity")
-    default List<ResponsibleEmployeeEntity> mapToResponsibleEmployeeEntity(List<ResponsibleEmployee> responsibleEmployees) {
+    default List<ResponsibleEmployeeEntity> mapToResponsibleEmployeeEntity(
+            List<ResponsibleEmployee> responsibleEmployees
+    ) {
         List<ResponsibleEmployeeEntity> responsibleEmployeeEntities = new ArrayList<>();
         for (ResponsibleEmployee responsibleEmployee : responsibleEmployees) {
             ResponsibleEmployeeEntity responsibleEmployeeEntity = new ResponsibleEmployeeEntity(

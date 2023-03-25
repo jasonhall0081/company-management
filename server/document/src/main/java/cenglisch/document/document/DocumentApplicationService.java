@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 
 @Service
-public class DocumentApplicationService {
+public final class DocumentApplicationService {
 
     @Autowired
     private FileSystemService fileSystemService;
@@ -24,7 +24,7 @@ public class DocumentApplicationService {
     @Autowired
     private DocumentDetermineService documentDetermineService;
 
-    public DocumentResponse determineDocumentType(MultipartFile file) {
+    public DocumentResponse determineDocumentType(final MultipartFile file) {
         File fileSystemStoredFile = fileSystemService.storeMultipartFile(file);
         String extractedText = ocrService.extractTextFromFile(fileSystemStoredFile);
         DocumentType documentType = documentDetermineService.determineFileType(extractedText);

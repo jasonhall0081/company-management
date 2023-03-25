@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class JobRepositoryAdapter implements JobRepository {
+public final class JobRepositoryAdapter implements JobRepository {
 
     @Autowired
     private JobJpaRepository jobJpaRepository;
@@ -18,14 +18,14 @@ public class JobRepositoryAdapter implements JobRepository {
     private JobMapper jobMapper;
 
 
-    public Optional<Job> find(JobId id) {
-        Optional<JobEntity> optionalJob = jobJpaRepository.findById(id.getId());
+    public Optional<Job> find(final JobId id) {
+        Optional<JobEntity> optionalJob = jobJpaRepository.findById(id.id());
         return optionalJob.map(jobEntity -> jobMapper.mapToJob(jobEntity));
     }
 
 
-    public Job save(Job job) {
-        if (job.getJobId() == null){
+    public Job save(final Job job) {
+        if (job.getJobId() == null) {
             job.setJobId(new JobId(generateId()));
         }
         jobJpaRepository.saveAndFlush(
@@ -35,11 +35,7 @@ public class JobRepositoryAdapter implements JobRepository {
     }
 
     @Override
-    public void remove(Job job) {
-
-    }
-
-    public void delete(JobId id) {
-
+    public void remove(final Job job) {
+        throw new RuntimeException("not implemented");
     }
 }

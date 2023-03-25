@@ -13,12 +13,16 @@ import cenglisch.hiring.domain.model.interview.type.InterviewType;
 
 import java.util.Optional;
 
-public class InterviewService {
+@org.jmolecules.ddd.annotation.Service
+public final class InterviewService {
 
     private final InterviewRepository interviewRepository;
     private final EventHandler eventHandler;
 
-    public InterviewService(InterviewRepository interviewRepository, EventHandler eventHandler) {
+    public InterviewService(
+            final InterviewRepository interviewRepository,
+            final EventHandler eventHandler
+    ) {
         this.interviewRepository = interviewRepository;
         this.eventHandler = eventHandler;
     }
@@ -53,13 +57,13 @@ public class InterviewService {
         interview.changeInterviewType(interviewType);
         interviewRepository.save(interview);
         eventHandler.publish(
-                interviewType == InterviewType.ONLINE ?
-                        new InterviewHeldOnline(interviewId) :
-                        new InterviewHeldOffline(interviewId)
+                interviewType == InterviewType.ONLINE
+                        ? new InterviewHeldOnline(interviewId)
+                        : new InterviewHeldOffline(interviewId)
         );
     }
 
-    public void changeInterviewState(InterviewId interviewId, InterviewState interviewState) {
+    public void changeInterviewState(final InterviewId interviewId, final InterviewState interviewState) {
         Interview interview = find(interviewId).orElseThrow(InterviewNotFoundException::new);
         interview.changeInterviewState(interviewState);
         interviewRepository.save(interview);

@@ -9,14 +9,15 @@ import cenglisch.domain.model.PersonId;
 
 import java.util.Optional;
 
-public class CandidateService {
+@org.jmolecules.ddd.annotation.Service
+public final class CandidateService {
     private final CandidateRepository candidateRepository;
 
     private final EventHandler eventHandler;
 
     public CandidateService(
-            CandidateRepository candidateRepository,
-            EventHandler eventHandler
+            final CandidateRepository candidateRepository,
+            final EventHandler eventHandler
     ) {
         this.candidateRepository = candidateRepository;
         this.eventHandler = eventHandler;
@@ -36,7 +37,7 @@ public class CandidateService {
     }
 
     public void newCandidate(final PersonId personId, final JobId jobId) {
-        if (personAlreadyAppliedForJob(personId, jobId)){
+        if (personAlreadyAppliedForJob(personId, jobId)) {
             throw new CandidateApplicationException("person has already applied for this job");
         }
 

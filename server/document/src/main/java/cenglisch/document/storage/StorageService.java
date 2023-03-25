@@ -7,16 +7,21 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 
 @Service
-public class StorageService {
+public final class StorageService {
 
     @Autowired
     private StorageRepository storageRepository;
 
-    public void deleteStorageItem(String storageId){
+    public void deleteStorageItem(final String storageId) {
         storageRepository.deleteById(storageId);
     }
 
-    public Storage storeFileContent(String reference, DocumentType documentType, String filePath, String fileContent){
+    public Storage storeFileContent(
+            final String reference,
+            final DocumentType documentType,
+            final String filePath,
+            final String fileContent
+    ) {
         return storageRepository.saveAndFlush(
                 new Storage(
                         reference,
@@ -27,7 +32,7 @@ public class StorageService {
         );
     }
 
-    public Collection<Storage> getStorageItemsByReference(String reference) {
+    public Collection<Storage> getStorageItemsByReference(final String reference) {
         return storageRepository.findByReference(reference);
     }
 

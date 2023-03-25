@@ -7,12 +7,16 @@ import cenglisch.appointment.domain.model.commitment.CommitmentService;
 import cenglisch.appointment.domain.model.commitment.event.ConfirmedCommitment;
 import cenglisch.domain.model.EventHandler;
 
-public class AppointmentCommandApplicationPort {
+public final class AppointmentCommandApplicationPort {
 
     private final AppointmentService appointmentService;
     private final CommitmentService commitmentService;
 
-    public AppointmentCommandApplicationPort(AppointmentService appointmentService, CommitmentService commitmentService, EventHandler eventHandler) {
+    public AppointmentCommandApplicationPort(
+            final AppointmentService appointmentService,
+            final CommitmentService commitmentService,
+            final EventHandler eventHandler
+    ) {
         this.appointmentService = appointmentService;
         this.commitmentService = commitmentService;
 
@@ -21,7 +25,7 @@ public class AppointmentCommandApplicationPort {
         });
     }
 
-    public void appointmentRegistration(AppointmentRegistration appointmentRegistration) {
+    public void appointmentRegistration(final AppointmentRegistration appointmentRegistration) {
         appointmentService.appointmentRegistration(
                 appointmentRegistration.appointmentId(),
                 appointmentRegistration.schedulingParticipant(),
@@ -31,36 +35,45 @@ public class AppointmentCommandApplicationPort {
         );
     }
 
-    public void rescheduleAppointment(RescheduleAppointment rescheduleAppointment){
+    public void rescheduleAppointment(final RescheduleAppointment rescheduleAppointment) {
         //das appointment date muss noch erstellt werden, es existsiert bis jetzt noch nicht in der db
-        //entweder wird von hier aus direkt der service angestoßen oder man lauscht auf das event, dass ein neues date erstellt wurde
+        //entweder wird von hier aus direkt der service angestoßen
+        // oder man lauscht auf das event, dass ein neues date erstellt wurde
         appointmentService.rescheduleAppointment(
                 rescheduleAppointment.appointmentId(),
                 rescheduleAppointment.appointmentDate()
         );
     }
 
-    public void acceptAppointment(AcceptAppointment acceptAppointment) {
-        Appointment appointment = appointmentService.pickUpAppointment(acceptAppointment.appointmentId()).orElseThrow(AppointmentNotFoundException::new);
-        if(!commitmentService.allParticipantAcceptedCommitment(acceptAppointment.appointmentId(), appointment.getParticipants().size())){
+    public void acceptAppointment(final AcceptAppointment acceptAppointment) {
+        final Appointment appointment = appointmentService.pickUpAppointment(
+                acceptAppointment.appointmentId()
+        ).orElseThrow(AppointmentNotFoundException::new);
+
+        final boolean allParticipantAcceptedCommitment = commitmentService.allParticipantAcceptedCommitment(
+                acceptAppointment.appointmentId(),
+                appointment.getParticipants().size()
+        );
+
+        if (!allParticipantAcceptedCommitment) {
             return;
         }
         appointmentService.acceptAppointment(acceptAppointment.appointmentId());
     }
 
-    public void launchAppointment(LaunchAppointment launchAppointment) {
+    public void launchAppointment(final LaunchAppointment launchAppointment) {
         appointmentService.launchAppointment(
                 launchAppointment.appointmentId()
         );
     }
 
-    public void finishAppointment(FinishAppointment finishAppointment) {
+    public void finishAppointment(final FinishAppointment finishAppointment) {
         appointmentService.finishAppointment(
                 finishAppointment.appointmentId()
         );
     }
 
-    public void addParticipant(AddParticipant addParticipant) {
+    public void addParticipant(final AddParticipant addParticipant) {
         appointmentService.addParticipant(
                 addParticipant.appointmentId(),
                 addParticipant.participantId()

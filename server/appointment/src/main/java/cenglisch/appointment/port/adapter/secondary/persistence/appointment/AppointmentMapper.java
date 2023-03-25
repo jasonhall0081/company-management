@@ -5,7 +5,10 @@ import cenglisch.appointment.domain.model.appointment.Appointment;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.date.AppointmentDateMapper;
 
 import cenglisch.domain.model.PersonId;
-import org.mapstruct.*;
+import org.mapstruct.Context;
+import org.mapstruct.InjectionStrategy;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -20,13 +23,21 @@ public interface AppointmentMapper {
     @Mapping(target = "appointmentId.id", source = "id")
     @Mapping(target = "schedulingParticipant.id", source = "schedulingParticipant")
     @Mapping(target = "participants", source = "participants")
-    @Mapping(target = "appointmentDate", source = "publishedAppointmentDate", qualifiedByName = "mapToAppointmentDate")
+    @Mapping(
+        target = "appointmentDate",
+        source = "publishedAppointmentDate",
+        qualifiedByName = "mapToAppointmentDate"
+    )
     Appointment mapToAppointment(AppointmentEntity appointmentEntity);
 
     @Mapping(target = "id", source = "appointmentId.id")
     @Mapping(target = "schedulingParticipant", source = "schedulingParticipant.id")
     @Mapping(target = "participants", source = "participants")
-    @Mapping(target = "publishedAppointmentDate", source = "appointmentDate", qualifiedByName = "mapToAppointmentDateEntity")
+    @Mapping(
+        target = "publishedAppointmentDate",
+        source = "appointmentDate",
+        qualifiedByName = "mapToAppointmentDateEntity"
+    )
     AppointmentEntity mapToAppointmentEntity(
             Appointment appointment,
             @Context AppointmentJpaRepository appointmentJpaRepository

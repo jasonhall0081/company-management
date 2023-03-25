@@ -6,7 +6,7 @@ import cenglisch.domain.model.PersonId;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class Calendar {
+public final class Calendar {
 
     private CalendarId calendarId;
 
@@ -24,19 +24,19 @@ public class Calendar {
         setAppointmentIds(appointmentIds);
     }
 
-    public void createCalendarEntry(AppointmentId appointmentId){
+    public void createCalendarEntry(final AppointmentId appointmentId) {
         appointmentIds.add(appointmentId);
     }
 
-    private void setCalendarId(CalendarId calendarId) {
+    private void setCalendarId(final CalendarId calendarId) {
         this.calendarId = calendarId;
     }
 
-    private void setParticipant(PersonId participant) {
+    private void setParticipant(final PersonId participant) {
         this.participant = participant;
     }
 
-    private void setAppointmentIds(Collection<AppointmentId> appointmentIds) {
+    private void setAppointmentIds(final Collection<AppointmentId> appointmentIds) {
         this.appointmentIds = appointmentIds;
     }
 

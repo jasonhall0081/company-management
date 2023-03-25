@@ -1,8 +1,6 @@
 package cenglisch.appointment.domain.model.appointment;
 
-import org.jmolecules.ddd.annotation.ValueObject;
-
-@ValueObject
+@org.jmolecules.ddd.annotation.ValueObject
 public enum AppointmentState {
     PENDING,
     CONFLICT,

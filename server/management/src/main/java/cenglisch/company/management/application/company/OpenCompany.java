@@ -9,4 +9,6 @@ public record OpenCompany(
         String houseNumber,
         String zip,
         String city
-) {}
+) {
+
+}

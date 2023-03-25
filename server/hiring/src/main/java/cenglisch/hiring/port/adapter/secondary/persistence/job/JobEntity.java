@@ -3,13 +3,17 @@ package cenglisch.hiring.port.adapter.secondary.persistence.job;
 import cenglisch.Default;
 
 import cenglisch.hiring.port.adapter.secondary.persistence.job.responsible.employee.ResponsibleEmployeeEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 import java.util.List;
 
 @Entity
 @Table(name = "job")
-public class JobEntity {
+public final class JobEntity {
     @Id
     @Column(name = "id", nullable = false)
     private String id;
@@ -26,14 +30,22 @@ public class JobEntity {
     @OneToMany(mappedBy = "job")
     private List<ResponsibleEmployeeEntity> responsibleEmployees;
 
-    public JobEntity() {}
+    public JobEntity() {
 
-    public JobEntity(String id) {
+    }
+
+    public JobEntity(final String id) {
         this.id = id;
     }
 
     @Default
-    public JobEntity(String id, String jobName, int neededCapacities, boolean published, List<ResponsibleEmployeeEntity> responsibleEmployees) {
+    public JobEntity(
+        final String id,
+        final String jobName,
+        final int neededCapacities,
+        final boolean published,
+        final List<ResponsibleEmployeeEntity> responsibleEmployees
+    ) {
         this.id = id;
         this.jobName = jobName;
         this.neededCapacities = neededCapacities;

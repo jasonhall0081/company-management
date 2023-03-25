@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Service
-public class CommitmentRepositoryAdapter implements CommitmentRepository {
+public final class CommitmentRepositoryAdapter implements CommitmentRepository {
 
     @Autowired
     private CommitmentJpaRepository commitmentJpaRepository;
@@ -23,18 +23,18 @@ public class CommitmentRepositoryAdapter implements CommitmentRepository {
     @Autowired
     private CommitmentMapper commitmentMapper;
 
-    public Optional<Commitment> findById(CommitmentId commitmentId) {
-        Optional<CommitmentEntity> optionalCommitmentEntity = commitmentJpaRepository.findById(commitmentId.getId());
+    public Optional<Commitment> findById(final CommitmentId commitmentId) {
+        Optional<CommitmentEntity> optionalCommitmentEntity = commitmentJpaRepository.findById(commitmentId.id());
         return optionalCommitmentEntity.map(commitmentEntity -> commitmentMapper.toCommitment(commitmentEntity));
     }
 
     @Override
-    public Optional<Commitment> find(CommitmentId id) {
+    public Optional<Commitment> find(final CommitmentId id) {
         return Optional.empty();
     }
 
-    public Commitment save(Commitment commitment) {
-        if (commitment.getCommitmentId() == null){
+    public Commitment save(final Commitment commitment) {
+        if (commitment.getCommitmentId() == null) {
             commitment.setCommitmentId(new CommitmentId(generateId()));
         }
         commitmentJpaRepository.save(commitmentMapper.toCommitmentEntity(commitment, appointmentJpaRepository));
@@ -42,11 +42,11 @@ public class CommitmentRepositoryAdapter implements CommitmentRepository {
     }
 
     @Override
-    public void remove(Commitment commitment) {
-
+    public void remove(final Commitment commitment) {
+        throw new RuntimeException("not implemented");
     }
 
-    public Collection<Commitment> findByAppointmentId(AppointmentId appointmentId) {
-        return commitmentMapper.toCommitmentCollection(commitmentJpaRepository.findByAppointmentId(appointmentId.getId()));
+    public Collection<Commitment> findByAppointmentId(final AppointmentId appointmentId) {
+        return commitmentMapper.toCommitmentCollection(commitmentJpaRepository.findByAppointmentId(appointmentId.id()));
     }
 }

@@ -3,10 +3,9 @@ package cenglisch.document.config;
 import net.sourceforge.tess4j.Tesseract;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 @Configuration
-public class TesseractConfig {
+public final class TesseractConfig {
 
     @Bean
     public Tesseract tesseract() {

@@ -2,11 +2,15 @@ package cenglisch.hiring.port.adapter.secondary.persistence.candidate;
 
 import cenglisch.Default;
 import cenglisch.hiring.domain.model.candidate.CandidateState;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "candidate")
-public class CandidateEntity {
+public final class CandidateEntity {
     @Id
     @Column(name = "id", nullable = false)
     private String id;
@@ -22,7 +26,12 @@ public class CandidateEntity {
     }
 
     @Default
-    public CandidateEntity(String id, String jobId, String personId, CandidateState candidateState) {
+    public CandidateEntity(
+        final String id,
+        final String jobId,
+        final String personId,
+        final CandidateState candidateState
+    ) {
         this.id = id;
         this.jobId = jobId;
         this.personId = personId;

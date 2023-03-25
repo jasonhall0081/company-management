@@ -4,11 +4,18 @@ import cenglisch.appointment.domain.model.commitment.CommitmentState;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentEntity;
 import cenglisch.Default;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "commitment")
-public class CommitmentEntity {
+public final class CommitmentEntity {
     @Id
     @Column(name = "id", nullable = false)
     private String id;
@@ -20,12 +27,16 @@ public class CommitmentEntity {
     @Column
     private CommitmentState commitmentState;
 
-    public CommitmentEntity(){
+    public CommitmentEntity() {
 
     }
 
     @Default
-    public CommitmentEntity(String id, AppointmentEntity appointment, String participant, CommitmentState commitmentState) {
+    public CommitmentEntity(
+            final String id,
+            final AppointmentEntity appointment,
+            final String participant, final CommitmentState commitmentState
+    ) {
         this.id = id;
         this.appointment = appointment;
         this.participant = participant;

@@ -1,13 +1,13 @@
 package cenglisch.company.management.domain.address;
 
-public class Address {
+public final class Address {
     private AddressId id;
     private String street;
     private String houseNumber;
     private String zip;
     private String city;
 
-    public Address(String street, String houseNumber, String zip, String city) {
+    public Address(final String street, final String houseNumber, final String zip, final String city) {
 
     }
 

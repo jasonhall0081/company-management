@@ -8,13 +8,18 @@ import cenglisch.appointment.domain.model.appointment.event.AppointmentLaunched;
 import cenglisch.appointment.domain.model.appointment.interview.AppointmentInterviewService;
 import cenglisch.domain.model.EventHandler;
 
-public class AppointmentCommandInterviewApplicationPort {
+public final class AppointmentCommandInterviewApplicationPort {
 
     private final AppointmentInterviewService appointmentInterviewService;
 
     private final AppointmentService appointmentService;
 
-    public AppointmentCommandInterviewApplicationPort(AppointmentInterviewService appointmentInterviewService, AppointmentService appointmentService, EventHandler eventHandler) {
+    public AppointmentCommandInterviewApplicationPort(
+            final AppointmentInterviewService appointmentInterviewService,
+            final AppointmentService appointmentService,
+            final EventHandler eventHandler
+    ) {
+
         this.appointmentInterviewService = appointmentInterviewService;
         this.appointmentService = appointmentService;
 
@@ -23,7 +28,7 @@ public class AppointmentCommandInterviewApplicationPort {
         eventHandler.subscribe(AppointmentFinished.class, this::finishAppointmentInterview);
     }
 
-    public void generateAppointmentInterview(GenerateInterviewAppointment generateInterviewAppointment) {
+    public void generateAppointmentInterview(final GenerateInterviewAppointment generateInterviewAppointment) {
         appointmentInterviewService.generateAppointmentInterview(
                 generateInterviewAppointment.interviewId(),
                 appointmentService.initializeAppointment(
@@ -32,21 +37,21 @@ public class AppointmentCommandInterviewApplicationPort {
         );
     }
 
-    private void acceptAppointmentInterview(AppointmentAccepted appointmentAccepted) {
+    private void acceptAppointmentInterview(final AppointmentAccepted appointmentAccepted) {
         appointmentInterviewService.publishEventChange(
                 appointmentAccepted.appointmentId(),
                 AppointmentState.ACCEPTED
         );
     }
 
-    private void launchAppointmentInterview(AppointmentLaunched appointmentLaunched) {
+    private void launchAppointmentInterview(final AppointmentLaunched appointmentLaunched) {
         appointmentInterviewService.publishEventChange(
                 appointmentLaunched.appointmentId(),
                 AppointmentState.LAUNCHED
         );
     }
 
-    private void finishAppointmentInterview(AppointmentFinished appointmentFinished) {
+    private void finishAppointmentInterview(final AppointmentFinished appointmentFinished) {
         appointmentInterviewService.publishEventChange(
                 appointmentFinished.appointmentId(),
                 AppointmentState.FINISHED

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class UserController {
+public final class UserController {
 
     @GetMapping("/users")
     public List<User> getUsers() {
@@ -24,7 +24,12 @@ public class UserController {
         private String lastName;
         private String email;
 
-        public User(Long id, String firstName, String lastName, String email) {
+        User(
+            final Long id,
+            final String firstName,
+            final String lastName,
+            final String email
+        ) {
             this.id = id;
             this.firstName = firstName;
             this.lastName = lastName;

@@ -11,18 +11,18 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
-public class FileSystemService {
+public final class FileSystemService {
 
-    private final String UPLOAD_FOLDER = "upload";
+    private static final String UPLOAD_FOLDER = "upload";
 
-    private final long MAX_FILE_SIZE = FileUtils.ONE_MB * 10;
+    private static final long MAX_FILE_SIZE = FileUtils.ONE_MB * 10;
 
-    public File storeMultipartFile(MultipartFile multipartFile) {
+    public File storeMultipartFile(final MultipartFile multipartFile) {
         if (multipartFile.isEmpty()) {
             throw new EmptyFileException();
         }
 
-        if (multipartFile.getSize() > MAX_FILE_SIZE){
+        if (multipartFile.getSize() > MAX_FILE_SIZE) {
             throw new FileSizeLimitExceededException();
         }
 

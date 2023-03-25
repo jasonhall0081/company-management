@@ -10,7 +10,7 @@ import cenglisch.hiring.domain.model.interview.state.InterviewState;
 import cenglisch.hiring.domain.model.job.JobId;
 import cenglisch.hiring.domain.model.job.JobService;
 
-public class CandidateCommandApplicationPort {
+public final class CandidateCommandApplicationPort {
     private final CandidateService candidateService;
     private final JobService jobService;
     private final InterviewService interviewService;
