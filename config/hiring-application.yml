@@ -11,3 +11,6 @@ spring:
     username: root
     password: wasd
     driver-class-name: org.mariadb.jdbc.Driver
+
+springdoc:
+  packagesToScan: cenglisch.hiring.port.adapter.primary

@@ -3,6 +3,7 @@ package cenglisch.hiring.port.adapter.primary.interview.type;
 import cenglisch.hiring.application.interview.type.HoldInterviewOffline;
 import cenglisch.hiring.application.interview.type.HoldInterviewOnline;
 import cenglisch.hiring.application.interview.type.InterviewTypeCommandApplicationPort;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("v1/interview/type")
+@Tag(name = "Interview", description = "APIs für die Interviewverwaltung.")
 public final class InterviewTypeV1RestAdapter {
 
     @Autowired

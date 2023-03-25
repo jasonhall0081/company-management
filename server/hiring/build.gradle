@@ -18,7 +18,7 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-actuator"
 
 	// SpringDoc
-	implementation "org.springdoc:springdoc-openapi-ui:${parent.springDocVersion}"
+	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${parent.springDocVersion}"
 
 	// jmolecules
 	implementation "org.jmolecules:jmolecules-ddd:${parent.jmoleculesVersion}"

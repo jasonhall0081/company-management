@@ -4,6 +4,7 @@ import cenglisch.hiring.application.interview.state.AcceptInterview;
 import cenglisch.hiring.application.interview.state.EndInterviewExecution;
 import cenglisch.hiring.application.interview.state.InterviewStateCommandApplicationPort;
 import cenglisch.hiring.application.interview.state.LaunchInterview;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("v1/interview/state")
+@Tag(name = "Interview", description = "APIs für die Interviewverwaltung.")
 public final class InterviewStateV1RestAdapter {
 
     @Autowired
