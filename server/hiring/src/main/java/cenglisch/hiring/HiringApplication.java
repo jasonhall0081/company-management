@@ -25,7 +25,7 @@ public class HiringApplication extends SpringBootServletInitializer {
                 .run(args);
     }
 
-    protected SpringApplicationBuilder configure(final SpringApplicationBuilder builder) {
+    protected final SpringApplicationBuilder configure(final SpringApplicationBuilder builder) {
         final Map<String, Object> props = new HashMap<>();
         props.put(CONFIG_FILE_PROPERTY, BOOTSTRAP_CONFIG_FILE_NAME);
         builder.properties(props);

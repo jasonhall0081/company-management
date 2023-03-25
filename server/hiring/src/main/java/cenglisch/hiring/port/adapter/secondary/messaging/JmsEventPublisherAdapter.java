@@ -10,11 +10,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
-public class JmsEventPublisherAdapter extends AbstractEventPublisher {
+public final class JmsEventPublisherAdapter extends AbstractEventPublisher {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    protected void publishExternally(DomainEvent domainEvent) {
+    protected void publishExternally(final DomainEvent domainEvent) {
         Logger.getLogger(domainEvent.topic()).log(Level.INFO, String.valueOf(domainEvent.getClass()));
         rabbitTemplate.convertAndSend(domainEvent.topic(), domainEvent.toString());
     }

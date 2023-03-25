@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class InterviewRepositoryAdapter implements InterviewRepository {
+public final class InterviewRepositoryAdapter implements InterviewRepository {
 
     @Autowired
     private InterviewJpaRepository interviewRepository;
@@ -18,14 +18,14 @@ public class InterviewRepositoryAdapter implements InterviewRepository {
     @Autowired
     private InterviewMapper interviewMapper;
 
-    public Optional<Interview> find(InterviewId id) {
-        Optional<InterviewEntity> optionalInterview = interviewRepository.findById(id.getId());
+    public Optional<Interview> find(final InterviewId id) {
+        Optional<InterviewEntity> optionalInterview = interviewRepository.findById(id.id());
         return optionalInterview.map(interviewEntity -> interviewMapper.mapToInterview(interviewEntity));
     }
 
 
-    public Interview save(Interview interview) {
-        if (interview.getInterviewId() == null){
+    public Interview save(final Interview interview) {
+        if (interview.getInterviewId() == null) {
             interview.setInterviewId(new InterviewId(generateId()));
         }
         interviewRepository.saveAndFlush(
@@ -35,12 +35,12 @@ public class InterviewRepositoryAdapter implements InterviewRepository {
     }
 
     @Override
-    public void remove(Interview interview) {
-
+    public void remove(final Interview interview) {
+        throw new RuntimeException("not implemented");
     }
 
-    public Optional<Interview> findByCandidateId(CandidateId candidateId) {
-        Optional<InterviewEntity> optionalInterview = interviewRepository.findByCandidateId(candidateId.getId());
+    public Optional<Interview> findByCandidateId(final CandidateId candidateId) {
+        Optional<InterviewEntity> optionalInterview = interviewRepository.findByCandidateId(candidateId.id());
         return optionalInterview.map(interviewEntity -> interviewMapper.mapToInterview(interviewEntity));
     }
 }

@@ -9,23 +9,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class InterviewStateQueueListener {
+public final class InterviewStateQueueListener {
 
     @Autowired
     private InterviewStateCommandApplicationPort interviewStateCommandApplicationPort;
 
     @RabbitListener(queues = "appointment.interview.accepted")
-    public void acceptInterview(AcceptInterview acceptInterview) {
+    public void acceptInterview(final AcceptInterview acceptInterview) {
         interviewStateCommandApplicationPort.acceptInterview(acceptInterview);
     }
 
     @RabbitListener(queues = "appointment.interview.launched")
-    public void launchInterview(LaunchInterview launchInterview) {
+    public void launchInterview(final LaunchInterview launchInterview) {
         interviewStateCommandApplicationPort.launchInterview(launchInterview);
     }
 
     @RabbitListener(queues = "appointment.interview.generated")
-    public void endInterviewExecution(EndInterviewExecution endInterviewExecution){
+    public void endInterviewExecution(final EndInterviewExecution endInterviewExecution) {
         interviewStateCommandApplicationPort.endInterviewExecution(endInterviewExecution);
     }
 }

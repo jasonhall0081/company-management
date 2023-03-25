@@ -2,11 +2,16 @@ package cenglisch.hiring.port.adapter.secondary.persistence.job.responsible.empl
 
 import cenglisch.Default;
 import cenglisch.hiring.port.adapter.secondary.persistence.job.JobEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "responsible_employee")
-public class ResponsibleEmployeeEntity {
+public final class ResponsibleEmployeeEntity {
     @Id
     @Column(name = "id", nullable = false)
     private String id;
@@ -23,12 +28,12 @@ public class ResponsibleEmployeeEntity {
     }
 
     @Default
-    public ResponsibleEmployeeEntity(String personId, JobEntity job) {
+    public ResponsibleEmployeeEntity(final String personId, final JobEntity job) {
         this.personId = personId;
         this.job = job;
     }
 
-    public ResponsibleEmployeeEntity(String id, String personId, JobEntity job) {
+    public ResponsibleEmployeeEntity(final String id, final String personId, final JobEntity job) {
         this.id = id;
         this.personId = personId;
         this.job = job;

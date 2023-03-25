@@ -3,13 +3,12 @@ package cenglisch.hiring.domain.model.job;
 import cenglisch.Default;
 import cenglisch.hiring.domain.model.Entity;
 import cenglisch.hiring.domain.model.job.exception.JobException;
-import org.jmolecules.ddd.annotation.AggregateRoot;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@AggregateRoot
-public class Job extends Entity {
+@org.jmolecules.ddd.annotation.AggregateRoot
+public final class Job extends Entity {
 
     private JobId jobId;
 
@@ -21,7 +20,7 @@ public class Job extends Entity {
 
     private final List<ResponsibleEmployee> responsibleEmployees;
 
-    private Job(){
+    private Job() {
         this.responsibleEmployees = new ArrayList<>();
     }
 
@@ -60,27 +59,27 @@ public class Job extends Entity {
         this.responsibleEmployees = responsibleEmployees;
     }
 
-    public final void reduceCapacities() {
+    public void reduceCapacities() {
         setNeededCapacities(neededCapacities - 1);
         if (!capacitiesAvailable()) {
             setPublished(false);
         }
     }
 
-    public final void publishJobPosting(final int neededCapacities) {
-        if (neededCapacities < 1){
+    public void publishJobPosting(final int neededCapacities) {
+        if (neededCapacities < 1) {
             throw new JobException("job can not be published if needed capacities are lower than 1");
         }
         setNeededCapacities(neededCapacities);
         setPublished(true);
     }
 
-    public final void addResponsibleEmployee(final ResponsibleEmployee responsibleEmployee){
+    public void addResponsibleEmployee(final ResponsibleEmployee responsibleEmployee) {
         assertArgumentNotNull(responsibleEmployee, "responsible employee can not be null");
         this.responsibleEmployees.add(responsibleEmployee);
     }
 
-    public final void removeResponsibleEmployee(final ResponsibleEmployee responsibleEmployee){
+    public void removeResponsibleEmployee(final ResponsibleEmployee responsibleEmployee) {
         assertArgumentNotNull(responsibleEmployee, "responsible employee can not be null");
         this.responsibleEmployees.remove(responsibleEmployee);
     }
@@ -89,26 +88,38 @@ public class Job extends Entity {
         return neededCapacities > 0;
     }
 
-    public void setJobId(JobId pJobId) {
-        assertArgumentNotNull(pJobId, "job id can not be null");
-        this.jobId = pJobId;
+    public void setJobId(final JobId jobId) {
+        assertArgumentNotNull(jobId, "job id can not be null");
+        this.jobId = jobId;
     }
 
-    private void setJobName(String pJobName) {
-        assertArgumentNotNull(pJobName, "job name can not be null");
-        assertArgumentLength(pJobName, 3, 30, "job name must be at least 1 and maximum 30 characters long");
-        this.jobName = pJobName;
+    @SuppressWarnings("checkstyle:MagicNumber")
+    private void setJobName(final String jobName) {
+        assertArgumentNotNull(jobName, "job name can not be null");
+        assertArgumentLength(
+                jobName,
+                3,
+                30,
+                "job name must be at least 1 and maximum 30 characters long"
+        );
+        this.jobName = jobName;
     }
 
-    private void setNeededCapacities(int pNeedCapacities) {
-        assertArgumentNotNull(pNeedCapacities, "need capacities can not be null");
-        assertArgumentRange(pNeedCapacities, 0, 99, "needed capacities minimum is 0 or maximum 99");
-        this.neededCapacities = pNeedCapacities;
+    @SuppressWarnings("checkstyle:MagicNumber")
+    private void setNeededCapacities(final int neededCapacities) {
+        assertArgumentNotNull(neededCapacities, "need capacities can not be null");
+        assertArgumentRange(
+                neededCapacities,
+                0,
+                99,
+                "needed capacities minimum is 0 or maximum 99"
+        );
+        this.neededCapacities = neededCapacities;
     }
 
-    private void setPublished(boolean pPublished) {
-        assertArgumentNotNull(pPublished, "Published can not be null");
-        this.published = pPublished;
+    private void setPublished(final boolean published) {
+        assertArgumentNotNull(published, "Published can not be null");
+        this.published = published;
     }
 
     public JobId getJobId() {

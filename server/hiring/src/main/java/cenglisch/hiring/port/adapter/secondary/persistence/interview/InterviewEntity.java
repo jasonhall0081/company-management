@@ -4,11 +4,15 @@ import cenglisch.Default;
 import cenglisch.hiring.domain.model.interview.state.InterviewState;
 import cenglisch.hiring.domain.model.interview.type.InterviewType;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "interview")
-public class InterviewEntity {
+public final class InterviewEntity {
     @Id
     @Column(name = "id", nullable = false)
     private String id;
@@ -25,7 +29,12 @@ public class InterviewEntity {
     }
 
     @Default
-    public InterviewEntity(String id, String candidateId, InterviewState interviewState, InterviewType interviewType) {
+    public InterviewEntity(
+        final String id,
+        final String candidateId,
+        final InterviewState interviewState,
+        final InterviewType interviewType
+    ) {
         this.id = id;
         this.candidateId = candidateId;
         this.interviewState = interviewState;

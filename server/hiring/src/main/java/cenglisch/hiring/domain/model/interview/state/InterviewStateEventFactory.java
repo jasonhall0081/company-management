@@ -3,7 +3,12 @@ package cenglisch.hiring.domain.model.interview.state;
 import cenglisch.hiring.domain.model.interview.InterviewId;
 
 public final class InterviewStateEventFactory {
-    public static InterviewStateEventHiring make(InterviewId interviewId, InterviewState interviewState) {
+
+    private InterviewStateEventFactory() {
+
+    }
+
+    public static InterviewStateEventHiring make(final InterviewId interviewId, final InterviewState interviewState) {
         return switch (interviewState) {
             case ACCEPTED -> new InterviewAccepted(interviewId);
             case LAUNCHED -> new InterviewLaunched(interviewId);
