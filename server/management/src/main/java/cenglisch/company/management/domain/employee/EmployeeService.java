@@ -11,28 +11,29 @@ import cenglisch.domain.model.EventHandler;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class EmployeeService {
+@org.jmolecules.ddd.annotation.Service
+public final class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final EventHandler eventHandler;
 
     public EmployeeService(
-            EmployeeRepository employeeRepository,
-            EventHandler eventHandler
+            final EmployeeRepository employeeRepository,
+            final EventHandler eventHandler
     ) {
         this.employeeRepository = employeeRepository;
         this.eventHandler = eventHandler;
     }
 
-    private Optional<Employee> find(EmployeeId employeeId) {
+    private Optional<Employee> find(final EmployeeId employeeId) {
         return employeeRepository.find(employeeId);
     }
 
-    public void newEmployee(AddressId addressId){
+    public void newEmployee(final AddressId addressId) {
         Employee employee = employeeRepository.save(new Employee());
         eventHandler.publish(new EmployeeCreated(employee.getId()));
     }
 
-    public void hireEmployee(EmployeeId employeeId, CompanyId companyId) {
+    public void hireEmployee(final EmployeeId employeeId, final CompanyId companyId) {
         manageEmployee(
                 employeeId,
                 employee -> employee.hireEmployee(companyId),
@@ -40,7 +41,7 @@ public class EmployeeService {
         );
     }
 
-    public void dismissEmployee(EmployeeId employeeId) {
+    public void dismissEmployee(final EmployeeId employeeId) {
         manageEmployee(
                 employeeId,
                 Employee::dismissEmployee,
@@ -48,7 +49,11 @@ public class EmployeeService {
         );
     }
 
-    private void manageEmployee(EmployeeId employeeId, Consumer<Employee> action, EmployeeEvent employeeEvent) {
+    private void manageEmployee(
+            final EmployeeId employeeId,
+            final Consumer<Employee> action,
+            final EmployeeEvent employeeEvent
+    ) {
         Employee employee = find(employeeId).orElseThrow(EmployeeNotFoundException::new);
         action.accept(employee);
         employeeRepository.save(employee);

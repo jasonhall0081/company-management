@@ -5,19 +5,29 @@ import cenglisch.domain.model.EventHandler;
 
 import java.util.Optional;
 
-public class AddressService {
+public final class AddressService {
 
     private final AddressRepository addressRepository;
 
     private final EventHandler eventHandler;
 
-    public AddressService(AddressRepository addressRepository, EventHandler eventHandler) {
+    public AddressService(final AddressRepository addressRepository, final EventHandler eventHandler) {
         this.addressRepository = addressRepository;
         this.eventHandler = eventHandler;
     }
 
-    public AddressId createOrGetAddress(String street, String houseNumber, String zip, String city) {
-        Optional<Address> optionalAddress = addressRepository.findByStreetAndHouseNumberAndZipAndCity(street, houseNumber, zip, city);
+    public AddressId createOrGetAddress(
+            final String street,
+            final String houseNumber,
+            final String zip, final String city
+    ) {
+        final Optional<Address> optionalAddress = addressRepository.findByStreetAndHouseNumberAndZipAndCity(
+                street,
+                houseNumber,
+                zip,
+                city
+        );
+
         if (optionalAddress.isPresent()) {
             return optionalAddress.get().getId();
         }

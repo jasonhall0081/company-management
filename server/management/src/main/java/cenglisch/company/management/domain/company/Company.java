@@ -2,8 +2,8 @@ package cenglisch.company.management.domain.company;
 
 import cenglisch.company.management.domain.address.AddressId;
 
-//@AggregateRoot
-public class Company {
+@org.jmolecules.ddd.annotation.AggregateRoot
+public final class Company {
 
     private CompanyId id;
 
@@ -11,16 +11,16 @@ public class Company {
     private String name;
 
 
-    public Company(AddressId addressId, String name) {
+    public Company(final AddressId addressId, final String name) {
         setAddressId(addressId);
         setName(name);
     }
 
-    private void setAddressId(AddressId addressId) {
+    private void setAddressId(final AddressId addressId) {
         this.addressId = addressId;
     }
 
-    private void setName(String name) {
+    private void setName(final String name) {
         this.name = name;
     }
 

@@ -3,17 +3,17 @@ package cenglisch.company.management.application.company;
 import cenglisch.company.management.domain.address.AddressService;
 import cenglisch.company.management.domain.company.CompanyService;
 
-public class CompanyCommandApplicationPort {
+public final class CompanyCommandApplicationPort {
 
     private final CompanyService companyService;
     private final AddressService addressService;
 
-    public CompanyCommandApplicationPort(CompanyService companyService, AddressService addressService) {
+    public CompanyCommandApplicationPort(final CompanyService companyService, final AddressService addressService) {
         this.companyService = companyService;
         this.addressService = addressService;
     }
 
-    public void openCompany(OpenCompany openCompany) {
+    public void openCompany(final OpenCompany openCompany) {
         companyService.openCompany(
                 openCompany.managerId(),
                 addressService.createOrGetAddress(
@@ -26,7 +26,7 @@ public class CompanyCommandApplicationPort {
         );
     }
 
-    public void closeCompany(CloseCompany closeCompany) {
+    public void closeCompany(final CloseCompany closeCompany) {
         companyService.closeCompany(closeCompany.companyId());
     }
 }

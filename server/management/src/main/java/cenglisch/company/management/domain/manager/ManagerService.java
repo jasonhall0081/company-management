@@ -10,25 +10,26 @@ import cenglisch.domain.model.EventHandler;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class ManagerService {
+@org.jmolecules.ddd.annotation.Service
+public final class ManagerService {
     private final ManagerRepository managerRepository;
     private final EventHandler eventHandler;
 
-    public ManagerService(ManagerRepository managerRepository, EventHandler eventHandler) {
+    public ManagerService(final ManagerRepository managerRepository, final EventHandler eventHandler) {
         this.managerRepository = managerRepository;
         this.eventHandler = eventHandler;
     }
 
-    private Optional<Manager> find(ManagerId managerId) {
+    private Optional<Manager> find(final ManagerId managerId) {
         return managerRepository.find(managerId);
     }
 
-    public void newManager(String name) {
+    public void newManager(final String name) {
         Manager manager = this.managerRepository.save(new Manager(name));
         this.eventHandler.publish(new ManagerCreated(manager.getManagerId()));
     }
 
-    public void joinCompany(ManagerId managerId, CompanyId companyId) {
+    public void joinCompany(final ManagerId managerId, final CompanyId companyId) {
         manageManager(
                 managerId,
                 manager -> manager.joinCompany(companyId),
@@ -36,7 +37,7 @@ public class ManagerService {
         );
     }
 
-    public void leaveCompany(ManagerId managerId, CompanyId companyId) {
+    public void leaveCompany(final ManagerId managerId, final CompanyId companyId) {
         manageManager(
                 managerId,
                 manager -> manager.leaveCompany(companyId),
@@ -44,7 +45,11 @@ public class ManagerService {
         );
     }
 
-    private void manageManager(ManagerId managerId, Consumer<Manager> action, ManagerEvent managerEvent){
+    private void manageManager(
+            final ManagerId managerId,
+            final Consumer<Manager> action,
+            final ManagerEvent managerEvent
+    ) {
         Manager manager = find(managerId).orElseThrow(ManagerNotFoundException::new);
         action.accept(manager);
         managerRepository.save(manager);
