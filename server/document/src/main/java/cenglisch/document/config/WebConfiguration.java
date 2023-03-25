@@ -5,7 +5,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public final class WebConfiguration implements WebMvcConfigurer {
+@SuppressWarnings("checkstyle:DesignForExtension")
+public class WebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(final CorsRegistry registry) {

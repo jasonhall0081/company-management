@@ -16,7 +16,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public final class BeanConfiguration {
+@SuppressWarnings("checkstyle:DesignForExtension")
+public class BeanConfiguration {
 
     @Autowired
     private JmsEventPublisherAdapter eventHandler;

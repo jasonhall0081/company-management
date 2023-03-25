@@ -5,7 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public final class TesseractConfig {
+@SuppressWarnings("checkstyle:DesignForExtension")
+public class TesseractConfig {
 
     @Bean
     public Tesseract tesseract() {

@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@SuppressWarnings("checkstyle:DesignForExtension")
 public class BeanConfiguration {
 
     @Autowired
@@ -23,12 +24,12 @@ public class BeanConfiguration {
     private AppointmentRepositoryAdapter appointmentRepositoryAdapter;
 
     @Bean
-    public final AppointmentService appointmentService() {
+    public AppointmentService appointmentService() {
         return new AppointmentService(appointmentRepositoryAdapter, jmsEventPublisherAdapter);
     }
 
     @Bean
-    public final AppointmentCommandApplicationPort appointmentApplicationPort() {
+    public AppointmentCommandApplicationPort appointmentApplicationPort() {
         return new AppointmentCommandApplicationPort(
                 appointmentService(),
                 commitmentService(),
@@ -40,7 +41,7 @@ public class BeanConfiguration {
     private CommitmentRepositoryAdapter commitmentRepositoryAdapter;
 
     @Bean
-    public final CommitmentService commitmentService() {
+    public CommitmentService commitmentService() {
         return new CommitmentService(commitmentRepositoryAdapter, jmsEventPublisherAdapter);
     }
 
@@ -48,12 +49,12 @@ public class BeanConfiguration {
     private AppointmentInterviewRepositoryAdapter appointmentInterviewRepositoryAdapter;
 
     @Bean
-    public final AppointmentInterviewService appointmentInterviewService() {
+    public AppointmentInterviewService appointmentInterviewService() {
         return new AppointmentInterviewService(appointmentInterviewRepositoryAdapter, jmsEventPublisherAdapter);
     }
 
     @Bean
-    public final AppointmentCommandInterviewApplicationPort appointmentInterviewApplicationPort() {
+    public AppointmentCommandInterviewApplicationPort appointmentInterviewApplicationPort() {
         return new AppointmentCommandInterviewApplicationPort(
                 appointmentInterviewService(),
                 appointmentService(),
