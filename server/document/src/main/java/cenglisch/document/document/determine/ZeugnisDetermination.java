@@ -1,9 +1,9 @@
 package cenglisch.document.document.determine;
 
-public class ZeugnisDetermination implements Determination {
+public final class ZeugnisDetermination implements Determination {
 
 
-    public boolean determine(String fileContent) {
+    public boolean determine(final String fileContent) {
         return fileContent.contains("ZEUGNIS");
     }
 

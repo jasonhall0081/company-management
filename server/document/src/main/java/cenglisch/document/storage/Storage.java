@@ -3,9 +3,9 @@ package cenglisch.document.storage;
 import cenglisch.document.document.determine.DocumentType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import ja final karta.persistence.Enumerated;
-import ja final karta.persistence.Id;
-import ja final karta.persistence.Lob;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 
 import java.util.UUID;
@@ -30,10 +30,10 @@ public final class Storage {
     }
 
     public Storage(
-        final String reference,
-        final String path,
-        final String content,
-        final DocumentType documentType
+            final String reference,
+            final String path,
+            final String content,
+            final DocumentType documentType
     ) {
         //TODO generate UUID over hibernate
         this.id = UUID.randomUUID().toString().toUpperCase();
