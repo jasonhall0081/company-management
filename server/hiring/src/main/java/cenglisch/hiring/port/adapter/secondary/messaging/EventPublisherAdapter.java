@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
-public final class JmsEventPublisherAdapter extends AbstractEventPublisher {
+public final class EventPublisherAdapter extends AbstractEventPublisher {
     @Autowired
     private StreamBridge streamBridge;
 

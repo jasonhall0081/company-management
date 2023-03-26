@@ -12,9 +12,40 @@ spring:
     password: wasd
     driver-class-name: org.mariadb.jdbc.Driver
 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
   cloud:
     stream:
+      function:
+        definition: acceptInterview;launchInterview;endInterviewExecution
+      bindings:
+        acceptInterview-in-0:
+          destination: appointment.interview.accepted
+        launchInterview-in-0:
+          destination: appointment.interview.launched
+        endInterviewExecution-in-0:
+          destination: appointment.interview.generated
       rabbit:
+        bindings:
+          acceptInterview-in-0:
+            consumer:
+              bindingRoutingKey: appointment.interview.accepted
+              exchangeDurable: true
+              exchangeType: topic
+          launchInterview-in-0:
+            consumer:
+              bindingRoutingKey: appointment.interview.launched
+              exchangeDurable: true
+              exchangeType: topic
+          endInterviewExecution-in-0:
+            consumer:
+              bindingRoutingKey: appointment.interview.generated
+              exchangeDurable: true
+              exchangeType: topic
         default:
           producer:
             exchangeType: topic
@@ -22,12 +53,6 @@ spring:
         destination: 'unused'
         binder: rabbit
         contentType: application/json
-
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
 
 springdoc:
   packagesToScan: cenglisch.hiring.port.adapter.primary
