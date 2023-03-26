@@ -7,10 +7,13 @@ import cenglisch.appointment.port.adapter.secondary.persistence.appointment.date
 import cenglisch.domain.model.PersonId;
 import org.mapstruct.Context;
 import org.mapstruct.InjectionStrategy;
+import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(
@@ -26,9 +29,13 @@ public interface AppointmentMapper {
     @Mapping(
         target = "appointmentDate",
         source = "publishedAppointmentDate",
-        qualifiedByName = "mapToAppointmentDate"
+        qualifiedByName = "toAppointmentDate"
     )
-    Appointment mapToAppointment(AppointmentEntity appointmentEntity);
+    @Named("toAppointment")
+    Appointment toAppointment(AppointmentEntity appointmentEntity);
+
+    @IterableMapping(qualifiedByName = "toAppointment")
+    List<Appointment> toAppointmentList(List<AppointmentEntity> appointmentEntityList);
 
     @Mapping(target = "id", source = "appointmentId.id")
     @Mapping(target = "schedulingParticipant", source = "schedulingParticipant.id")
@@ -36,18 +43,18 @@ public interface AppointmentMapper {
     @Mapping(
         target = "publishedAppointmentDate",
         source = "appointmentDate",
-        qualifiedByName = "mapToAppointmentDateEntity"
+        qualifiedByName = "toAppointmentDateEntity"
     )
-    AppointmentEntity mapToAppointmentEntity(
+    AppointmentEntity toAppointmentEntity(
             Appointment appointment,
             @Context AppointmentJpaRepository appointmentJpaRepository
     );
 
-    default Collection<PersonId> mapToParticipantCollection(Collection<String> participants) {
+    default Collection<PersonId> toParticipantCollection(Collection<String> participants) {
         return participants.stream().map(PersonId::new).collect(Collectors.toList());
     }
 
-    default Collection<String> mapFromParticipantCollection(Collection<PersonId> personIds) {
+    default Collection<String> fromParticipantCollection(Collection<PersonId> personIds) {
         return personIds.stream().map(PersonId::id).collect(Collectors.toList());
     }
 }

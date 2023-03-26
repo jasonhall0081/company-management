@@ -7,6 +7,7 @@ import cenglisch.appointment.domain.model.appointment.interview.AppointmentInter
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +18,11 @@ public final class AppointmentInterviewRepositoryAdapter implements AppointmentI
 
     @Autowired
     private AppointmentInterviewMapper appointmentInterviewMapper;
+
+    @Override
+    public List<AppointmentInterview> findAll() {
+        return appointmentInterviewMapper.toAppointmentInterviewList(appointmentInterviewJpaRepository.findAll());
+    }
 
     @Override
     public Optional<AppointmentInterview> find(final AppointmentInterviewId appointmentInterviewId) {

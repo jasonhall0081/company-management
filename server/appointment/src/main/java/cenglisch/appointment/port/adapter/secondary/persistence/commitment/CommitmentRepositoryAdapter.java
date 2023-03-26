@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,6 +27,11 @@ public final class CommitmentRepositoryAdapter implements CommitmentRepository {
     public Optional<Commitment> findById(final CommitmentId commitmentId) {
         Optional<CommitmentEntity> optionalCommitmentEntity = commitmentJpaRepository.findById(commitmentId.id());
         return optionalCommitmentEntity.map(commitmentEntity -> commitmentMapper.toCommitment(commitmentEntity));
+    }
+
+    @Override
+    public List<Commitment> findAll() {
+        return commitmentMapper.toCommitmentList(commitmentJpaRepository.findAll());
     }
 
     @Override

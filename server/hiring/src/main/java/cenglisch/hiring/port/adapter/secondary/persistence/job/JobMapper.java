@@ -19,24 +19,24 @@ public interface JobMapper {
     @Mapping(
         source = "responsibleEmployees",
         target = "responsibleEmployees",
-        qualifiedByName = "mapToResponsibleEmployee"
+        qualifiedByName = "toResponsibleEmployee"
     )
-    @Named("mapToJob")
-    Job mapToJob(JobEntity jobEntity);
+    @Named("toJob")
+    Job toJob(JobEntity jobEntity);
 
     @Mapping(source = "jobId.id", target = "id")
     @Mapping(
         source = "responsibleEmployees",
         target = "responsibleEmployees",
-        qualifiedByName = "mapToResponsibleEmployeeEntity"
+        qualifiedByName = "toResponsibleEmployeeEntity"
     )
-    JobEntity mapToJobEntity(Job job);
+    JobEntity toJobEntity(Job job);
 
-    @IterableMapping(qualifiedByName = "mapToJob")
-    List<Job> mapToJobList(List<JobEntity> all);
+    @IterableMapping(qualifiedByName = "toJob")
+    List<Job> toJobList(List<JobEntity> all);
 
-    @Named("mapToResponsibleEmployee")
-    default List<ResponsibleEmployee> mapToResponsibleEmployee(
+    @Named("toResponsibleEmployee")
+    default List<ResponsibleEmployee> toResponsibleEmployee(
             List<ResponsibleEmployeeEntity> responsibleEmployeeEntities
     ) {
         List<ResponsibleEmployee> responsibleEmployees = new ArrayList<>();
@@ -47,8 +47,8 @@ public interface JobMapper {
         return responsibleEmployees;
     }
 
-    @Named("mapToResponsibleEmployeeEntity")
-    default List<ResponsibleEmployeeEntity> mapToResponsibleEmployeeEntity(
+    @Named("toResponsibleEmployeeEntity")
+    default List<ResponsibleEmployeeEntity> toResponsibleEmployeeEntity(
             List<ResponsibleEmployee> responsibleEmployees
     ) {
         List<ResponsibleEmployeeEntity> responsibleEmployeeEntities = new ArrayList<>();

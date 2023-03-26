@@ -21,12 +21,12 @@ public final class InterviewRepositoryAdapter implements InterviewRepository {
 
     @Override
     public List<Interview> findAll() {
-        return interviewMapper.mapToInterviewList(interviewRepository.findAll());
+        return interviewMapper.toInterviewList(interviewRepository.findAll());
     }
 
     public Optional<Interview> find(final InterviewId id) {
         Optional<InterviewEntity> optionalInterview = interviewRepository.findById(id.id());
-        return optionalInterview.map(interviewEntity -> interviewMapper.mapToInterview(interviewEntity));
+        return optionalInterview.map(interviewEntity -> interviewMapper.toInterview(interviewEntity));
     }
 
 
@@ -35,7 +35,7 @@ public final class InterviewRepositoryAdapter implements InterviewRepository {
             interview.setInterviewId(new InterviewId(generateId()));
         }
         interviewRepository.saveAndFlush(
-                interviewMapper.mapToInterviewEntity(interview)
+                interviewMapper.toInterviewEntity(interview)
         );
         return interview;
     }
@@ -47,6 +47,6 @@ public final class InterviewRepositoryAdapter implements InterviewRepository {
 
     public Optional<Interview> findByCandidateId(final CandidateId candidateId) {
         Optional<InterviewEntity> optionalInterview = interviewRepository.findByCandidateId(candidateId.id());
-        return optionalInterview.map(interviewEntity -> interviewMapper.mapToInterview(interviewEntity));
+        return optionalInterview.map(interviewEntity -> interviewMapper.toInterview(interviewEntity));
     }
 }

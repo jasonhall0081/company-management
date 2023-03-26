@@ -14,13 +14,13 @@ public interface InterviewMapper {
 
     @Mapping(source = "id", target = "interviewId.id")
     @Mapping(source = "candidateId", target = "candidateId.id")
-    @Named("mapToInterview")
-    Interview mapToInterview(InterviewEntity interviewEntity);
+    @Named("toInterview")
+    Interview toInterview(InterviewEntity interviewEntity);
 
     @Mapping(source = "interviewId.id", target = "id")
     @Mapping(source = "candidateId.id", target = "candidateId")
-    InterviewEntity mapToInterviewEntity(Interview interview);
+    InterviewEntity toInterviewEntity(Interview interview);
 
-    @IterableMapping(qualifiedByName = "mapToInterview")
-    List<Interview> mapToInterviewList(List<InterviewEntity> all);
+    @IterableMapping(qualifiedByName = "toInterview")
+    List<Interview> toInterviewList(List<InterviewEntity> all);
 }

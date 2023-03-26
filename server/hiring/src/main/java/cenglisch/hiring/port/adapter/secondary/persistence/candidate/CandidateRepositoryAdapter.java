@@ -20,12 +20,12 @@ public final class CandidateRepositoryAdapter implements CandidateRepository {
 
     @Override
     public List<Candidate> findAll() {
-        return candidateMapper.mapToCandidateList(candidateRepository.findAll());
+        return candidateMapper.toCandidateList(candidateRepository.findAll());
     }
 
     public Optional<Candidate> find(final CandidateId id) {
         Optional<CandidateEntity> optionalPerson = candidateRepository.findById(id.id());
-        return optionalPerson.map(candidateEntity -> candidateMapper.mapToCandidate(candidateEntity));
+        return optionalPerson.map(candidateEntity -> candidateMapper.toCandidate(candidateEntity));
     }
 
     public Candidate save(final Candidate candidate) {
@@ -33,7 +33,7 @@ public final class CandidateRepositoryAdapter implements CandidateRepository {
             candidate.setCandidateId(new CandidateId(generateId()));
         }
         candidateRepository.saveAndFlush(
-                candidateMapper.mapToCandidateEntity(candidate)
+                candidateMapper.toCandidateEntity(candidate)
         );
         return candidate;
     }
@@ -55,6 +55,6 @@ public final class CandidateRepositoryAdapter implements CandidateRepository {
 
     @Override
     public List<Candidate> findByJobId(JobId jobId) {
-        return candidateMapper.mapToCandidateList(candidateRepository.findByJobId(jobId.id()));
+        return candidateMapper.toCandidateList(candidateRepository.findByJobId(jobId.id()));
     }
 }
