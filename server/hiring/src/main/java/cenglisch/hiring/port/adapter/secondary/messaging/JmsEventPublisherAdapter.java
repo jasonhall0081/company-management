@@ -2,8 +2,10 @@ package cenglisch.hiring.port.adapter.secondary.messaging;
 
 import cenglisch.domain.model.DomainEvent;
 import cenglisch.port.adapter.secondary.messaging.AbstractEventPublisher;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.integration.support.MessageBuilder;
+import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;
 
 import java.util.logging.Level;
@@ -12,10 +14,15 @@ import java.util.logging.Logger;
 @Service
 public final class JmsEventPublisherAdapter extends AbstractEventPublisher {
     @Autowired
-    private RabbitTemplate rabbitTemplate;
+    private StreamBridge streamBridge;
 
     protected void publishExternally(final DomainEvent domainEvent) {
         Logger.getLogger(domainEvent.topic()).log(Level.INFO, String.valueOf(domainEvent.getClass()));
-        rabbitTemplate.convertAndSend(domainEvent.topic(), domainEvent.toString());
+
+        Message<String> message = MessageBuilder.withPayload(domainEvent.toString())
+                .setHeader("routingKey", domainEvent.topic())
+                .build();
+
+        streamBridge.send("dynamic-out-0", message);
     }
 }

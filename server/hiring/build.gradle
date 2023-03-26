@@ -23,13 +23,12 @@ dependencies {
 	// jmolecules
 	implementation "org.jmolecules:jmolecules-ddd:${parent.jmoleculesVersion}"
 
-	// Spring Cloud
+	// Spring Cloud Config
 	implementation "org.springframework.cloud:spring-cloud-config-server:${parent.springCloudVersion}"
 	implementation "org.springframework.cloud:spring-cloud-starter-bootstrap:${parent.springCloudVersion}"
 
-	// RabbitMQ
-	implementation "org.springframework.boot:spring-boot-starter-amqp"
-	implementation "com.rabbitmq:amqp-client:${parent.rabbitMQVersion}"
+	// Spring Cloud Stream
+	implementation "org.springframework.cloud:spring-cloud-starter-stream-rabbit:${parent.springCloudVersion}"
 
 	// Persistence
 	implementation 'org.liquibase:liquibase-core'
