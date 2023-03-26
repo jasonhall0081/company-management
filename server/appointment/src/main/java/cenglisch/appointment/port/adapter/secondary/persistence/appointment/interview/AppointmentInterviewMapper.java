@@ -1,9 +1,9 @@
 package cenglisch.appointment.port.adapter.secondary.persistence.appointment.interview;
 
 import cenglisch.appointment.domain.model.appointment.interview.AppointmentInterview;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
+
+import java.util.List;
 
 @Mapper(
         componentModel = "spring",
@@ -16,5 +16,9 @@ public interface AppointmentInterviewMapper {
 
     @Mapping(target = "appointmentInterviewId.id", source = "id")
     @Mapping(target = "appointmentId.id", source = "appointmentId")
+    @Named("toAppointmentInterview")
     AppointmentInterview toAppointmentInterview(AppointmentInterviewEntity appointmentInterviewEntity);
+
+    @IterableMapping(qualifiedByName = "toAppointmentInterview")
+    List<AppointmentInterview> toAppointmentInterviewList(List<AppointmentInterviewEntity> appointmentInterviewEntityList);
 }

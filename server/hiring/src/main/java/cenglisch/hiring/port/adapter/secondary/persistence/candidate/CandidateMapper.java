@@ -14,13 +14,13 @@ public interface CandidateMapper {
     @Mapping(source = "id", target = "candidateId.id")
     @Mapping(source = "personId", target = "personId.id")
     @Mapping(source = "jobId", target = "jobId.id")
-    @Named("mapToCandidate")
-    Candidate mapToCandidate(CandidateEntity candidateEntity);
+    @Named("toCandidate")
+    Candidate toCandidate(CandidateEntity candidateEntity);
     @Mapping(source = "candidateId.id", target = "id")
     @Mapping(source = "personId.id", target = "personId")
     @Mapping(source = "jobId.id", target = "jobId")
-    CandidateEntity mapToCandidateEntity(Candidate candidate);
+    CandidateEntity toCandidateEntity(Candidate candidate);
 
-    @IterableMapping(qualifiedByName = "mapToCandidate")
-    List<Candidate> mapToCandidateList(List<CandidateEntity> candidateEntities);
+    @IterableMapping(qualifiedByName = "toCandidate")
+    List<Candidate> toCandidateList(List<CandidateEntity> candidateEntities);
 }

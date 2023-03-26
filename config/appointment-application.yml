@@ -12,5 +12,26 @@ spring:
     password: wasd
     driver-class-name: org.mariadb.jdbc.Driver
 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  cloud:
+    stream:
+      function:
+        definition: generateAppointmentInterview
+      bindings:
+        generateAppointmentInterview-in-0:
+          destination: hiring.interview.state.generated
+      rabbit:
+        bindings:
+          generateAppointmentInterview-in-0:
+            consumer:
+              bindingRoutingKey: hiring.interview.state.generated
+              exchangeDurable: true
+              exchangeType: topic
+
 springdoc:
   packagesToScan: cenglisch.appointment.port.adapter.primary

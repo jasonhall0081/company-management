@@ -21,12 +21,12 @@ public final class JobRepositoryAdapter implements JobRepository {
 
     @Override
     public List<Job> findAll() {
-        return jobMapper.mapToJobList(jobJpaRepository.findAll());
+        return jobMapper.toJobList(jobJpaRepository.findAll());
     }
 
     public Optional<Job> find(final JobId id) {
         Optional<JobEntity> optionalJob = jobJpaRepository.findById(id.id());
-        return optionalJob.map(jobEntity -> jobMapper.mapToJob(jobEntity));
+        return optionalJob.map(jobEntity -> jobMapper.toJob(jobEntity));
     }
 
 
@@ -35,7 +35,7 @@ public final class JobRepositoryAdapter implements JobRepository {
             job.setJobId(new JobId(generateId()));
         }
         jobJpaRepository.saveAndFlush(
-                jobMapper.mapToJobEntity(job)
+                jobMapper.toJobEntity(job)
         );
         return job;
     }

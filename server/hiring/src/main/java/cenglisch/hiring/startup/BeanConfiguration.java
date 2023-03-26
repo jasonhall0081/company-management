@@ -12,7 +12,7 @@ import cenglisch.hiring.domain.model.job.JobService;
 import cenglisch.hiring.port.adapter.secondary.persistence.candidate.CandidateRepositoryAdapter;
 import cenglisch.hiring.port.adapter.secondary.persistence.interview.InterviewRepositoryAdapter;
 import cenglisch.hiring.port.adapter.secondary.persistence.job.JobRepositoryAdapter;
-import cenglisch.hiring.port.adapter.secondary.messaging.JmsEventPublisherAdapter;
+import cenglisch.hiring.port.adapter.secondary.messaging.EventPublisherAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,8 +22,7 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfiguration {
 
     @Autowired
-    private JmsEventPublisherAdapter eventHandler;
-
+    private EventPublisherAdapter eventHandler;
 
     @Autowired
     private CandidateRepositoryAdapter candidateRepositoryAdapter;

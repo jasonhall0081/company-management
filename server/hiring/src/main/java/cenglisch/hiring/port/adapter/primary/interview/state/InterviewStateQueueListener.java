@@ -4,28 +4,32 @@ import cenglisch.hiring.application.interview.command.state.AcceptInterview;
 import cenglisch.hiring.application.interview.command.state.EndInterviewExecution;
 import cenglisch.hiring.application.interview.command.state.InterviewStateCommandApplicationPort;
 import cenglisch.hiring.application.interview.command.state.LaunchInterview;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@Component
-public final class InterviewStateQueueListener {
+import java.util.function.Consumer;
 
-    @Autowired
-    private InterviewStateCommandApplicationPort interviewStateCommandApplicationPort;
+@Configuration
+public class InterviewStateQueueListener {
 
-    @RabbitListener(queues = "appointment.interview.accepted")
-    public void acceptInterview(final AcceptInterview acceptInterview) {
-        interviewStateCommandApplicationPort.acceptInterview(acceptInterview);
+    private final InterviewStateCommandApplicationPort interviewStateCommandApplicationPort;
+
+    public InterviewStateQueueListener(InterviewStateCommandApplicationPort interviewStateCommandApplicationPort) {
+        this.interviewStateCommandApplicationPort = interviewStateCommandApplicationPort;
     }
 
-    @RabbitListener(queues = "appointment.interview.launched")
-    public void launchInterview(final LaunchInterview launchInterview) {
-        interviewStateCommandApplicationPort.launchInterview(launchInterview);
+    @Bean
+    public Consumer<AcceptInterview> acceptInterview() {
+        return interviewStateCommandApplicationPort::acceptInterview;
     }
 
-    @RabbitListener(queues = "appointment.interview.generated")
-    public void endInterviewExecution(final EndInterviewExecution endInterviewExecution) {
-        interviewStateCommandApplicationPort.endInterviewExecution(endInterviewExecution);
+    @Bean
+    public Consumer<LaunchInterview> launchInterview() {
+        return interviewStateCommandApplicationPort::launchInterview;
+    }
+
+    @Bean
+    public Consumer<EndInterviewExecution> endInterviewExecution() {
+        return interviewStateCommandApplicationPort::endInterviewExecution;
     }
 }

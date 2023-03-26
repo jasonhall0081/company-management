@@ -18,23 +18,23 @@ public interface AppointmentDateMapper {
 
     @Mapping(target = "appointmentDateId.id", source = "id")
     @Mapping(target = "appointmentId.id", source = "appointment.id")
-    @Named("mapToAppointmentDate")
-    AppointmentDate mapToAppointmentDate(AppointmentDateEntity appointmentDateEntity);
+    @Named("toAppointmentDate")
+    AppointmentDate toAppointmentDate(AppointmentDateEntity appointmentDateEntity);
 
     @Mapping(target = "id", source = "appointmentDateId.id")
     @Mapping(
         target = "appointment",
         source = "appointmentId",
-        qualifiedByName = "mapAppointmentIdToAppointmentEntity"
+        qualifiedByName = "fromAppointmentIdToAppointmentEntity"
     )
-    @Named("mapToAppointmentDateEntity")
-    AppointmentDateEntity mapToAppointmentDateEntity(
+    @Named("toAppointmentDateEntity")
+    AppointmentDateEntity toAppointmentDateEntity(
             AppointmentDate appointmentDate,
             @Context AppointmentJpaRepository appointmentRepository
     );
 
-    @Named("mapAppointmentIdToAppointmentEntity")
-    default AppointmentEntity mapAppointmentIdToAppointmentEntity(
+    @Named("fromAppointmentIdToAppointmentEntity")
+    default AppointmentEntity fromAppointmentIdToAppointmentEntity(
             AppointmentId appointmentId,
             @Context AppointmentJpaRepository appointmentRepository
     ) {
