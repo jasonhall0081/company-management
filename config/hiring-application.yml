@@ -12,5 +12,22 @@ spring:
     password: wasd
     driver-class-name: org.mariadb.jdbc.Driver
 
+  cloud:
+    stream:
+      rabbit:
+        default:
+          producer:
+            exchangeType: topic
+      dynamic:
+        destination: 'unused'
+        binder: rabbit
+        contentType: application/json
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
 springdoc:
   packagesToScan: cenglisch.hiring.port.adapter.primary
