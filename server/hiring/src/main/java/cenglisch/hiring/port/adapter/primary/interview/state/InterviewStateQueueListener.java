@@ -10,11 +10,14 @@ import org.springframework.context.annotation.Configuration;
 import java.util.function.Consumer;
 
 @Configuration
+@SuppressWarnings("checkstyle:DesignForExtension")
 public class InterviewStateQueueListener {
 
     private final InterviewStateCommandApplicationPort interviewStateCommandApplicationPort;
 
-    public InterviewStateQueueListener(InterviewStateCommandApplicationPort interviewStateCommandApplicationPort) {
+    public InterviewStateQueueListener(
+            final InterviewStateCommandApplicationPort interviewStateCommandApplicationPort
+    ) {
         this.interviewStateCommandApplicationPort = interviewStateCommandApplicationPort;
     }
 
