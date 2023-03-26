@@ -3,25 +3,22 @@ package cenglisch.appointment.port.adapter.primary.appointment.interview;
 
 import cenglisch.appointment.application.appointment.interview.AppointmentCommandInterviewApplicationPort;
 import cenglisch.appointment.application.appointment.interview.GenerateInterviewAppointment;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+import java.util.function.Consumer;
+
+@Configuration
 public class AppointmentInterviewQueueListener {
 
-    @Autowired
-    private AppointmentCommandInterviewApplicationPort appointmentCommandInterviewApplicationPort;
+    private final AppointmentCommandInterviewApplicationPort appointmentCommandInterviewApplicationPort;
 
-    @RabbitListener(queues = "hiring.interview.state.generated")
-    public final void generateAppointmentInterview(final GenerateInterviewAppointment generateInterviewAppointment) {
-        appointmentCommandInterviewApplicationPort.generateAppointmentInterview(generateInterviewAppointment);
+    public AppointmentInterviewQueueListener(AppointmentCommandInterviewApplicationPort appointmentCommandInterviewApplicationPort) {
+        this.appointmentCommandInterviewApplicationPort = appointmentCommandInterviewApplicationPort;
     }
 
-    /*
-    @RabbitListener(queues = "hiring.interview.appointment.participant")
-    public void addParticipant(ParticipantInformations participantInformations){
-        appointmentInterviewApplicationPort.addParticipants(participantInformations);
+    @Bean
+    public Consumer<GenerateInterviewAppointment> generateAppointmentInterview() {
+        return appointmentCommandInterviewApplicationPort::generateAppointmentInterview;
     }
-    */
 }
