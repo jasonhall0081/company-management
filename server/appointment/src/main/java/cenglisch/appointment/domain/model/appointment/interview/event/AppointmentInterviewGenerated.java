@@ -10,4 +10,9 @@ public record AppointmentInterviewGenerated(
     public String topic() {
         return AppointmentInterviewEvent.super.topic()  + ".generated";
     }
+
+    @Override
+    public String getIdentifier() {
+        return appointmentInterviewId.id();
+    }
 }

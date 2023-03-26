@@ -4,8 +4,6 @@ import cenglisch.domain.model.DomainEvent;
 import cenglisch.port.adapter.secondary.messaging.AbstractEventPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.integration.support.MessageBuilder;
-import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;
 
 import java.util.logging.Level;
@@ -17,12 +15,12 @@ public final class EventPublisherAdapter extends AbstractEventPublisher {
     private StreamBridge streamBridge;
 
     protected void publishExternally(final DomainEvent domainEvent) {
-        Logger.getLogger(domainEvent.topic()).log(Level.INFO, String.valueOf(domainEvent.getClass()));
+        Logger.getLogger(domainEvent.topic())
+              .log(Level.INFO, String.valueOf(domainEvent.getClass()));
 
-        Message<String> message = MessageBuilder.withPayload(domainEvent.toString())
-                .setHeader("routingKey", domainEvent.topic())
-                .build();
-
-        streamBridge.send("dynamic-out-0", message);
+        streamBridge.send(
+            domainEvent.topic(),
+            domainEvent
+        );
     }
 }

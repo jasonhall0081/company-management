@@ -5,4 +5,8 @@ import cenglisch.hiring.domain.model.job.JobId;
 
 public record CandidateRejected(CandidateId candidateId, JobId jobId) implements CandidateEventHiring {
 
+    @Override
+    public String getIdentifier() {
+        return candidateId.id();
+    }
 }

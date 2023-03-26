@@ -1,6 +1,7 @@
 package cenglisch.hiring.domain.model.interview;
 
 import cenglisch.domain.model.EventHandler;
+import cenglisch.domain.model.PersonId;
 import cenglisch.hiring.domain.model.candidate.CandidateId;
 import cenglisch.hiring.domain.model.interview.exception.InterviewException;
 import cenglisch.hiring.domain.model.interview.exception.InterviewNotFoundException;
@@ -40,14 +41,15 @@ public final class InterviewService {
         return interview.getInterviewState() == interviewState;
     }
 
-    public void newInterview(final CandidateId candidateId) {
+    public void newInterview(final CandidateId candidateId, final PersonId personId) {
         findByCandidateId(candidateId).ifPresent(s -> {
             throw new InterviewException("candidate already assigned to interview");
         });
         Interview interview = interviewRepository.save(new Interview(candidateId));
         eventHandler.publish(
                 new InterviewGenerated(
-                        interview.getInterviewId()
+                        interview.getInterviewId(),
+                        personId
                 )
         );
     }

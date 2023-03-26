@@ -1,6 +1,7 @@
 package cenglisch.hiring.application.interview.command.state;
 
 import cenglisch.domain.model.EventHandler;
+import cenglisch.hiring.domain.model.candidate.Candidate;
 import cenglisch.hiring.domain.model.candidate.CandidateId;
 import cenglisch.hiring.domain.model.candidate.CandidateService;
 import cenglisch.hiring.domain.model.candidate.CandidateState;
@@ -12,6 +13,10 @@ import cenglisch.hiring.domain.model.interview.InterviewId;
 import cenglisch.hiring.domain.model.interview.InterviewService;
 import cenglisch.hiring.domain.model.interview.exception.InterviewNotFoundException;
 import cenglisch.hiring.domain.model.interview.state.InterviewState;
+
+import javax.swing.text.AbstractDocument;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public final class InterviewStateCommandApplicationPort {
 
@@ -36,11 +41,11 @@ public final class InterviewStateCommandApplicationPort {
     }
 
     private void generateInterview(final CandidateId candidateId) {
-        if (candidateService.find(candidateId).isEmpty()) {
-            throw new CandidateNotFoundException();
-        }
+        final Candidate candidate = candidateService.find(candidateId).orElseThrow(CandidateNotFoundException::new);
+
         interviewService.newInterview(
-                candidateId
+                candidateId,
+                candidate.getPersonId()
         );
     }
 
@@ -56,13 +61,23 @@ public final class InterviewStateCommandApplicationPort {
     }
 
     public void acceptInterview(final AcceptInterview acceptInterview) {
-        candidateApplicationMustBeApproved(acceptInterview.interviewId());
-        interviewService.changeInterviewState(acceptInterview.interviewId(), InterviewState.ACCEPTED);
+        try{
+            candidateApplicationMustBeApproved(acceptInterview.interviewId());
+            interviewService.changeInterviewState(acceptInterview.interviewId(), InterviewState.ACCEPTED);
+        } catch (Exception exception){
+            var logger = Logger.getLogger("wasd");
+            logger.log(Level.WARNING, exception.getMessage());
+        }
     }
 
     public void launchInterview(final LaunchInterview launchInterview) {
-        candidateApplicationMustBeApproved(launchInterview.interviewId());
-        interviewService.changeInterviewState(launchInterview.interviewId(), InterviewState.LAUNCHED);
+        try {
+            candidateApplicationMustBeApproved(launchInterview.interviewId());
+            interviewService.changeInterviewState(launchInterview.interviewId(), InterviewState.LAUNCHED);
+        } catch (Throwable throwable){
+            var logger = Logger.getLogger("wasd");
+            logger.log(Level.WARNING, throwable.getMessage());
+        }
     }
 
     public void endInterviewExecution(final EndInterviewExecution endInterviewExecution) {

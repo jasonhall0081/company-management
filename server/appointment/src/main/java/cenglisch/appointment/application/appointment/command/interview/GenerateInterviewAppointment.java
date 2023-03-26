@@ -1,4 +1,4 @@
-package cenglisch.appointment.application.appointment.interview;
+package cenglisch.appointment.application.appointment.command.interview;
 
 import cenglisch.appointment.domain.model.appointment.interview.AppointmentInterviewId;
 import cenglisch.domain.model.PersonId;

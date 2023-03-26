@@ -1,9 +1,9 @@
 package cenglisch.appointment.port.adapter.primary.appointment;
 
-import cenglisch.appointment.application.appointment.AddParticipant;
-import cenglisch.appointment.application.appointment.AppointmentCommandApplicationPort;
-import cenglisch.appointment.application.appointment.AppointmentRegistration;
-import cenglisch.appointment.application.appointment.RescheduleAppointment;
+import cenglisch.appointment.application.appointment.command.AddParticipant;
+import cenglisch.appointment.application.appointment.command.AppointmentCommandApplicationPort;
+import cenglisch.appointment.application.appointment.command.AppointmentRegistration;
+import cenglisch.appointment.application.appointment.command.RescheduleAppointment;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Appointment", description = "APIs für die Terminverwaltung.")
 @RestController
 @RequestMapping("v1/appointment")
-public final class AppointmentV1CommandRestAdapter {
+public final class V1AppointmentCommandRestAdapter {
     @Autowired
     private AppointmentCommandApplicationPort appointmentCommandApplicationPort;
 

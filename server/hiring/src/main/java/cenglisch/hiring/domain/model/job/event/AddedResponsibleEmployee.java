@@ -4,4 +4,9 @@ import cenglisch.hiring.domain.model.job.JobId;
 import cenglisch.hiring.domain.model.job.ResponsibleEmployee;
 
 public record AddedResponsibleEmployee(JobId jobId, ResponsibleEmployee responsibleEmployee) implements JobEventHiring {
+    @Override
+    public String getIdentifier() {
+        return jobId.id();
+    }
+
 }

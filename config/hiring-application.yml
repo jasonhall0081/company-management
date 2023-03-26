@@ -24,28 +24,51 @@ spring:
         definition: acceptInterview;launchInterview;endInterviewExecution
       bindings:
         acceptInterview-in-0:
+          binder: acceptInterview
           destination: appointment.interview.accepted
+          content-type: application/json
         launchInterview-in-0:
+          binder: launchInterview
           destination: appointment.interview.launched
+          content-type: application/json
         endInterviewExecution-in-0:
-          destination: appointment.interview.generated
+          binder: endInterviewExecution
+          destination: appointment.interview.executionEnded
+          content-type: application/json
+      binders:
+        acceptInterview:
+          type: rabbit
+        launchInterview:
+          type: rabbit
+        endInterviewExecution:
+          type: rabbit
       rabbit:
         bindings:
-          acceptInterview-in-0:
-            consumer:
-              bindingRoutingKey: appointment.interview.accepted
-              exchangeDurable: true
-              exchangeType: topic
-          launchInterview-in-0:
-            consumer:
-              bindingRoutingKey: appointment.interview.launched
-              exchangeDurable: true
-              exchangeType: topic
-          endInterviewExecution-in-0:
-            consumer:
-              bindingRoutingKey: appointment.interview.generated
-              exchangeDurable: true
-              exchangeType: topic
+          input:
+            acceptInterview-in-0:
+              consumer:
+                binding-routing-key: appointment.interview.accepted
+                exchange-name: appointment-interview-exchange
+                queue-name-group-only: true
+                bind-queue: true
+                exchange-durable: true
+                exchange-type: topic
+            launchInterview-in-0:
+              consumer:
+                binding-routing-key: appointment.interview.launched
+                exchange-name: appointment-interview-exchange
+                queue-name-group-only: true
+                bind-queue: true
+                exchange-durable: true
+                exchange-type: topic
+            endInterviewExecution-in-0:
+              consumer:
+                binding-routing-key: appointment.interview.executionEnded
+                exchange-name: appointment-interview-exchange
+                queue-name-group-only: true
+                bind-queue: true
+                exchange-durable: true
+                exchange-type: topic
         default:
           producer:
             exchangeType: topic

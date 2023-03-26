@@ -7,4 +7,8 @@ public record ParticipantAddedToAppointment(
         AppointmentId appointmentId,
         PersonId personId
 ) implements AppointmentEvent {
+    @Override
+    public String getIdentifier() {
+        return appointmentId.id();
+    }
 }
