@@ -7,6 +7,7 @@ import cenglisch.hiring.domain.model.interview.InterviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +18,11 @@ public final class InterviewRepositoryAdapter implements InterviewRepository {
 
     @Autowired
     private InterviewMapper interviewMapper;
+
+    @Override
+    public List<Interview> findAll() {
+        return interviewMapper.mapToInterviewList(interviewRepository.findAll());
+    }
 
     public Optional<Interview> find(final InterviewId id) {
         Optional<InterviewEntity> optionalInterview = interviewRepository.findById(id.id());

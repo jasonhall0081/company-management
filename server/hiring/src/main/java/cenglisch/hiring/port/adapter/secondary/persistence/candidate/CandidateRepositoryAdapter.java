@@ -8,6 +8,7 @@ import cenglisch.domain.model.PersonId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +18,10 @@ public final class CandidateRepositoryAdapter implements CandidateRepository {
     @Autowired
     private CandidateMapper candidateMapper;
 
+    @Override
+    public List<Candidate> findAll() {
+        return candidateMapper.mapToCandidateList(candidateRepository.findAll());
+    }
 
     public Optional<Candidate> find(final CandidateId id) {
         Optional<CandidateEntity> optionalPerson = candidateRepository.findById(id.id());
@@ -46,5 +51,10 @@ public final class CandidateRepositoryAdapter implements CandidateRepository {
     @Override
     public boolean existsByPersonIdAndJobId(final PersonId personId, final JobId jobId) {
         return candidateRepository.existsByPersonIdAndJobId(personId.id(), jobId.id());
+    }
+
+    @Override
+    public List<Candidate> findByJobId(JobId jobId) {
+        return candidateMapper.mapToCandidateList(candidateRepository.findByJobId(jobId.id()));
     }
 }

@@ -1,9 +1,11 @@
 package cenglisch.hiring.startup;
 
-import cenglisch.hiring.application.candidate.CandidateCommandApplicationPort;
-import cenglisch.hiring.application.interview.state.InterviewStateCommandApplicationPort;
-import cenglisch.hiring.application.interview.type.InterviewTypeCommandApplicationPort;
-import cenglisch.hiring.application.job.JobCommandApplicationPort;
+import cenglisch.hiring.application.candidate.command.CandidateCommandApplicationPort;
+import cenglisch.hiring.application.candidate.query.CandidateQueryApplicationPort;
+import cenglisch.hiring.application.interview.command.state.InterviewStateCommandApplicationPort;
+import cenglisch.hiring.application.interview.command.type.InterviewTypeCommandApplicationPort;
+import cenglisch.hiring.application.job.command.JobCommandApplicationPort;
+import cenglisch.hiring.application.job.query.JobQueryApplicationPort;
 import cenglisch.hiring.domain.model.candidate.CandidateService;
 import cenglisch.hiring.domain.model.interview.InterviewService;
 import cenglisch.hiring.domain.model.job.JobService;
@@ -70,5 +72,15 @@ public class BeanConfiguration {
     @Bean
     JobCommandApplicationPort jobApplicationPort() {
         return new JobCommandApplicationPort(jobService(), candidateRepositoryAdapter, eventHandler);
+    }
+
+    @Bean
+    JobQueryApplicationPort jobQueryApplicationPort() {
+        return new JobQueryApplicationPort(jobRepositoryAdapter);
+    }
+
+    @Bean
+    CandidateQueryApplicationPort candidateQueryApplicationPort() {
+        return new CandidateQueryApplicationPort(candidateRepositoryAdapter);
     }
 }

@@ -10,5 +10,6 @@
     <include file="candidate-structure.xml" relativeToChangelogFile="true"/>
     <include file="job-structure.xml" relativeToChangelogFile="true"/>
     <include file="person-structure.xml" relativeToChangelogFile="true"/>
+    <include file="responsible_employee-structure.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

@@ -1,9 +1,9 @@
 package cenglisch.hiring.port.adapter.primary.interview.state;
 
-import cenglisch.hiring.application.interview.state.AcceptInterview;
-import cenglisch.hiring.application.interview.state.EndInterviewExecution;
-import cenglisch.hiring.application.interview.state.InterviewStateCommandApplicationPort;
-import cenglisch.hiring.application.interview.state.LaunchInterview;
+import cenglisch.hiring.application.interview.command.state.AcceptInterview;
+import cenglisch.hiring.application.interview.command.state.EndInterviewExecution;
+import cenglisch.hiring.application.interview.command.state.InterviewStateCommandApplicationPort;
+import cenglisch.hiring.application.interview.command.state.LaunchInterview;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
