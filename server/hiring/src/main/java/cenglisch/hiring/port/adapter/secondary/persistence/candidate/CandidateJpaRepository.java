@@ -1,6 +1,5 @@
 package cenglisch.hiring.port.adapter.secondary.persistence.candidate;
 
-import cenglisch.hiring.domain.model.candidate.Candidate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

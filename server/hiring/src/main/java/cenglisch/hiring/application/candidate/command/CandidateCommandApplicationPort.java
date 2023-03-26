@@ -34,7 +34,7 @@ public final class CandidateCommandApplicationPort {
 
     private void jobCapacitiesMustBeAvailable(final CandidateId candidateId) {
         Candidate candidate = candidateService.find(candidateId).orElseThrow(() -> {
-            throw new CandidateException("candidate not found");
+            throw new CandidateException("candidate " + candidateId + "not found");
         });
         jobCapacitiesMustBeAvailable(candidate.getJobId());
     }

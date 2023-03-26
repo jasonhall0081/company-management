@@ -54,7 +54,7 @@ public final class CandidateRepositoryAdapter implements CandidateRepository {
     }
 
     @Override
-    public List<Candidate> findByJobId(JobId jobId) {
+    public List<Candidate> findByJobId(final JobId jobId) {
         return candidateMapper.toCandidateList(candidateRepository.findByJobId(jobId.id()));
     }
 }

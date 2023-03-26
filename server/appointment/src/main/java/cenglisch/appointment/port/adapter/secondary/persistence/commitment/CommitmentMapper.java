@@ -4,7 +4,12 @@ import cenglisch.appointment.domain.model.appointment.AppointmentId;
 import cenglisch.appointment.domain.model.commitment.Commitment;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentEntity;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentJpaRepository;
-import org.mapstruct.*;
+import org.mapstruct.Context;
+import org.mapstruct.InjectionStrategy;
+import org.mapstruct.IterableMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 import java.util.Collection;
 import java.util.List;
