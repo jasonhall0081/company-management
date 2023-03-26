@@ -5,6 +5,7 @@ import cenglisch.hiring.domain.model.job.Job;
 import cenglisch.hiring.domain.model.job.ResponsibleEmployee;
 import cenglisch.hiring.port.adapter.secondary.persistence.job.responsible.employee.ResponsibleEmployeeEntity;
 import org.mapstruct.InjectionStrategy;
+import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -20,6 +21,7 @@ public interface JobMapper {
         target = "responsibleEmployees",
         qualifiedByName = "mapToResponsibleEmployee"
     )
+    @Named("mapToJob")
     Job mapToJob(JobEntity jobEntity);
 
     @Mapping(source = "jobId.id", target = "id")
@@ -29,6 +31,9 @@ public interface JobMapper {
         qualifiedByName = "mapToResponsibleEmployeeEntity"
     )
     JobEntity mapToJobEntity(Job job);
+
+    @IterableMapping(qualifiedByName = "mapToJob")
+    List<Job> mapToJobList(List<JobEntity> all);
 
     @Named("mapToResponsibleEmployee")
     default List<ResponsibleEmployee> mapToResponsibleEmployee(
