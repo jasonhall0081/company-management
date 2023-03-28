@@ -6,4 +6,8 @@ public record AppointmentInterviewLaunched(
         AppointmentInterviewId appointmentInterviewId
 ) implements AppointmentInterviewEvent {
 
+    @Override
+    public String getIdentifier() {
+        return appointmentInterviewId.id();
+    }
 }

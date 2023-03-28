@@ -8,4 +8,9 @@ public record AppointmentInterviewAccepted(
     public String topic() {
         return AppointmentInterviewEvent.super.topic()  + ".accepted";
     }
+
+    @Override
+    public String getIdentifier() {
+        return appointmentInterviewId.id();
+    }
 }

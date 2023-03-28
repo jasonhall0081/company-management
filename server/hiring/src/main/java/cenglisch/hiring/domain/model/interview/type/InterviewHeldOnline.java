@@ -7,4 +7,9 @@ public record InterviewHeldOnline(InterviewId interviewId) implements InterviewT
     public String topic() {
         return "hiring.interview";
     }
+
+    @Override
+    public String getIdentifier() {
+        return interviewId.id();
+    }
 }

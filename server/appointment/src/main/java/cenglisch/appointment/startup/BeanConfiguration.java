@@ -1,14 +1,15 @@
 package cenglisch.appointment.startup;
 
-import cenglisch.appointment.application.appointment.AppointmentCommandApplicationPort;
-import cenglisch.appointment.application.appointment.interview.AppointmentCommandInterviewApplicationPort;
+import cenglisch.appointment.application.appointment.command.AppointmentCommandApplicationPort;
+import cenglisch.appointment.application.appointment.command.interview.AppointmentCommandInterviewApplicationPort;
+import cenglisch.appointment.application.appointment.query.AppointmentQueryApplicationPort;
 import cenglisch.appointment.domain.model.appointment.AppointmentService;
 import cenglisch.appointment.domain.model.appointment.interview.AppointmentInterviewService;
 import cenglisch.appointment.domain.model.commitment.CommitmentService;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentRepositoryAdapter;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.interview.AppointmentInterviewRepositoryAdapter;
 import cenglisch.appointment.port.adapter.secondary.persistence.commitment.CommitmentRepositoryAdapter;
-import cenglisch.appointment.port.adapter.secondary.messaging.JmsEventPublisherAdapter;
+import cenglisch.appointment.port.adapter.secondary.messaging.EventPublisherAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,14 +19,14 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfiguration {
 
     @Autowired
-    private JmsEventPublisherAdapter jmsEventPublisherAdapter;
+    private EventPublisherAdapter eventPublisherAdapter;
 
     @Autowired
     private AppointmentRepositoryAdapter appointmentRepositoryAdapter;
 
     @Bean
     public AppointmentService appointmentService() {
-        return new AppointmentService(appointmentRepositoryAdapter, jmsEventPublisherAdapter);
+        return new AppointmentService(appointmentRepositoryAdapter, eventPublisherAdapter);
     }
 
     @Bean
@@ -33,7 +34,7 @@ public class BeanConfiguration {
         return new AppointmentCommandApplicationPort(
                 appointmentService(),
                 commitmentService(),
-                jmsEventPublisherAdapter
+                eventPublisherAdapter
         );
     }
 
@@ -42,7 +43,7 @@ public class BeanConfiguration {
 
     @Bean
     public CommitmentService commitmentService() {
-        return new CommitmentService(commitmentRepositoryAdapter, jmsEventPublisherAdapter);
+        return new CommitmentService(commitmentRepositoryAdapter, eventPublisherAdapter);
     }
 
     @Autowired
@@ -50,7 +51,7 @@ public class BeanConfiguration {
 
     @Bean
     public AppointmentInterviewService appointmentInterviewService() {
-        return new AppointmentInterviewService(appointmentInterviewRepositoryAdapter, jmsEventPublisherAdapter);
+        return new AppointmentInterviewService(appointmentInterviewRepositoryAdapter, eventPublisherAdapter);
     }
 
     @Bean
@@ -58,7 +59,14 @@ public class BeanConfiguration {
         return new AppointmentCommandInterviewApplicationPort(
                 appointmentInterviewService(),
                 appointmentService(),
-                jmsEventPublisherAdapter
+                eventPublisherAdapter
+        );
+    }
+
+    @Bean
+    public AppointmentQueryApplicationPort appointmentQueryApplicationPort(){
+        return new AppointmentQueryApplicationPort(
+                appointmentRepositoryAdapter
         );
     }
 }

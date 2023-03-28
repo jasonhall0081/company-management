@@ -24,14 +24,37 @@ spring:
         definition: generateAppointmentInterview
       bindings:
         generateAppointmentInterview-in-0:
+          binder: generateAppointmentInterview
           destination: hiring.interview.state.generated
+          content-type: application/json
+        messagePublisher-out-0:
+          binder: messagePublisher
+          destination: appointment.interview.message
+          content-type: application/json
+      binders:
+        generateAppointmentInterview:
+          type: rabbit
+        messagePublisher:
+          type: rabbit
       rabbit:
         bindings:
-          generateAppointmentInterview-in-0:
-            consumer:
-              bindingRoutingKey: hiring.interview.state.generated
-              exchangeDurable: true
-              exchangeType: topic
+          input:
+            generateAppointmentInterview-in-0:
+              consumer:
+                binding-routing-key: hiring.interview.state.generated
+                exchange-name: interview-exchange
+                queue-name-group-only: true
+                bind-queue: true
+                exchange-durable: true
+                exchange-type: topic
+          output:
+            messagePublisher-out-0:
+              producer:
+                binding-routing-key: appointment.interview.message
+                exchange-name: appointment-interview-exchange
+                exchange-durable: true
+                exchange-type: topic
+
 
 springdoc:
   packagesToScan: cenglisch.appointment.port.adapter.primary

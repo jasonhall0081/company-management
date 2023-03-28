@@ -7,4 +7,8 @@ public record RemovedResponsibleEmployee(
         JobId jobId,
         ResponsibleEmployee responsibleEmployee
 ) implements JobEventHiring {
+    @Override
+    public String getIdentifier() {
+        return jobId.id();
+    }
 }

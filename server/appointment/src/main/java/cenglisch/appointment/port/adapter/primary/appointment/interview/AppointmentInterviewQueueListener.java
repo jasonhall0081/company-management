@@ -1,8 +1,9 @@
 package cenglisch.appointment.port.adapter.primary.appointment.interview;
 
 
-import cenglisch.appointment.application.appointment.interview.AppointmentCommandInterviewApplicationPort;
-import cenglisch.appointment.application.appointment.interview.GenerateInterviewAppointment;
+import cenglisch.appointment.application.appointment.command.interview.AppointmentCommandInterviewApplicationPort;
+import cenglisch.appointment.application.appointment.command.interview.GenerateInterviewAppointment;
+import cenglisch.appointment.domain.model.appointment.interview.AppointmentInterviewId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

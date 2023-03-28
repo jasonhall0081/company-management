@@ -1,4 +1,4 @@
-package cenglisch.appointment.application.appointment;
+package cenglisch.appointment.application.appointment.command;
 
 import cenglisch.appointment.domain.model.appointment.Appointment;
 import cenglisch.appointment.domain.model.appointment.exception.AppointmentNotFoundException;

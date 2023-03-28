@@ -4,4 +4,6 @@ public interface DomainEvent {
     default String topic() {
         return "company.management";
     }
+
+    String getIdentifier();
 }

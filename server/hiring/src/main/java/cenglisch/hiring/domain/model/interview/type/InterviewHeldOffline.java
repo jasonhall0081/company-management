@@ -7,4 +7,9 @@ public record InterviewHeldOffline(InterviewId interviewId) implements Interview
     public String topic() {
         return "hiring.interview";
     }
+
+    @Override
+    public String getIdentifier() {
+        return interviewId.id();
+    }
 }

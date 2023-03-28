@@ -7,4 +7,9 @@ public record CandidateAdopted(CandidateId candidateId, JobId jobId) implements 
     public String topic() {
         return CandidateEventHiring.super.topic() + ".adopted";
     }
+
+    @Override
+    public String getIdentifier() {
+        return candidateId.id();
+    }
 }
