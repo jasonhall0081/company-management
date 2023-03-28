@@ -55,6 +55,8 @@ spring:
                 exchange-durable: true
                 exchange-type: topic
 
+server:
+  forward-headers-strategy: framework
 
 springdoc:
   packagesToScan: cenglisch.appointment.port.adapter.primary

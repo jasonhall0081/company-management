@@ -11,6 +11,5 @@
     <include file="appointment/appointment-interview-structure.xml" relativeToChangelogFile="true"/>
     <include file="appointment/appointment-participant-structure.xml" relativeToChangelogFile="true"/>
     <include file="commitment-structure.xml" relativeToChangelogFile="true"/>
-    <include file="index-changelog.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

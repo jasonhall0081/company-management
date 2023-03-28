@@ -1,3 +1,25 @@
+# Appointment Backend
+curl -i -X POST \
+  --url http://localhost:8001/services/ \
+  --data 'name=appointment' \
+  --data 'url=http://appointment:8080';
+
+curl -i -X POST \
+  --url http://localhost:8001/services/appointment/routes \
+  --data 'paths[]=/appointment' \
+  --data 'name=appointment-route';
+
+# Hiring Backend
+curl -i -X POST \
+  --url http://localhost:8001/services/ \
+  --data 'name=hiring' \
+  --data 'url=http://hiring:8080';
+
+curl -i -X POST \
+  --url http://localhost:8001/services/hiring/routes \
+  --data 'paths[]=/hiring' \
+  --data 'name=hiring-route';
+
 # Document Backend
 curl -i -X POST \
   --url http://localhost:8001/services/ \
@@ -27,6 +49,14 @@ curl -X POST http://localhost:8001/services/document/plugins \
     --data "config.credentials=true" \
     --data "config.max_age=3600";
 
+curl -k -X POST --url http://localhost:8001/plugins \
+  --data name=oidc \
+  --data config.realm=master \
+  --data config.client_id=kong \
+  --data config.client_secret=WEnUi6MAEB8mZQScpAdwkhHQTtxCKNUr \
+  --data config.discovery=http://sso:8080/auth/realms/master/.well-known/openid-configuration;
+
+
 # SSO Backend
 curl -i -X POST \
   --url http://localhost:8001/services/ \
@@ -38,23 +68,5 @@ curl -i -X POST \
   --data 'paths[]=/sso' \
   --data 'name=sso-route';
 
-curl -k -X POST --url http://localhost:8001/routes/document-route/plugins \
-  --data name=oidc \
-  --data config.realm=master \
-  --data config.client_id=kong \
-  --data config.client_secret=PsQpZXs32XDGb9ywLZ8KAkm48Pfd2P0k \
-  --data config.discovery=http://sso:8080/auth/realms/master/.well-known/openid-configuration
-
-
-curl -k -X POST --url http://localhost:8001/routes/document-route/plugins \
-  --data name=oidc \
-  --data config.realm=master \
-  --data config.client_id=kong \
-  --data config.client_secret=PsQpZXs32XDGb9ywLZ8KAkm48Pfd2P0k \
-  --data config.discovery=http://localhost:8000/sso/realms/master/.well-known/openid-configuration
 
 curl -X OPTIONS http://sso:8080/auth/realms/master/.well-known/openid-configuration -H 'Origin: http://localhost:5173'
-
-
-
-curl -X DELETE --url E9C15E99-39B0-4C9C-ABAD-0765B82610C8
