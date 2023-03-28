@@ -31,21 +31,32 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mariadb://database:3306/${SERVICE_NAME}_hiring
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
-  document:
-    build:
-        context: ./server
-        dockerfile: document/Dockerfile
-    depends_on:
-        database:
-            condition: service_healthy
-    image: ${SERVICE_NAME}-document
-    container_name: ${SERVICE_NAME}-document
-    ports:
-        - "8030:8080"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mariadb://database:3306/${SERVICE_NAME}_document
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
+  sso:
+    container_name: ${SERVICE_NAME}-document-sso
+    extends:
+      file: ./infrastructure/docker-compose.infrastructure.yml
+      service: sso
+  kong-db:
+    container_name: ${SERVICE_NAME}-document-gateway-database
+    extends:
+      file: ./infrastructure/gateway/docker-compose.gateway.yml
+      service: kong-db
+  kong:
+    container_name: ${SERVICE_NAME}-document-gateway
+    extends:
+      file: ./infrastructure/gateway/docker-compose.gateway.yml
+      service: kong
+  queue:
+    container_name: ${SERVICE_NAME}-document-queue
+    extends:
+      file: ./infrastructure/docker-compose.infrastructure.yml
+      service: queue
+  database:
+    container_name: ${SERVICE_NAME}-document-database
+    extends:
+      file: ./infrastructure/docker-compose.infrastructure.yml
+      service: database
 
-
-# Infrastructure is missing
+volumes:
+  db-volume:
+  migration-volume:
