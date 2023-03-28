@@ -25,9 +25,10 @@ public final class AppointmentEntity {
     @Column(name = "id", nullable = false)
     private String id;
 
+    @Column(name = "scheduling_participant_id")
     private String schedulingParticipant;
 
-    private Collection<String> participants;
+    //private Collection<String> participants;
 
     @OneToOne(fetch = FetchType.LAZY)
     private AppointmentDateEntity publishedAppointmentDate;
@@ -51,7 +52,7 @@ public final class AppointmentEntity {
     public AppointmentEntity(
         final String id,
         final String schedulingParticipant,
-        final Collection<String> participants,
+        //final Collection<String> participants,
         final AppointmentDateEntity publishedAppointmentDate,
         final AppointmentType appointmentType,
         final AppointmentState appointmentState,
@@ -59,7 +60,7 @@ public final class AppointmentEntity {
     ) {
         this.id = id;
         this.schedulingParticipant = schedulingParticipant;
-        this.participants = participants;
+        //this.participants = participants;
         this.publishedAppointmentDate = publishedAppointmentDate;
         this.appointmentType = appointmentType;
         this.appointmentState = appointmentState;
@@ -74,9 +75,9 @@ public final class AppointmentEntity {
         return schedulingParticipant;
     }
 
-    public Collection<String> getParticipants() {
+    /*public Collection<String> getParticipants() {
         return participants;
-    }
+    }*/
 
     public AppointmentDateEntity getPublishedAppointmentDate() {
         return publishedAppointmentDate;

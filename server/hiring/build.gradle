@@ -29,7 +29,7 @@ dependencies {
 
 	// Spring Cloud Stream
 	implementation "org.springframework.cloud:spring-cloud-starter-stream-rabbit:${parent.springCloudVersion}"
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.7.1'
+	implementation "com.fasterxml.jackson.core:jackson-databind:${parent.jacksonVersion}"
 
 	// Persistence
 	implementation 'org.liquibase:liquibase-core'

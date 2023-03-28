@@ -1,6 +1,7 @@
 package cenglisch.hiring.application.interview.command.state;
 
 import cenglisch.domain.model.EventHandler;
+import cenglisch.domain.model.PersonId;
 import cenglisch.hiring.domain.model.candidate.Candidate;
 import cenglisch.hiring.domain.model.candidate.CandidateId;
 import cenglisch.hiring.domain.model.candidate.CandidateService;
@@ -41,11 +42,10 @@ public final class InterviewStateCommandApplicationPort {
     }
 
     private void generateInterview(final CandidateId candidateId) {
-        final Candidate candidate = candidateService.find(candidateId).orElseThrow(CandidateNotFoundException::new);
-
+        candidateService.find(candidateId).orElseThrow(CandidateNotFoundException::new);
         interviewService.newInterview(
-                candidateId,
-                candidate.getPersonId()
+            candidateId,
+            new PersonId("Christoph Englisch")
         );
     }
 

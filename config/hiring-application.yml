@@ -20,6 +20,7 @@ spring:
 
   cloud:
     stream:
+      default-binder: messagePublisher
       function:
         definition: acceptInterview;launchInterview;endInterviewExecution
       bindings:
@@ -35,12 +36,18 @@ spring:
           binder: endInterviewExecution
           destination: appointment.interview.executionEnded
           content-type: application/json
+        messagePublisher-out-0:
+          binder: messagePublisher
+          destination: appointment.interview.message
+          content-type: application/json
       binders:
         acceptInterview:
           type: rabbit
         launchInterview:
           type: rabbit
         endInterviewExecution:
+          type: rabbit
+        messagePublisher:
           type: rabbit
       rabbit:
         bindings:
@@ -69,13 +76,14 @@ spring:
                 bind-queue: true
                 exchange-durable: true
                 exchange-type: topic
-        default:
-          producer:
-            exchangeType: topic
-      dynamic:
-        destination: 'unused'
-        binder: rabbit
-        contentType: application/json
+          output:
+            messagePublisher-out-0:
+              producer:
+                binding-routing-key: appointment.interview.message
+                exchange-name: appointment-interview-exchange
+                exchange-durable: true
+                exchange-type: topic
+
 
 springdoc:
   packagesToScan: cenglisch.hiring.port.adapter.primary
