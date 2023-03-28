@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://database:3306/company_management_appointment
+    username: root
+    password: root
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  rabbitmq:
+    host: queue
+    port: 5672
+    username: company_management
+    password: company_management

@@ -39,7 +39,7 @@ services:
       - kong-db
     # uncomment following line to run migrations for a new database
     # versuchen den command in eine build datei auszulagern
-    #command: kong migrations bootstrap
+    # command: kong migrations bootstrap
     depends_on:
       - kong-db
     healthcheck:

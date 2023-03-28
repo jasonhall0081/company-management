@@ -3,7 +3,7 @@ package cenglisch.hiring.domain.model.candidate;
 import cenglisch.domain.model.EventHandler;
 import cenglisch.hiring.domain.model.candidate.event.CandidateApplicationAccepted;
 import cenglisch.hiring.domain.model.candidate.event.CandidateApplicationApproved;
-import cenglisch.hiring.domain.model.candidate.exception.CandidateException;
+import cenglisch.hiring.domain.model.candidate.exception.CandidateNotFoundException;
 import cenglisch.hiring.domain.model.job.JobId;
 import cenglisch.domain.model.PersonId;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -52,13 +51,9 @@ public class CandidateServiceTest {
         Optional<Candidate> optionalCandidate = Optional.empty();
         when(candidateRepository.find(any(CandidateId.class))).thenAnswer(invocation -> optionalCandidate);
 
-        Exception exception = assertThrows(CandidateException.class, () -> {
+        Exception exception = assertThrows(CandidateNotFoundException.class, () -> {
             candidateService.changeCandidateState(new CandidateId("C-131221"), CandidateState.ADOPTED);
         });
-        assertEquals(
-                "Candidate not found",
-                exception.getMessage()
-        );
     }
 
     @Test
