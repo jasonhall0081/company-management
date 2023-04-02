@@ -1,5 +1,6 @@
 package cenglisch.appointment.port.adapter.secondary.persistence.calendar;
 
+import cenglisch.Default;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentEntity;
 import jakarta.persistence.*;
 
@@ -26,6 +27,7 @@ public final class CalendarEntity {
     public CalendarEntity() {
     }
 
+    @Default
     public CalendarEntity(final String id, final String participant, final List<AppointmentEntity> appointments) {
         this.id = id;
         this.participant = participant;

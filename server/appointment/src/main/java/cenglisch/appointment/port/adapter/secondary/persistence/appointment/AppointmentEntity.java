@@ -25,7 +25,7 @@ public final class AppointmentEntity {
     @OneToMany(mappedBy = "appointment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<ParticipantEntity> participants = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne()
     private AppointmentDateEntity publishedAppointmentDate;
 
     @Enumerated(EnumType.STRING)
@@ -43,27 +43,27 @@ public final class AppointmentEntity {
 
     }
 
+    public AppointmentEntity(final String id){
+        this.id = id;
+    }
+
     @Default
     public AppointmentEntity(
             final String id,
             final String schedulingParticipant,
+            final Collection<ParticipantEntity> participants,
             final AppointmentDateEntity publishedAppointmentDate,
             final AppointmentType appointmentType,
             final AppointmentState appointmentState,
-            final AppointmentInformation appointmentInformation,
-            final Collection<PersonId> participants
+            final AppointmentInformation appointmentInformation
     ) {
         this.id = id;
         this.schedulingParticipant = schedulingParticipant;
+        this.participants = participants;
         this.publishedAppointmentDate = publishedAppointmentDate;
         this.appointmentType = appointmentType;
         this.appointmentState = appointmentState;
         this.appointmentInformation = appointmentInformation;
-        if (participants != null) {
-            for (PersonId personId : participants) {
-                this.participants.add(new ParticipantEntity(this, personId));
-            }
-        }
     }
 
     public String getId() {

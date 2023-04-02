@@ -25,19 +25,16 @@ public interface AppointmentDateMapper {
     @Mapping(
         target = "appointment",
         source = "appointmentId",
-        qualifiedByName = "fromAppointmentIdToAppointmentEntity"
+        qualifiedByName = "fromAppointmentDateToAppointmentEntity"
     )
     @Named("toAppointmentDateEntity")
     AppointmentDateEntity toAppointmentDateEntity(
-            AppointmentDate appointmentDate,
-            @Context AppointmentJpaRepository appointmentRepository
+            AppointmentDate appointmentDate
     );
 
-    @Named("fromAppointmentIdToAppointmentEntity")
-    default AppointmentEntity fromAppointmentIdToAppointmentEntity(
-            AppointmentId appointmentId,
-            @Context AppointmentJpaRepository appointmentRepository
-    ) {
-        return appointmentRepository.findById(appointmentId.id()).orElse(null);
+    @Named("fromAppointmentDateToAppointmentEntity")
+    default AppointmentEntity fromAppointmentDateToAppointmentEntity(AppointmentId appointmentId){
+        //TODO prüfen ob die Methode gegen ein direktes Mapping entfernt werden kann
+        return new AppointmentEntity(appointmentId.id());
     }
 }

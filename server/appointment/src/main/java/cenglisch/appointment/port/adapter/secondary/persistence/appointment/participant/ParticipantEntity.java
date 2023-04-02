@@ -2,7 +2,6 @@ package cenglisch.appointment.port.adapter.secondary.persistence.appointment.par
 
 import cenglisch.Default;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentEntity;
-import cenglisch.domain.model.PersonId;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,14 +17,13 @@ public final class ParticipantEntity {
     @JoinColumn(name = "appointment_id")
     private AppointmentEntity appointment;
 
-    @Embedded
-    private PersonId personId;
+    private String personId;
 
     @Default
     public ParticipantEntity() {
     }
 
-    public ParticipantEntity(final AppointmentEntity appointment, final PersonId personId) {
+    public ParticipantEntity(final AppointmentEntity appointment, final String personId) {
         this.appointment = appointment;
         this.personId = personId;
     }
@@ -38,7 +36,7 @@ public final class ParticipantEntity {
         return appointment;
     }
 
-    public PersonId getPersonId() {
+    public String getPersonId() {
         return personId;
     }
 }

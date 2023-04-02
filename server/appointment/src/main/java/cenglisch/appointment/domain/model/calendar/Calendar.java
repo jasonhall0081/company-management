@@ -1,5 +1,6 @@
 package cenglisch.appointment.domain.model.calendar;
 
+import cenglisch.Default;
 import cenglisch.appointment.domain.model.appointment.AppointmentId;
 import cenglisch.domain.model.PersonId;
 
@@ -20,7 +21,13 @@ public final class Calendar {
         appointmentIds = new ArrayList<>();
     }
 
-    public Calendar(final PersonId participant, final Collection<AppointmentId> appointmentIds) {
+    @Default
+    public Calendar(
+            final CalendarId calendarId,
+            final PersonId participant,
+            final Collection<AppointmentId> appointmentIds
+    ) {
+        setCalendarId(calendarId);
         setParticipant(participant);
         setAppointmentIds(appointmentIds);
     }

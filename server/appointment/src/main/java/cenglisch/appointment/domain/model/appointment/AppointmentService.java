@@ -33,7 +33,7 @@ public final class AppointmentService {
 
     public Collection<PersonId> pickUpAffectedPersons(final AppointmentId appointmentId) {
         Appointment appointment = pickUpAppointment(appointmentId).orElseThrow(AppointmentNotFoundException::new);
-        return appointment.getAllParticipants();
+        return appointment.allParticipants();
     }
 
     public AppointmentId initializeAppointment(final PersonId participant) {

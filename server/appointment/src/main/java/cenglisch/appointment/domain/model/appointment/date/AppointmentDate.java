@@ -21,6 +21,7 @@ public final class AppointmentDate extends Entity {
     private Time endTime;
 
     public AppointmentDate(
+            final AppointmentDateId appointmentDateId,
             final AppointmentId appointmentId,
             final Date date,
             final Time startTime,

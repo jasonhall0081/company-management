@@ -13,11 +13,36 @@ public final class Appointment {
     @org.jmolecules.ddd.annotation.Identity
     private AppointmentId appointmentId;
     private PersonId schedulingParticipant;
-    //private Collection<PersonId> participants;
+    private final Collection<PersonId> participants;
     private AppointmentDate appointmentDate;
     private AppointmentType appointmentType;
     private AppointmentState appointmentState;
     private AppointmentInformation appointmentInformation;
+
+    public Appointment() {
+        participants = new ArrayList<>();
+    }
+
+    public Appointment(final PersonId participantId) {
+        this();
+        setAppointmentState(AppointmentState.PENDING);
+        setAppointmentType(AppointmentType.COMPULSORY_ATTENDANCE);
+        setSchedulingParticipant(participantId);
+    }
+
+    public Appointment(
+            final PersonId participant,
+            final AppointmentDate appointmentDate,
+            final AppointmentType appointmentType,
+            final AppointmentInformation appointmentInformation
+    ) {
+        this();
+        setSchedulingParticipant(participant);
+        setAppointmentDate(appointmentDate);
+        setAppointmentType(appointmentType);
+        setAppointmentState(AppointmentState.PENDING);
+        setAppointmentInformation(appointmentInformation);
+    }
 
     @Default
     public Appointment(
@@ -36,30 +61,6 @@ public final class Appointment {
         this.appointmentType = appointmentType;
         this.appointmentState = appointmentState;
         this.appointmentInformation = appointmentInformation;
-    }
-
-    public Appointment(
-            final PersonId participant,
-            final AppointmentDate appointmentDate,
-            final AppointmentType appointmentType,
-            final AppointmentInformation appointmentInformation
-    ) {
-        this();
-        setSchedulingParticipant(participant);
-        setAppointmentDate(appointmentDate);
-        setAppointmentType(appointmentType);
-        setAppointmentState(AppointmentState.PENDING);
-        setAppointmentInformation(appointmentInformation);
-    }
-
-    public Appointment(final PersonId participantId) {
-        setAppointmentState(AppointmentState.PENDING);
-        setAppointmentType(AppointmentType.COMPULSORY_ATTENDANCE);
-        setSchedulingParticipant(participantId);
-    }
-
-    public Appointment() {
-        participants = new ArrayList<>();
     }
 
     public void rescheduleAppointment(final AppointmentDate appointmentDate) {
@@ -173,7 +174,7 @@ public final class Appointment {
         return participants;
     }
 
-    public Collection<PersonId> getAllParticipants() {
+    public Collection<PersonId> allParticipants() {
         Collection<PersonId> allParticipants = new ArrayList<>(participants);
         allParticipants.add(schedulingParticipant);
         return allParticipants;
