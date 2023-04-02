@@ -9,7 +9,7 @@ import cenglisch.domain.model.PersonId;
 import java.util.Optional;
 
 @org.jmolecules.ddd.annotation.Service
-public class CalendarService {
+public final class CalendarService {
 
     private final CalendarRepository calendarRepository;
     private final EventHandler eventHandler;

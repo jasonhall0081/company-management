@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "calendar")
-public class CalendarEntity {
+public final class CalendarEntity {
     @Id
     @Column(name = "id", nullable = false)
     private String id;
@@ -26,7 +26,7 @@ public class CalendarEntity {
     public CalendarEntity() {
     }
 
-    public CalendarEntity(String id, String participant, List<AppointmentEntity> appointments) {
+    public CalendarEntity(final String id, final String participant, final List<AppointmentEntity> appointments) {
         this.id = id;
         this.participant = participant;
         this.appointments = appointments;

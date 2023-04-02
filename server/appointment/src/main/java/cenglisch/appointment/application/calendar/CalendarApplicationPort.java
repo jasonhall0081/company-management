@@ -73,7 +73,7 @@ public class CalendarApplicationPort {
     }
 
 
-    private void createCalendarEntry(CreateCalendarEntry createCalendarEntry) {
+    private void createCalendarEntry(final CreateCalendarEntry createCalendarEntry) {
         if (!appointmentService.appointmentExists(createCalendarEntry.appointmentId())) {
             throw new AppointmentNotFoundException();
         }
@@ -84,7 +84,7 @@ public class CalendarApplicationPort {
         );
     }
 
-    private void removeCalendarEntry(RemoveCalendarEntry removeCalendarEntry) {
+    private void removeCalendarEntry(final RemoveCalendarEntry removeCalendarEntry) {
         if (!appointmentService.appointmentExists(removeCalendarEntry.appointmentId())) {
             throw new AppointmentNotFoundException();
         }

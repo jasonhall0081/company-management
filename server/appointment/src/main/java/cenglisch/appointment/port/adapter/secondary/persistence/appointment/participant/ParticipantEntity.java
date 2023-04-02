@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "appointment_participant")
-public class ParticipantEntity {
+public final class ParticipantEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class ParticipantEntity {
     public ParticipantEntity() {
     }
 
-    public ParticipantEntity(AppointmentEntity appointment, PersonId personId) {
+    public ParticipantEntity(final AppointmentEntity appointment, final PersonId personId) {
         this.appointment = appointment;
         this.personId = personId;
     }

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CalendarRepositoryAdapter implements CalendarRepository {
+public final class CalendarRepositoryAdapter implements CalendarRepository {
     @Autowired
     private CalendarJpaRepository calendarJpaRepository;
 
@@ -24,13 +24,13 @@ public class CalendarRepositoryAdapter implements CalendarRepository {
     }
 
     @Override
-    public Optional<Calendar> find(CalendarId calendarId) {
+    public Optional<Calendar> find(final CalendarId calendarId) {
         Optional<CalendarEntity> optionalCalendar = calendarJpaRepository.findById(calendarId.id());
         return optionalCalendar.map(calendarEntity -> calendarMapper.toCalendar(calendarEntity));
     }
 
     @Override
-    public Calendar save(Calendar calendar) {
+    public Calendar save(final Calendar calendar) {
         if (calendar.getCalendarId() == null) {
             calendar.setCalendarId(new CalendarId(generateId()));
         }
@@ -39,12 +39,12 @@ public class CalendarRepositoryAdapter implements CalendarRepository {
     }
 
     @Override
-    public void remove(Calendar calendar) {
+    public void remove(final Calendar calendar) {
         throw new RuntimeException("CalendarRepositoryAdapter.remove() not implemented");
     }
 
     @Override
-    public Optional<Calendar> findByPerson(PersonId personId) {
+    public Optional<Calendar> findByPerson(final PersonId personId) {
         Optional<CalendarEntity> optionalCalendar = calendarJpaRepository.findByParticipant(personId.id());
         return optionalCalendar.map(calendarEntity -> calendarMapper.toCalendar(calendarEntity));
     }

@@ -31,7 +31,11 @@ public interface CalendarMapper {
 
     @Named("toAppointmentIds")
     default List<AppointmentId> toAppointmentIds(List<AppointmentEntity> appointmentEntities) {
-        return appointmentEntities.stream().map(AppointmentEntity::getId).map(AppointmentId::new).collect(Collectors.toList());
+        return appointmentEntities
+                .stream()
+                .map(AppointmentEntity::getId)
+                .map(AppointmentId::new)
+                .collect(Collectors.toList());
     }
 
     @Named("toAppointmentEntities")

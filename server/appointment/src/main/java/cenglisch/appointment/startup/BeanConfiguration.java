@@ -64,15 +64,15 @@ public class BeanConfiguration {
     }
 
     @Autowired
-    CommitmentRepositoryAdapter commitmentRepositoryAdapter;
+    private CommitmentRepositoryAdapter commitmentRepositoryAdapter;
 
     @Bean
-    public CommitmentService commitmentService(){
+    public CommitmentService commitmentService() {
         return new CommitmentService(commitmentRepositoryAdapter, eventPublisherAdapter);
     }
 
     @Bean
-    public CommitmentApplicationPort commitmentApplicationPort(){
+    public CommitmentApplicationPort commitmentApplicationPort() {
         return new CommitmentApplicationPort(
                 commitmentService(),
                 appointmentService()
