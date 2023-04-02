@@ -20,8 +20,9 @@ public final class CommitmentEntity {
     @Column(name = "id", nullable = false)
     private String id;
     @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "appointment_id")
     private AppointmentEntity appointment;
-    @Column
+    @Column(name = "participant_id")
     private String participant;
     @Enumerated(EnumType.STRING)
     @Column

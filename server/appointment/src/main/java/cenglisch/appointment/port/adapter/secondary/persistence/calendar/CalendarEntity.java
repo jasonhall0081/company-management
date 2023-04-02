@@ -14,7 +14,7 @@ public final class CalendarEntity {
     @Column(name = "id", nullable = false)
     private String id;
 
-    @Column(name = "participant", nullable = false)
+    @Column(name = "participant_id", nullable = false)
     private String participant;
 
     @ManyToMany(fetch = FetchType.EAGER)

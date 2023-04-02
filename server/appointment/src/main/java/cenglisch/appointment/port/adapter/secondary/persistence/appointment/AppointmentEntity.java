@@ -5,8 +5,7 @@ import cenglisch.appointment.domain.model.appointment.AppointmentInformation;
 import cenglisch.appointment.domain.model.appointment.AppointmentState;
 import cenglisch.appointment.domain.model.appointment.AppointmentType;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.date.AppointmentDateEntity;
-import cenglisch.appointment.port.adapter.secondary.persistence.appointment.participant.ParticipantEntity;
-import cenglisch.domain.model.PersonId;
+import cenglisch.appointment.port.adapter.secondary.persistence.appointment.participant.AppointmentParticipantEntity;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -22,10 +21,11 @@ public final class AppointmentEntity {
     @Column(name = "scheduling_participant_id")
     private String schedulingParticipant;
 
-    @OneToMany(mappedBy = "appointment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Collection<ParticipantEntity> participants = new ArrayList<>();
+    @OneToMany(mappedBy = "appointment_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<AppointmentParticipantEntity> participants = new ArrayList<>();
 
     @OneToOne()
+    @Column(name = "published_appointment_date_id")
     private AppointmentDateEntity publishedAppointmentDate;
 
     @Enumerated(EnumType.STRING)
@@ -51,7 +51,7 @@ public final class AppointmentEntity {
     public AppointmentEntity(
             final String id,
             final String schedulingParticipant,
-            final Collection<ParticipantEntity> participants,
+            final Collection<AppointmentParticipantEntity> participants,
             final AppointmentDateEntity publishedAppointmentDate,
             final AppointmentType appointmentType,
             final AppointmentState appointmentState,
@@ -74,7 +74,7 @@ public final class AppointmentEntity {
         return schedulingParticipant;
     }
 
-    public Collection<ParticipantEntity> getParticipants() {
+    public Collection<AppointmentParticipantEntity> getParticipants() {
         return participants;
     }
 

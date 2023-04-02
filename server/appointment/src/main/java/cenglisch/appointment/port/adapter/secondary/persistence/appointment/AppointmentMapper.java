@@ -2,7 +2,7 @@ package cenglisch.appointment.port.adapter.secondary.persistence.appointment;
 
 import cenglisch.appointment.domain.model.appointment.Appointment;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.date.AppointmentDateMapper;
-import cenglisch.appointment.port.adapter.secondary.persistence.appointment.participant.ParticipantEntity;
+import cenglisch.appointment.port.adapter.secondary.persistence.appointment.participant.AppointmentParticipantEntity;
 import cenglisch.domain.model.PersonId;
 import org.mapstruct.*;
 
@@ -35,9 +35,9 @@ public interface AppointmentMapper {
     Appointment toAppointment(AppointmentEntity appointmentEntity);
 
     @Named("toPersonIds")
-    default Collection<PersonId> toPersonIds(Collection<ParticipantEntity> participants) {
+    default Collection<PersonId> toPersonIds(Collection<AppointmentParticipantEntity> participants) {
         return participants.stream()
-                .map(ParticipantEntity::getPersonId)
+                .map(AppointmentParticipantEntity::getPersonId)
                 .map(PersonId::new)
                 .collect(Collectors.toList());
     }
@@ -64,7 +64,7 @@ public interface AppointmentMapper {
     );
 
     @Named("toParticipantEntities")
-    default Collection<ParticipantEntity> toParticipantEntities(
+    default Collection<AppointmentParticipantEntity> toParticipantEntities(
             Collection<PersonId> personIds,
             //TODO prüfen ob es möglich ist anders zu implementieren
             @Context Appointment appointment
@@ -72,7 +72,7 @@ public interface AppointmentMapper {
         return personIds.stream()
                 //TODO prüfen ob nur eine Id übergabe reicht oder ob hier noch mehr infos gebraucht werden
                 .map(personId ->
-                        new ParticipantEntity(
+                        new AppointmentParticipantEntity(
                             new AppointmentEntity(
                                 appointment.getAppointmentId().id()
                             ),

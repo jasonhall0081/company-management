@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "appointment_participant")
-public final class ParticipantEntity {
+public final class AppointmentParticipantEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +20,10 @@ public final class ParticipantEntity {
     private String personId;
 
     @Default
-    public ParticipantEntity() {
+    public AppointmentParticipantEntity() {
     }
 
-    public ParticipantEntity(final AppointmentEntity appointment, final String personId) {
+    public AppointmentParticipantEntity(final AppointmentEntity appointment, final String personId) {
         this.appointment = appointment;
         this.personId = personId;
     }

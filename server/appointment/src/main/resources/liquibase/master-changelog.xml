@@ -10,6 +10,11 @@
     <include file="appointment/appointment-date-structure.xml" relativeToChangelogFile="true"/>
     <include file="appointment/appointment-interview-structure.xml" relativeToChangelogFile="true"/>
     <include file="appointment/appointment-participant-structure.xml" relativeToChangelogFile="true"/>
-    <include file="commitment-structure.xml" relativeToChangelogFile="true"/>
+
+    <include file="calendar/calendar-structure.xml" relativeToChangelogFile="true"/>
+    <include file="calendar/calendar-appointments-structure.xml" relativeToChangelogFile="true"/>
+
+    <include file="commitment/commitment-structure.xml" relativeToChangelogFile="true"/>
+
 
 </databaseChangeLog>
