@@ -84,13 +84,6 @@
         <property name="maximum" value="0"/>
     </module>
 
-    <!-- Checks for Headers                                -->
-    <!-- See https://checkstyle.org/config_header.html   -->
-    <!-- <module name="Header"> -->
-    <!--   <property name="headerFile" value="${checkstyle.header.file}"/> -->
-    <!--   <property name="fileExtensions" value="java"/> -->
-    <!-- </module> -->
-
     <module name="TreeWalker">
 
         <!-- Checks for Naming Conventions.                  -->
@@ -107,7 +100,6 @@
 
         <!-- Checks for imports                              -->
         <!-- See https://checkstyle.org/config_imports.html -->
-        <module name="AvoidStarImport"/>
         <module name="IllegalImport"/>
         <module name="IllegalImport">
             <property name="id" value="illegal-jmolecules-import"/>
@@ -186,7 +178,6 @@
         <!-- Enable use of @SuppressWarnings("checkstyle:...") -->
         <!-- See https://checkstyle.org/config_annotation.html#SuppressWarningsHolder -->
         <module name="SuppressWarningsHolder"/>
-
     </module>
 
 </module>

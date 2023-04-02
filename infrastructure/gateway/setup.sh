@@ -53,7 +53,7 @@ curl -k -X POST --url http://localhost:8001/plugins \
   --data name=oidc \
   --data config.realm=master \
   --data config.client_id=kong \
-  --data config.client_secret=WEnUi6MAEB8mZQScpAdwkhHQTtxCKNUr \
+  --data config.client_secret=yUbfDBfalE1aNQPuD7zD4gDscNX85Z7e \
   --data config.discovery=http://sso:8080/auth/realms/master/.well-known/openid-configuration;
 
 

@@ -12,7 +12,7 @@
   * [Grobe Erklärung der Module nach Fachlichkeit](#grobe-erklärung-der-module-nach-fachlichkeit)
 <!-- TOC -->
 
-The following description is written in German, but the code and other dependencies are based on the English language. It will be worth to translate the following text into English ;) P.S. use deepl.com
+The following description is written in German, but the code and other dependencies are based on the English language. It will be worth to translate the following text into English
 
 ## Einleitung
 Dieses Projekt soll meinen Umgang mit einer Fullstack Anwendung repräsentieren. <br>
@@ -54,7 +54,7 @@ Alle Commands die in das System implementiert wurden, sind gleich mit den Befehl
 * document
   * Ablage von Dokumenten wie z.B. Bewerbungsunterlagen
 * hiring 
-  * Abbildung des Geschäftsprozesses einer Bewerber Einstellung
+  * Abbildung des Geschäftsprozesses einer Bewerbereinstellung
 * management 
   * Verwaltung von Personalinformationen
 
