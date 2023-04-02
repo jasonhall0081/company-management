@@ -40,10 +40,16 @@ public final class CommitmentService {
             final PersonId participant,
             final CommitmentState commitmentState
     ) {
-        Commitment commitment = commitmentRepository.save(new Commitment(appointmentId, participant, commitmentState));
+        Commitment commitment = commitmentRepository.save(
+                new Commitment(
+                        appointmentId,
+                        participant,
+                        commitmentState
+                )
+        );
         eventHandler.publish(
                 commitment.isCommitmentStateConfirmed()
-                        ? new ConfirmedCommitment(appointmentId, commitment.getCommitmentId())
-                        : new RejectedCommitment(appointmentId, commitment.getCommitmentId()));
+                        ? new ConfirmedCommitment(commitment.getCommitmentId(), appointmentId, participant)
+                        : new RejectedCommitment(commitment.getCommitmentId(), appointmentId, participant));
     }
 }

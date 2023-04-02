@@ -1,4 +1,4 @@
 package cenglisch.appointment.domain.model.calendar;
 
-public class CalendarId {
+public record CalendarId(String id) {
 }

@@ -1,20 +1,10 @@
 package cenglisch.appointment.port.adapter.secondary.persistence.appointment;
 
 import cenglisch.appointment.domain.model.appointment.Appointment;
-
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.date.AppointmentDateMapper;
+import org.mapstruct.*;
 
-import cenglisch.domain.model.PersonId;
-import org.mapstruct.Context;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.IterableMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(
         componentModel = "spring",
@@ -46,15 +36,6 @@ public interface AppointmentMapper {
         qualifiedByName = "toAppointmentDateEntity"
     )
     AppointmentEntity toAppointmentEntity(
-            Appointment appointment,
-            @Context AppointmentJpaRepository appointmentJpaRepository
+            Appointment appointment
     );
-
-    /*default Collection<PersonId> toParticipantCollection(Collection<String> participants) {
-        return participants.stream().map(PersonId::new).collect(Collectors.toList());
-    }*/
-
-    /*default Collection<String> fromParticipantCollection(Collection<PersonId> personIds) {
-        return personIds.stream().map(PersonId::id).collect(Collectors.toList());
-    }*/
 }

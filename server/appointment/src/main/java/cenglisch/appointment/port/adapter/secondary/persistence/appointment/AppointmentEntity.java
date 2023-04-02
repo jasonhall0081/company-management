@@ -1,21 +1,15 @@
 package cenglisch.appointment.port.adapter.secondary.persistence.appointment;
 
+import cenglisch.Default;
 import cenglisch.appointment.domain.model.appointment.AppointmentInformation;
 import cenglisch.appointment.domain.model.appointment.AppointmentState;
 import cenglisch.appointment.domain.model.appointment.AppointmentType;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.date.AppointmentDateEntity;
-import cenglisch.Default;
+import cenglisch.appointment.port.adapter.secondary.persistence.appointment.participant.ParticipantEntity;
+import cenglisch.domain.model.PersonId;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
@@ -28,7 +22,8 @@ public final class AppointmentEntity {
     @Column(name = "scheduling_participant_id")
     private String schedulingParticipant;
 
-    //private Collection<String> participants;
+    @OneToMany(mappedBy = "appointment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<ParticipantEntity> participants = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY)
     private AppointmentDateEntity publishedAppointmentDate;
@@ -50,21 +45,25 @@ public final class AppointmentEntity {
 
     @Default
     public AppointmentEntity(
-        final String id,
-        final String schedulingParticipant,
-        //final Collection<String> participants,
-        final AppointmentDateEntity publishedAppointmentDate,
-        final AppointmentType appointmentType,
-        final AppointmentState appointmentState,
-        final AppointmentInformation appointmentInformation
+            final String id,
+            final String schedulingParticipant,
+            final AppointmentDateEntity publishedAppointmentDate,
+            final AppointmentType appointmentType,
+            final AppointmentState appointmentState,
+            final AppointmentInformation appointmentInformation,
+            final Collection<PersonId> participants
     ) {
         this.id = id;
         this.schedulingParticipant = schedulingParticipant;
-        //this.participants = participants;
         this.publishedAppointmentDate = publishedAppointmentDate;
         this.appointmentType = appointmentType;
         this.appointmentState = appointmentState;
         this.appointmentInformation = appointmentInformation;
+        if (participants != null) {
+            for (PersonId personId : participants) {
+                this.participants.add(new ParticipantEntity(this, personId));
+            }
+        }
     }
 
     public String getId() {
@@ -75,9 +74,9 @@ public final class AppointmentEntity {
         return schedulingParticipant;
     }
 
-    /*public Collection<String> getParticipants() {
+    public Collection<ParticipantEntity> getParticipants() {
         return participants;
-    }*/
+    }
 
     public AppointmentDateEntity getPublishedAppointmentDate() {
         return publishedAppointmentDate;

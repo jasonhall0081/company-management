@@ -8,6 +8,6 @@ public interface AppointmentInterviewEvent extends AppointmentDomainEvent {
     AppointmentInterviewId appointmentInterviewId();
 
     default String topic() {
-        return AppointmentDomainEvent.super.topic() + ".appointment.interview";
+        return "appointment.interview";
     }
 }

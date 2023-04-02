@@ -6,6 +6,7 @@ import cenglisch.domain.model.PersonId;
 import java.util.ArrayList;
 import java.util.Collection;
 
+@org.jmolecules.ddd.annotation.AggregateRoot
 public final class Calendar {
 
     private CalendarId calendarId;
@@ -28,7 +29,11 @@ public final class Calendar {
         appointmentIds.add(appointmentId);
     }
 
-    private void setCalendarId(final CalendarId calendarId) {
+    public void removeCalendarEntry(final AppointmentId appointmentId) {
+        appointmentIds.remove(appointmentId);
+    }
+
+    public void setCalendarId(final CalendarId calendarId) {
         this.calendarId = calendarId;
     }
 

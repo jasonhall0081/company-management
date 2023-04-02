@@ -2,18 +2,18 @@ package cenglisch.appointment.domain.model.appointment;
 
 import cenglisch.Default;
 import cenglisch.appointment.domain.model.appointment.date.AppointmentDate;
-import java.util.ArrayList;
-import java.util.Collection;
-
 import cenglisch.appointment.domain.model.appointment.exception.AppointmentException;
 import cenglisch.domain.model.PersonId;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @org.jmolecules.ddd.annotation.AggregateRoot
 public final class Appointment {
     @org.jmolecules.ddd.annotation.Identity
     private AppointmentId appointmentId;
     private PersonId schedulingParticipant;
-    private Collection<PersonId> participants;
+    //private Collection<PersonId> participants;
     private AppointmentDate appointmentDate;
     private AppointmentType appointmentType;
     private AppointmentState appointmentState;
@@ -171,6 +171,12 @@ public final class Appointment {
 
     public Collection<PersonId> getParticipants() {
         return participants;
+    }
+
+    public Collection<PersonId> getAllParticipants() {
+        Collection<PersonId> allParticipants = new ArrayList<>(participants);
+        allParticipants.add(schedulingParticipant);
+        return allParticipants;
     }
 
     public AppointmentDate getAppointmentDate() {

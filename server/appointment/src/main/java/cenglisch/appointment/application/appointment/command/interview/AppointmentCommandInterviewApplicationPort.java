@@ -7,15 +7,9 @@ import cenglisch.appointment.domain.model.appointment.event.AppointmentFinished;
 import cenglisch.appointment.domain.model.appointment.event.AppointmentLaunched;
 import cenglisch.appointment.domain.model.appointment.interview.AppointmentInterviewService;
 import cenglisch.domain.model.EventHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class AppointmentCommandInterviewApplicationPort {
-
-    private final static Logger LOGGER = LoggerFactory.getLogger(AppointmentCommandInterviewApplicationPort.class);
-
     private final AppointmentInterviewService appointmentInterviewService;
-
     private final AppointmentService appointmentService;
 
     public AppointmentCommandInterviewApplicationPort(
@@ -30,6 +24,15 @@ public final class AppointmentCommandInterviewApplicationPort {
         eventHandler.subscribe(AppointmentAccepted.class, this::acceptAppointmentInterview);
         eventHandler.subscribe(AppointmentLaunched.class, this::launchAppointmentInterview);
         eventHandler.subscribe(AppointmentFinished.class, this::finishAppointmentInterview);
+    }
+
+    public void generateAppointmentInterview(final GenerateInterviewAppointment generateInterviewAppointment) {
+        appointmentInterviewService.generateAppointmentInterview(
+                generateInterviewAppointment.interviewId(),
+                appointmentService.initializeAppointment(
+                        generateInterviewAppointment.personId()
+                )
+        );
     }
 
     private void acceptAppointmentInterview(final AppointmentAccepted appointmentAccepted) {
@@ -50,16 +53,6 @@ public final class AppointmentCommandInterviewApplicationPort {
         appointmentInterviewService.publishEventChange(
                 appointmentFinished.appointmentId(),
                 AppointmentState.FINISHED
-        );
-    }
-
-    public void generateAppointmentInterview(final GenerateInterviewAppointment generateInterviewAppointment) {
-        LOGGER.info("try to initalize appointment " + generateInterviewAppointment.interviewId());
-        appointmentInterviewService.generateAppointmentInterview(
-                generateInterviewAppointment.interviewId(),
-                appointmentService.initializeAppointment(
-                        generateInterviewAppointment.personId()
-                )
         );
     }
 }

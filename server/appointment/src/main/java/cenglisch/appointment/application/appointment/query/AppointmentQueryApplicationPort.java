@@ -5,11 +5,11 @@ import cenglisch.appointment.domain.model.appointment.AppointmentRepository;
 
 import java.util.List;
 
-public class AppointmentQueryApplicationPort {
+public final class AppointmentQueryApplicationPort {
 
     private final AppointmentRepository appointmentRepository;
 
-    public AppointmentQueryApplicationPort(AppointmentRepository appointmentRepository) {
+    public AppointmentQueryApplicationPort(final AppointmentRepository appointmentRepository) {
         this.appointmentRepository = appointmentRepository;
     }
 

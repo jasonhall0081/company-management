@@ -3,13 +3,14 @@ package cenglisch.appointment.startup;
 import cenglisch.appointment.application.appointment.command.AppointmentCommandApplicationPort;
 import cenglisch.appointment.application.appointment.command.interview.AppointmentCommandInterviewApplicationPort;
 import cenglisch.appointment.application.appointment.query.AppointmentQueryApplicationPort;
+import cenglisch.appointment.application.commitment.CommitmentApplicationPort;
 import cenglisch.appointment.domain.model.appointment.AppointmentService;
 import cenglisch.appointment.domain.model.appointment.interview.AppointmentInterviewService;
 import cenglisch.appointment.domain.model.commitment.CommitmentService;
+import cenglisch.appointment.port.adapter.secondary.messaging.EventPublisherAdapter;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentRepositoryAdapter;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.interview.AppointmentInterviewRepositoryAdapter;
 import cenglisch.appointment.port.adapter.secondary.persistence.commitment.CommitmentRepositoryAdapter;
-import cenglisch.appointment.port.adapter.secondary.messaging.EventPublisherAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,14 +40,6 @@ public class BeanConfiguration {
     }
 
     @Autowired
-    private CommitmentRepositoryAdapter commitmentRepositoryAdapter;
-
-    @Bean
-    public CommitmentService commitmentService() {
-        return new CommitmentService(commitmentRepositoryAdapter, eventPublisherAdapter);
-    }
-
-    @Autowired
     private AppointmentInterviewRepositoryAdapter appointmentInterviewRepositoryAdapter;
 
     @Bean
@@ -64,9 +57,26 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public AppointmentQueryApplicationPort appointmentQueryApplicationPort(){
+    public AppointmentQueryApplicationPort appointmentQueryApplicationPort() {
         return new AppointmentQueryApplicationPort(
                 appointmentRepositoryAdapter
         );
     }
+
+    @Autowired
+    CommitmentRepositoryAdapter commitmentRepositoryAdapter;
+
+    @Bean
+    public CommitmentService commitmentService(){
+        return new CommitmentService(commitmentRepositoryAdapter, eventPublisherAdapter);
+    }
+
+    @Bean
+    public CommitmentApplicationPort commitmentApplicationPort(){
+        return new CommitmentApplicationPort(
+                commitmentService(),
+                appointmentService()
+        );
+    }
 }
+

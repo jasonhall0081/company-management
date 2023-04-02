@@ -13,13 +13,13 @@ import java.util.List;
 @RestController
 @RequestMapping("v1/appointment")
 @Tag(name = "Appointment", description = "APIs für die Terminverwaltung.")
-public class V1AppointmentQueryRestAdapter {
+public final class V1AppointmentQueryRestAdapter {
 
     @Autowired
     private AppointmentQueryApplicationPort appointmentQueryApplicationPort;
 
     @GetMapping
-    public List<Appointment> getAppointments(){
+    public List<Appointment> getAppointments() {
         return appointmentQueryApplicationPort.showAppointments();
     }
 }

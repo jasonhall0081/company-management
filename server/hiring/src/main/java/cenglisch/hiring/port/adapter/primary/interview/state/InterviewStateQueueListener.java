@@ -4,7 +4,6 @@ import cenglisch.hiring.application.interview.command.state.AcceptInterview;
 import cenglisch.hiring.application.interview.command.state.EndInterviewExecution;
 import cenglisch.hiring.application.interview.command.state.InterviewStateCommandApplicationPort;
 import cenglisch.hiring.application.interview.command.state.LaunchInterview;
-import cenglisch.hiring.domain.model.interview.InterviewId;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

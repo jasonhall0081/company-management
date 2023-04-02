@@ -1,18 +1,12 @@
 package cenglisch.appointment.domain.model.appointment;
 
 import cenglisch.appointment.domain.model.appointment.date.AppointmentDate;
-import cenglisch.appointment.domain.model.appointment.event.AppointmentAccepted;
-import cenglisch.appointment.domain.model.appointment.event.AppointmentCanceled;
-import cenglisch.appointment.domain.model.appointment.event.AppointmentCreated;
-import cenglisch.appointment.domain.model.appointment.event.AppointmentEvent;
-import cenglisch.appointment.domain.model.appointment.event.AppointmentFinished;
-import cenglisch.appointment.domain.model.appointment.event.AppointmentLaunched;
-import cenglisch.appointment.domain.model.appointment.event.AppointmentRescheduled;
-import cenglisch.appointment.domain.model.appointment.event.ParticipantAddedToAppointment;
+import cenglisch.appointment.domain.model.appointment.event.*;
 import cenglisch.appointment.domain.model.appointment.exception.AppointmentNotFoundException;
 import cenglisch.domain.model.EventHandler;
 import cenglisch.domain.model.PersonId;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -33,17 +27,26 @@ public final class AppointmentService {
         return appointmentRepository.find(appointmentId);
     }
 
+    public boolean appointmentExists(final AppointmentId appointmentId) {
+        return pickUpAppointment(appointmentId).isPresent();
+    }
+
+    public Collection<PersonId> pickUpAffectedPersons(final AppointmentId appointmentId) {
+        Appointment appointment = pickUpAppointment(appointmentId).orElseThrow(AppointmentNotFoundException::new);
+        return appointment.getAllParticipants();
+    }
+
     public AppointmentId initializeAppointment(final PersonId participant) {
         Appointment appointment = appointmentRepository.save(new Appointment(participant));
         return appointment.getAppointmentId();
     }
 
     public void appointmentRegistration(
-        final AppointmentId appointmentId,
-        final PersonId schedulingParticipant,
-        final AppointmentDate appointmentDate,
-        final AppointmentType appointmentType,
-        final AppointmentInformation appointmentInformation
+            final AppointmentId appointmentId,
+            final PersonId schedulingParticipant,
+            final AppointmentDate appointmentDate,
+            final AppointmentType appointmentType,
+            final AppointmentInformation appointmentInformation
     ) {
         Appointment appointment = new Appointment(
                 schedulingParticipant,
@@ -55,7 +58,12 @@ public final class AppointmentService {
             appointment.setAppointmentId(appointmentId);
         }
         appointmentRepository.save(appointment);
-        eventHandler.publish(new AppointmentCreated(appointment.getAppointmentId()));
+        eventHandler.publish(
+                new AppointmentCreated(
+                        appointment.getAppointmentId(),
+                        schedulingParticipant
+                )
+        );
     }
 
     public void rescheduleAppointment(final AppointmentId appointmentId, final AppointmentDate appointmentDate) {

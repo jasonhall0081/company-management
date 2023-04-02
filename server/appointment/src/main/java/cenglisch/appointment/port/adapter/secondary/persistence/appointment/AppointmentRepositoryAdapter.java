@@ -32,8 +32,7 @@ public final class AppointmentRepositoryAdapter implements AppointmentRepository
             appointment.setAppointmentId(new AppointmentId(generateId()));
         }
         final AppointmentEntity appointmentEntity = appointmentMapper.toAppointmentEntity(
-                appointment,
-                appointmentJpaRepository
+                appointment
         );
         return appointmentMapper.toAppointment(appointmentJpaRepository.save(appointmentEntity));
     }

@@ -1,8 +1,8 @@
 package cenglisch.appointment.application.appointment.command;
 
 import cenglisch.appointment.domain.model.appointment.Appointment;
-import cenglisch.appointment.domain.model.appointment.exception.AppointmentNotFoundException;
 import cenglisch.appointment.domain.model.appointment.AppointmentService;
+import cenglisch.appointment.domain.model.appointment.exception.AppointmentNotFoundException;
 import cenglisch.appointment.domain.model.commitment.CommitmentService;
 import cenglisch.appointment.domain.model.commitment.event.ConfirmedCommitment;
 import cenglisch.domain.model.EventHandler;
