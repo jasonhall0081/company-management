@@ -4,14 +4,7 @@ import cenglisch.appointment.domain.model.commitment.CommitmentState;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentEntity;
 import cenglisch.Default;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "commitment")
@@ -20,7 +13,7 @@ public final class CommitmentEntity {
     @Column(name = "id", nullable = false)
     private String id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "appointment_id")
+    @JoinColumn(name = "appointment_id", referencedColumnName = "id")
     private AppointmentEntity appointment;
     @Column(name = "participant_id")
     private String participant;

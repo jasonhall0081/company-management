@@ -14,7 +14,7 @@ public final class AppointmentParticipantEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "appointment_id")
+    @JoinColumn(name = "appointment_id", referencedColumnName = "id")
     private AppointmentEntity appointment;
 
     private String personId;

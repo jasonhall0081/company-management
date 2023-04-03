@@ -21,10 +21,15 @@ public final class AppointmentEntity {
     @Column(name = "scheduling_participant_id")
     private String schedulingParticipant;
 
-    @OneToMany(mappedBy = "appointment_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(
+            mappedBy = "appointment",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private Collection<AppointmentParticipantEntity> participants = new ArrayList<>();
 
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "published_appointment_date_id", referencedColumnName = "id")
     private AppointmentDateEntity publishedAppointmentDate;
 
     @Enumerated(EnumType.STRING)
