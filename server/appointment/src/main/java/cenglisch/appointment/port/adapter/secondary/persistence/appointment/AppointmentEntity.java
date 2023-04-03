@@ -25,7 +25,6 @@ public final class AppointmentEntity {
     private Collection<AppointmentParticipantEntity> participants = new ArrayList<>();
 
     @OneToOne()
-    @Column(name = "published_appointment_date_id")
     private AppointmentDateEntity publishedAppointmentDate;
 
     @Enumerated(EnumType.STRING)

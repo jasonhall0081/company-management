@@ -16,6 +16,7 @@ import java.sql.Time;
 @Entity
 @Table(name = "appointment_date")
 public final class AppointmentDateEntity {
+
     @Id
     @Column(name = "id", nullable = false)
     private String id;

@@ -1,10 +1,14 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd"
+>
 
     <changeSet id="create-calendar-appointments-table" author="cenglisch">
         <createTable tableName="calendar_appointments">
+            <column name="id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
             <column name="calendar_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
@@ -12,19 +16,6 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-    </changeSet>
-
-    <changeSet id="add-foreign-key-to-calendar-appointments" author="cenglisch">
-        <addForeignKeyConstraint baseColumnNames="calendar_id"
-                                 baseTableName="calendar"
-                                 constraintName="fk_calendar_appointments_calendar"
-                                 referencedColumnNames="id"
-                                 referencedTableName="calendar"/>
-        <addForeignKeyConstraint baseColumnNames="appointment_id"
-                                 baseTableName="calendar_appointments"
-                                 constraintName="fk_calendar_appointments_appointment"
-                                 referencedColumnNames="id"
-                                 referencedTableName="appointment"/>
     </changeSet>
 
 </databaseChangeLog>
