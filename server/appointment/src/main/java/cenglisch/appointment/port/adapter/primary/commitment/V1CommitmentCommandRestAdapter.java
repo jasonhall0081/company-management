@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("v1/commitment")
-@Tag(name = "Appointment", description = "APIs für abgabe von Vereinbarungen.")
+@Tag(name = "Commitment", description = "APIs für abgabe von Vereinbarungen.")
 public final class V1CommitmentCommandRestAdapter {
 
     @Autowired
