@@ -36,19 +36,19 @@ public final class AppointmentService {
     }
 
     public AppointmentId initializeAppointment(
-            final PersonId schedulingParticipant,
+            final PersonId scheduler,
             final AppointmentInformation appointmentInformation
     ) {
         Appointment appointment = appointmentRepository.save(
                 new Appointment(
-                        schedulingParticipant,
+                        scheduler,
                         appointmentInformation
                 )
         );
 
         eventHandler.publish(new AppointmentCreated(
                 appointment.getAppointmentId(),
-                schedulingParticipant
+                scheduler
         ));
 
         return appointment.getAppointmentId();
@@ -71,7 +71,7 @@ public final class AppointmentService {
                         appointmentId,
                         pickUpAppointment(appointmentId)
                                 .orElseThrow(AppointmentNotFoundException::new)
-                                .getSchedulingParticipant()
+                                .getScheduler()
                 )
         );
     }

@@ -15,7 +15,7 @@ public final class Appointment {
 
     @org.jmolecules.ddd.annotation.Identity
     private AppointmentId appointmentId;
-    private PersonId schedulingParticipant;
+    private PersonId scheduler;
     private final Collection<PersonId> participants;
     private AppointmentDate appointmentDate;
     private AppointmentType appointmentType;
@@ -28,20 +28,20 @@ public final class Appointment {
     }
 
     public Appointment(
-            final PersonId schedulingParticipant,
+            final PersonId scheduler,
             final AppointmentInformation appointmentInformation
     ) {
         this();
         setAppointmentState(AppointmentState.INITIALIZED);
         setAppointmentType(AppointmentType.COMPULSORY_ATTENDANCE);
-        setSchedulingParticipant(schedulingParticipant);
+        setscheduler(scheduler);
         setAppointmentInformation(appointmentInformation);
     }
 
     @Default
     public Appointment(
             final AppointmentId appointmentId,
-            final PersonId schedulingParticipant,
+            final PersonId scheduler,
             final Collection<PersonId> participants,
             final AppointmentDate appointmentDate,
             final AppointmentType appointmentType,
@@ -49,7 +49,7 @@ public final class Appointment {
             final AppointmentInformation appointmentInformation
     ) {
         this.appointmentId = appointmentId;
-        this.schedulingParticipant = schedulingParticipant;
+        this.scheduler = scheduler;
         this.participants = participants;
         this.appointmentDate = appointmentDate;
         this.appointmentType = appointmentType;
@@ -169,8 +169,8 @@ public final class Appointment {
         this.appointmentId = appointmentId;
     }
 
-    private void setSchedulingParticipant(final PersonId schedulingParticipant) {
-        this.schedulingParticipant = schedulingParticipant;
+    private void setscheduler(final PersonId scheduler) {
+        this.scheduler = scheduler;
     }
 
     private void setAppointmentDate(final AppointmentDate appointmentDate) {
@@ -193,8 +193,8 @@ public final class Appointment {
         return appointmentId;
     }
 
-    public PersonId getSchedulingParticipant() {
-        return schedulingParticipant;
+    public PersonId getScheduler() {
+        return scheduler;
     }
 
     public Collection<PersonId> getParticipants() {
@@ -203,7 +203,7 @@ public final class Appointment {
 
     public Collection<PersonId> allParticipants() {
         Collection<PersonId> allParticipants = new ArrayList<>(participants);
-        allParticipants.add(schedulingParticipant);
+        allParticipants.add(scheduler);
         return allParticipants;
     }
 

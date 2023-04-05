@@ -12,7 +12,7 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="published_appointment_date_id" type="VARCHAR(255)"/>
-            <column name="scheduling_participant_id" type="VARCHAR(255)"/>
+            <column name="scheduler_id" type="VARCHAR(255)"/>
             <column name="caption" type="VARCHAR(255)"/>
             <column name="note" type="VARCHAR(255)"/>
             <column name="place" type="VARCHAR(255)"/>

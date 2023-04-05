@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public interface AppointmentMapper {
 
     @Mapping(target = "appointmentId.id", source = "id")
-    @Mapping(target = "schedulingParticipant.id", source = "schedulingParticipant")
+    @Mapping(target = "scheduler.id", source = "scheduler")
     @Mapping(
         target = "participants",
         source = "participants",
@@ -46,7 +46,7 @@ public interface AppointmentMapper {
     List<Appointment> toAppointmentList(List<AppointmentEntity> appointmentEntityList);
 
     @Mapping(target = "id", source = "appointmentId.id")
-    @Mapping(target = "schedulingParticipant", source = "schedulingParticipant.id")
+    @Mapping(target = "scheduler", source = "scheduler.id")
     @Mapping(
             target = "participants",
             source = "participants",

@@ -3,13 +3,15 @@ package cenglisch.appointment.port.adapter.secondary.persistence.appointment.par
 import cenglisch.Default;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentEntity;
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "appointment_participant")
 public final class AppointmentParticipantEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -20,6 +22,7 @@ public final class AppointmentParticipantEntity {
     public AppointmentParticipantEntity() {
     }
 
+    @Default
     public AppointmentParticipantEntity(final AppointmentEntity appointment, final String participantId) {
         this.appointment = appointment;
         this.participantId = participantId;

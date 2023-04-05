@@ -17,13 +17,12 @@ public final class AppointmentEntity {
     @Column(name = "id", nullable = false)
     private String id;
 
-    @Column(name = "scheduling_participant_id")
-    private String schedulingParticipant;
+    @Column(name = "scheduler_id")
+    private String scheduler;
 
-    @OneToMany(
-            mappedBy = "appointment",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+    @OneToMany(        mappedBy = "appointment",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
     )
     private Collection<AppointmentParticipantEntity> participants = new ArrayList<>();
 
@@ -50,14 +49,14 @@ public final class AppointmentEntity {
     @Default
     public AppointmentEntity(
             final String id,
-            final String schedulingParticipant,
+            final String scheduler,
             final Collection<AppointmentParticipantEntity> participants,
             final AppointmentDateEntity publishedAppointmentDate,
             final AppointmentType appointmentType,
             final AppointmentState appointmentState
     ) {
         this.id = id;
-        this.schedulingParticipant = schedulingParticipant;
+        this.scheduler = scheduler;
         this.participants = participants;
         this.publishedAppointmentDate = publishedAppointmentDate;
         this.appointmentType = appointmentType;
@@ -68,8 +67,8 @@ public final class AppointmentEntity {
         return id;
     }
 
-    public String getSchedulingParticipant() {
-        return schedulingParticipant;
+    public String getscheduler() {
+        return scheduler;
     }
 
     public Collection<AppointmentParticipantEntity> getParticipants() {

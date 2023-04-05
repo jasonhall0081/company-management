@@ -27,7 +27,7 @@ public final class AppointmentCommandApplicationPort {
 
     public void initializeAppointment(final InitializeAppointment initializeAppointment) {
         appointmentService.initializeAppointment(
-                initializeAppointment.schedulingParticipant(),
+                initializeAppointment.scheduler(),
                 initializeAppointment.appointmentInformation()
         );
     }

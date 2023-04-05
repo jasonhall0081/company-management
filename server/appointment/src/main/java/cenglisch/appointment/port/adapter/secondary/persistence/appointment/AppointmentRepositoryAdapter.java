@@ -5,17 +5,23 @@ import cenglisch.appointment.domain.model.appointment.AppointmentId;
 import cenglisch.appointment.domain.model.appointment.AppointmentRepository;
 import cenglisch.appointment.domain.model.appointment.date.AppointmentDate;
 import cenglisch.appointment.domain.model.appointment.date.AppointmentDateId;
+import cenglisch.appointment.port.adapter.secondary.persistence.appointment.participant.AppointmentParticipantEntity;
+import cenglisch.appointment.port.adapter.secondary.persistence.appointment.participant.AppointmentParticipantJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public final class AppointmentRepositoryAdapter implements AppointmentRepository {
+public class AppointmentRepositoryAdapter implements AppointmentRepository {
 
     @Autowired
     private AppointmentJpaRepository appointmentJpaRepository;
+
+    @Autowired
+    private AppointmentParticipantJpaRepository appointmentParticipantJpaRepository;
 
     @Autowired
     private AppointmentMapper appointmentMapper;
@@ -29,6 +35,7 @@ public final class AppointmentRepositoryAdapter implements AppointmentRepository
         return optionalAppointment.map(appointmentEntity -> appointmentMapper.toAppointment(appointmentEntity));
     }
 
+    @Transactional
     public Appointment save(final Appointment appointment) {
         if (appointment.getAppointmentId() == null) {
             appointment.setAppointmentId(new AppointmentId(generateId()));
@@ -41,6 +48,11 @@ public final class AppointmentRepositoryAdapter implements AppointmentRepository
                 appointment,
                 appointment
         );
+
+        //Aktuell gibt es keinen Appointment Participant im Domain Model
+        //deswegen müssen alle Teilnehmer gelöscht und erneut eigentragen werden
+        appointmentParticipantJpaRepository.deleteAllByAppointmentId(appointment.getAppointmentId().id());
+
         return appointmentMapper.toAppointment(appointmentJpaRepository.save(appointmentEntity));
     }
 
