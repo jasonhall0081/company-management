@@ -4,7 +4,7 @@ import cenglisch.appointment.domain.model.appointment.Appointment;
 import cenglisch.appointment.domain.model.appointment.AppointmentService;
 import cenglisch.appointment.domain.model.appointment.exception.AppointmentNotFoundException;
 import cenglisch.appointment.domain.model.commitment.CommitmentService;
-import cenglisch.appointment.domain.model.commitment.event.ConfirmedCommitment;
+import cenglisch.appointment.domain.model.commitment.event.CommitmentConfirmed;
 import cenglisch.domain.model.EventHandler;
 
 public final class AppointmentCommandApplicationPort {
@@ -20,8 +20,8 @@ public final class AppointmentCommandApplicationPort {
         this.appointmentService = appointmentService;
         this.commitmentService = commitmentService;
 
-        eventHandler.subscribe(ConfirmedCommitment.class, confirmedCommitment -> {
-            acceptAppointment(new AcceptAppointment(confirmedCommitment.appointmentId()));
+        eventHandler.subscribe(CommitmentConfirmed.class, commitmentConfirmed -> {
+            acceptAppointment(new AcceptAppointment(commitmentConfirmed.appointmentId()));
         });
     }
 

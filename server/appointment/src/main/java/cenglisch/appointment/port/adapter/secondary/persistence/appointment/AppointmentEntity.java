@@ -13,6 +13,7 @@ import java.util.Collection;
 @Entity
 @Table(name = "appointment")
 public final class AppointmentEntity {
+
     @Id
     @Column(name = "id", nullable = false)
     private String id;
@@ -20,7 +21,8 @@ public final class AppointmentEntity {
     @Column(name = "scheduler_id")
     private String scheduler;
 
-    @OneToMany(        mappedBy = "appointment",
+    @OneToMany(
+        mappedBy = "appointment",
         cascade = CascadeType.ALL,
         orphanRemoval = true
     )

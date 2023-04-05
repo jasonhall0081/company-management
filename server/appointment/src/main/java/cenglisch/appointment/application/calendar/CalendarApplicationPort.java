@@ -5,8 +5,8 @@ import cenglisch.appointment.domain.model.appointment.AppointmentService;
 import cenglisch.appointment.domain.model.appointment.event.AppointmentCreated;
 import cenglisch.appointment.domain.model.appointment.exception.AppointmentNotFoundException;
 import cenglisch.appointment.domain.model.calendar.CalendarService;
-import cenglisch.appointment.domain.model.commitment.event.ConfirmedCommitment;
-import cenglisch.appointment.domain.model.commitment.event.RejectedCommitment;
+import cenglisch.appointment.domain.model.commitment.event.CommitmentConfirmed;
+import cenglisch.appointment.domain.model.commitment.event.CommitmentRejected;
 import cenglisch.domain.model.EventHandler;
 
 public class CalendarApplicationPort {
@@ -27,20 +27,20 @@ public class CalendarApplicationPort {
     }
 
     private void initializeListener() {
-        eventHandler.subscribe(ConfirmedCommitment.class, confirmedCommitment -> {
+        eventHandler.subscribe(CommitmentConfirmed.class, commitmentConfirmed -> {
             createCalendarEntry(
                     new CreateCalendarEntry(
-                            confirmedCommitment.appointmentId(),
-                            confirmedCommitment.personId()
+                            commitmentConfirmed.appointmentId(),
+                            commitmentConfirmed.personId()
                     )
             );
         });
 
-        eventHandler.subscribe(RejectedCommitment.class, rejectedCommitment -> {
+        eventHandler.subscribe(CommitmentRejected.class, commitmentRejected -> {
             removeCalendarEntry(
                     new RemoveCalendarEntry(
-                            rejectedCommitment.appointmentId(),
-                            rejectedCommitment.personId()
+                            commitmentRejected.appointmentId(),
+                            commitmentRejected.personId()
                     )
             );
         });

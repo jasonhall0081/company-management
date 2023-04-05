@@ -1,8 +1,8 @@
 package cenglisch.appointment.domain.model.commitment;
 
 import cenglisch.appointment.domain.model.appointment.AppointmentId;
-import cenglisch.appointment.domain.model.commitment.event.ConfirmedCommitment;
-import cenglisch.appointment.domain.model.commitment.event.RejectedCommitment;
+import cenglisch.appointment.domain.model.commitment.event.CommitmentConfirmed;
+import cenglisch.appointment.domain.model.commitment.event.CommitmentRejected;
 import cenglisch.domain.model.EventHandler;
 import cenglisch.domain.model.PersonId;
 
@@ -49,8 +49,8 @@ public final class CommitmentService {
         );
         eventHandler.publish(
                 commitment.isCommitmentStateConfirmed()
-                        ? new ConfirmedCommitment(commitment.getCommitmentId(), appointmentId, participant)
-                        : new RejectedCommitment(commitment.getCommitmentId(), appointmentId, participant)
+                        ? new CommitmentConfirmed(commitment.getCommitmentId(), appointmentId, participant)
+                        : new CommitmentRejected(commitment.getCommitmentId(), appointmentId, participant)
         );
     }
 }
