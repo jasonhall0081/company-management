@@ -2,7 +2,6 @@ package cenglisch.appointment.port.adapter.primary.appointment;
 
 import cenglisch.appointment.application.appointment.command.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,8 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("v1/appointment")
 public final class V1AppointmentCommandRestAdapter {
 
-    @Autowired
-    private AppointmentCommandApplicationPort appointmentCommandApplicationPort;
+    private final AppointmentCommandApplicationPort appointmentCommandApplicationPort;
+
+    public V1AppointmentCommandRestAdapter(final AppointmentCommandApplicationPort appointmentCommandApplicationPort) {
+        this.appointmentCommandApplicationPort = appointmentCommandApplicationPort;
+    }
 
     @PostMapping("initializeAppointment")
     @ResponseStatus(HttpStatus.NO_CONTENT)

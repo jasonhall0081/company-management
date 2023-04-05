@@ -3,7 +3,6 @@ package cenglisch.hiring.port.adapter.primary.interview;
 import cenglisch.hiring.application.interview.query.InterviewQueryApplicationPort;
 import cenglisch.hiring.domain.model.interview.Interview;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,8 +14,11 @@ import java.util.List;
 @Tag(name = "Interview", description = "APIs für die Interviewverwaltung.")
 public final class V1InterviewQueryRestAdapter {
 
-    @Autowired
-    private InterviewQueryApplicationPort interviewQueryApplicationPort;
+    private final InterviewQueryApplicationPort interviewQueryApplicationPort;
+
+    public V1InterviewQueryRestAdapter(final InterviewQueryApplicationPort interviewQueryApplicationPort) {
+        this.interviewQueryApplicationPort = interviewQueryApplicationPort;
+    }
 
     @GetMapping
     public List<Interview> getInterviews() {

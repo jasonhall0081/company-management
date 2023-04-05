@@ -3,7 +3,6 @@ package cenglisch.document.service;
 
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -11,8 +10,11 @@ import java.io.File;
 @Service
 public final class OcrService {
 
-    @Autowired
-    private Tesseract tesseract;
+    private final Tesseract tesseract;
+
+    public OcrService(final Tesseract tesseract) {
+        this.tesseract = tesseract;
+    }
 
     public String extractTextFromFile(final File file) {
         try {

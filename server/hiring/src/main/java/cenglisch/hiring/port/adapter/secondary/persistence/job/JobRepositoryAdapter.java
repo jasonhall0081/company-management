@@ -3,7 +3,6 @@ package cenglisch.hiring.port.adapter.secondary.persistence.job;
 import cenglisch.hiring.domain.model.job.Job;
 import cenglisch.hiring.domain.model.job.JobId;
 import cenglisch.hiring.domain.model.job.JobRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,11 +11,17 @@ import java.util.Optional;
 @Service
 public final class JobRepositoryAdapter implements JobRepository {
 
-    @Autowired
-    private JobJpaRepository jobJpaRepository;
+    private final JobJpaRepository jobJpaRepository;
 
-    @Autowired
-    private JobMapper jobMapper;
+    private final JobMapper jobMapper;
+
+    public JobRepositoryAdapter(
+        final JobJpaRepository jobJpaRepository,
+        final JobMapper jobMapper
+    ) {
+        this.jobJpaRepository = jobJpaRepository;
+        this.jobMapper = jobMapper;
+    }
 
 
     @Override

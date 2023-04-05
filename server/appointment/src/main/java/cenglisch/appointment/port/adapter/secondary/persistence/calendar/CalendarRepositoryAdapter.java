@@ -4,7 +4,6 @@ import cenglisch.appointment.domain.model.calendar.Calendar;
 import cenglisch.appointment.domain.model.calendar.CalendarId;
 import cenglisch.appointment.domain.model.calendar.CalendarRepository;
 import cenglisch.domain.model.PersonId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,11 +11,17 @@ import java.util.Optional;
 
 @Service
 public final class CalendarRepositoryAdapter implements CalendarRepository {
-    @Autowired
-    private CalendarJpaRepository calendarJpaRepository;
+    private final CalendarJpaRepository calendarJpaRepository;
 
-    @Autowired
-    private CalendarMapper calendarMapper;
+    private final CalendarMapper calendarMapper;
+
+    public CalendarRepositoryAdapter(
+        final CalendarJpaRepository calendarJpaRepository,
+        final CalendarMapper calendarMapper
+    ) {
+        this.calendarJpaRepository = calendarJpaRepository;
+        this.calendarMapper = calendarMapper;
+    }
 
     @Override
     public List<Calendar> findAll() {

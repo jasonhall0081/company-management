@@ -1,11 +1,10 @@
 package cenglisch.hiring.port.adapter.secondary.persistence.candidate;
 
+import cenglisch.domain.model.PersonId;
 import cenglisch.hiring.domain.model.candidate.Candidate;
 import cenglisch.hiring.domain.model.candidate.CandidateId;
 import cenglisch.hiring.domain.model.candidate.CandidateRepository;
 import cenglisch.hiring.domain.model.job.JobId;
-import cenglisch.domain.model.PersonId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,10 +12,16 @@ import java.util.Optional;
 
 @Service
 public final class CandidateRepositoryAdapter implements CandidateRepository {
-    @Autowired
-    private CandidateJpaRepository candidateRepository;
-    @Autowired
-    private CandidateMapper candidateMapper;
+    private final CandidateJpaRepository candidateRepository;
+    private final CandidateMapper candidateMapper;
+
+    public CandidateRepositoryAdapter(
+        final CandidateJpaRepository candidateRepository,
+        final CandidateMapper candidateMapper
+    ) {
+        this.candidateRepository = candidateRepository;
+        this.candidateMapper = candidateMapper;
+    }
 
     @Override
     public List<Candidate> findAll() {

@@ -4,7 +4,6 @@ import cenglisch.appointment.domain.model.appointment.AppointmentId;
 import cenglisch.appointment.domain.model.appointment.interview.AppointmentInterview;
 import cenglisch.appointment.domain.model.appointment.interview.AppointmentInterviewId;
 import cenglisch.appointment.domain.model.appointment.interview.AppointmentInterviewRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,11 +12,17 @@ import java.util.Optional;
 @Service
 public final class AppointmentInterviewRepositoryAdapter implements AppointmentInterviewRepository {
 
-    @Autowired
-    private AppointmentInterviewJpaRepository appointmentInterviewJpaRepository;
+    private final AppointmentInterviewJpaRepository appointmentInterviewJpaRepository;
 
-    @Autowired
-    private AppointmentInterviewMapper appointmentInterviewMapper;
+    private final AppointmentInterviewMapper appointmentInterviewMapper;
+
+    public AppointmentInterviewRepositoryAdapter(
+        final AppointmentInterviewJpaRepository appointmentInterviewJpaRepository,
+        final AppointmentInterviewMapper appointmentInterviewMapper
+    ) {
+        this.appointmentInterviewJpaRepository = appointmentInterviewJpaRepository;
+        this.appointmentInterviewMapper = appointmentInterviewMapper;
+    }
 
     @Override
     public List<AppointmentInterview> findAll() {

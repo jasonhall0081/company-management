@@ -1,11 +1,7 @@
 package cenglisch.document.storage;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -13,8 +9,11 @@ import java.util.Collection;
 @RequestMapping("v1/document/storage")
 public final class StorageController {
 
-    @Autowired
-    private StorageService storageService;
+    private final StorageService storageService;
+
+    public StorageController(final StorageService storageService) {
+        this.storageService = storageService;
+    }
 
     @GetMapping
     public Collection<Storage> getStorageItems() {

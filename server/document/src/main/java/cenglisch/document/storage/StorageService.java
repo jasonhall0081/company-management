@@ -1,7 +1,6 @@
 package cenglisch.document.storage;
 
 import cenglisch.document.document.determine.DocumentType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -9,8 +8,11 @@ import java.util.Collection;
 @Service
 public final class StorageService {
 
-    @Autowired
-    private StorageRepository storageRepository;
+    private final StorageRepository storageRepository;
+
+    public StorageService(final StorageRepository storageRepository) {
+        this.storageRepository = storageRepository;
+    }
 
     public void deleteStorageItem(final String storageId) {
         storageRepository.deleteById(storageId);
