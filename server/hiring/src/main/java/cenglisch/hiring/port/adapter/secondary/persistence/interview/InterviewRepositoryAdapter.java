@@ -4,7 +4,6 @@ import cenglisch.hiring.domain.model.candidate.CandidateId;
 import cenglisch.hiring.domain.model.interview.Interview;
 import cenglisch.hiring.domain.model.interview.InterviewId;
 import cenglisch.hiring.domain.model.interview.InterviewRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,11 +12,17 @@ import java.util.Optional;
 @Service
 public final class InterviewRepositoryAdapter implements InterviewRepository {
 
-    @Autowired
-    private InterviewJpaRepository interviewRepository;
+    private final InterviewJpaRepository interviewRepository;
 
-    @Autowired
-    private InterviewMapper interviewMapper;
+    private final InterviewMapper interviewMapper;
+
+    public InterviewRepositoryAdapter(
+        final InterviewJpaRepository interviewRepository,
+        final InterviewMapper interviewMapper
+    ) {
+        this.interviewRepository = interviewRepository;
+        this.interviewMapper = interviewMapper;
+    }
 
     @Override
     public List<Interview> findAll() {

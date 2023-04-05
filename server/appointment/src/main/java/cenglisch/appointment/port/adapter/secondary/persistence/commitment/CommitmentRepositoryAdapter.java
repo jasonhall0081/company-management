@@ -5,7 +5,6 @@ import cenglisch.appointment.domain.model.commitment.Commitment;
 import cenglisch.appointment.domain.model.commitment.CommitmentId;
 import cenglisch.appointment.domain.model.commitment.CommitmentRepository;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentJpaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -15,14 +14,21 @@ import java.util.Optional;
 @Service
 public final class CommitmentRepositoryAdapter implements CommitmentRepository {
 
-    @Autowired
-    private CommitmentJpaRepository commitmentJpaRepository;
+    private final CommitmentJpaRepository commitmentJpaRepository;
 
-    @Autowired
-    private AppointmentJpaRepository appointmentJpaRepository;
+    private final AppointmentJpaRepository appointmentJpaRepository;
 
-    @Autowired
-    private CommitmentMapper commitmentMapper;
+    private final CommitmentMapper commitmentMapper;
+
+    public CommitmentRepositoryAdapter(
+        final CommitmentJpaRepository commitmentJpaRepository,
+        final AppointmentJpaRepository appointmentJpaRepository,
+        final CommitmentMapper commitmentMapper
+    ) {
+        this.commitmentJpaRepository = commitmentJpaRepository;
+        this.appointmentJpaRepository = appointmentJpaRepository;
+        this.commitmentMapper = commitmentMapper;
+    }
 
     public Optional<Commitment> findById(final CommitmentId commitmentId) {
         Optional<CommitmentEntity> optionalCommitmentEntity = commitmentJpaRepository.findById(commitmentId.id());

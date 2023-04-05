@@ -6,7 +6,6 @@ import cenglisch.document.service.FileSystemService;
 import cenglisch.document.service.OcrService;
 import cenglisch.document.storage.Storage;
 import cenglisch.document.storage.StorageService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,14 +14,22 @@ import java.io.File;
 @Service
 public final class DocumentApplicationService {
 
-    @Autowired
-    private FileSystemService fileSystemService;
-    @Autowired
-    private OcrService ocrService;
-    @Autowired
-    private StorageService storageService;
-    @Autowired
-    private DocumentDetermineService documentDetermineService;
+    private final FileSystemService fileSystemService;
+    private final OcrService ocrService;
+    private final StorageService storageService;
+    private final DocumentDetermineService documentDetermineService;
+
+    public DocumentApplicationService(
+        final FileSystemService fileSystemService,
+        final OcrService ocrService,
+        final StorageService storageService,
+        final DocumentDetermineService documentDetermineService
+    ) {
+        this.fileSystemService = fileSystemService;
+        this.ocrService = ocrService;
+        this.storageService = storageService;
+        this.documentDetermineService = documentDetermineService;
+    }
 
     public DocumentResponse determineDocumentType(final MultipartFile file) {
         File fileSystemStoredFile = fileSystemService.storeMultipartFile(file);

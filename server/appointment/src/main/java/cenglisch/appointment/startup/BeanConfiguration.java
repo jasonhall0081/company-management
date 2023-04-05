@@ -11,8 +11,6 @@ import cenglisch.appointment.port.adapter.secondary.messaging.EventPublisherAdap
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentRepositoryAdapter;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.interview.AppointmentInterviewRepositoryAdapter;
 import cenglisch.appointment.port.adapter.secondary.persistence.commitment.CommitmentRepositoryAdapter;
-import cenglisch.domain.model.EventHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,11 +18,10 @@ import org.springframework.context.annotation.Configuration;
 @SuppressWarnings("checkstyle:DesignForExtension")
 public class BeanConfiguration {
 
-    @Autowired
-    private EventPublisherAdapter eventPublisherAdapter;
+    private final EventPublisherAdapter eventPublisherAdapter;
 
-    @Autowired
-    private AppointmentRepositoryAdapter appointmentRepositoryAdapter;
+    private final AppointmentRepositoryAdapter appointmentRepositoryAdapter;
+    private final AppointmentInterviewRepositoryAdapter appointmentInterviewRepositoryAdapter;
 
     @Bean
     public AppointmentService appointmentService() {
@@ -39,9 +36,7 @@ public class BeanConfiguration {
                 eventPublisherAdapter
         );
     }
-
-    @Autowired
-    private AppointmentInterviewRepositoryAdapter appointmentInterviewRepositoryAdapter;
+    private final CommitmentRepositoryAdapter commitmentRepositoryAdapter;
 
     @Bean
     public AppointmentInterviewService appointmentInterviewService() {
@@ -64,8 +59,17 @@ public class BeanConfiguration {
         );
     }
 
-    @Autowired
-    private CommitmentRepositoryAdapter commitmentRepositoryAdapter;
+    public BeanConfiguration(
+        final EventPublisherAdapter eventPublisherAdapter,
+        final AppointmentRepositoryAdapter appointmentRepositoryAdapter,
+        final AppointmentInterviewRepositoryAdapter appointmentInterviewRepositoryAdapter,
+        final CommitmentRepositoryAdapter commitmentRepositoryAdapter
+    ) {
+        this.eventPublisherAdapter = eventPublisherAdapter;
+        this.appointmentRepositoryAdapter = appointmentRepositoryAdapter;
+        this.appointmentInterviewRepositoryAdapter = appointmentInterviewRepositoryAdapter;
+        this.commitmentRepositoryAdapter = commitmentRepositoryAdapter;
+    }
 
     @Bean
     public CommitmentService commitmentService() {
@@ -79,10 +83,4 @@ public class BeanConfiguration {
                 appointmentService()
         );
     }
-
-    @Bean
-    public EventHandler eventHandler() {
-        return EventPublisherAdapter.getInstance();
-    }
 }
-

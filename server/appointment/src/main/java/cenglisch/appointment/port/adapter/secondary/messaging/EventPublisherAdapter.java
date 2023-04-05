@@ -2,7 +2,6 @@ package cenglisch.appointment.port.adapter.secondary.messaging;
 
 import cenglisch.domain.model.DomainEvent;
 import cenglisch.port.adapter.secondary.messaging.AbstractEventPublisher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +11,13 @@ import java.util.logging.Logger;
 @Service
 public final class EventPublisherAdapter extends AbstractEventPublisher {
 
-    private static final EventPublisherAdapter INSTANCE = new EventPublisherAdapter();
+    private final StreamBridge streamBridge;
 
-    private EventPublisherAdapter() {
+    private EventPublisherAdapter(
+        final StreamBridge streamBridge
+    ) {
+        this.streamBridge = streamBridge;
     }
-
-    public static EventPublisherAdapter getInstance() {
-        return INSTANCE;
-    }
-
-    @Autowired
-    private StreamBridge streamBridge;
 
     protected void publishExternally(final DomainEvent domainEvent) {
         Logger.getLogger(domainEvent.topic())

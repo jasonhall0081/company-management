@@ -1,27 +1,20 @@
 package cenglisch.hiring.port.adapter.primary.candidate;
 
-import cenglisch.hiring.application.candidate.command.AdoptCandidate;
-import cenglisch.hiring.application.candidate.command.ApproveCandidateApplication;
-import cenglisch.hiring.application.candidate.command.CandidateApplies;
-import cenglisch.hiring.application.candidate.command.CandidateCommandApplicationPort;
-import cenglisch.hiring.application.candidate.command.RejectCandidate;
-import cenglisch.hiring.application.candidate.command.RejectCandidateApplication;
+import cenglisch.hiring.application.candidate.command.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Candidate", description = "APIs für die Bewerberverwaltung.")
 @RestController
 @RequestMapping("v1/candidate")
 public final class V1CandidateCommandRestAdapter {
 
-    @Autowired
-    private CandidateCommandApplicationPort candidateCommandApplicationPort;
+    private final CandidateCommandApplicationPort candidateCommandApplicationPort;
+
+    public V1CandidateCommandRestAdapter(final CandidateCommandApplicationPort candidateCommandApplicationPort) {
+        this.candidateCommandApplicationPort = candidateCommandApplicationPort;
+    }
 
     @PostMapping("candidateApplies")
     @ResponseStatus(HttpStatus.NO_CONTENT)

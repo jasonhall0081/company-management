@@ -10,11 +10,10 @@ import cenglisch.hiring.application.job.query.JobQueryApplicationPort;
 import cenglisch.hiring.domain.model.candidate.CandidateService;
 import cenglisch.hiring.domain.model.interview.InterviewService;
 import cenglisch.hiring.domain.model.job.JobService;
+import cenglisch.hiring.port.adapter.secondary.messaging.EventPublisherAdapter;
 import cenglisch.hiring.port.adapter.secondary.persistence.candidate.CandidateRepositoryAdapter;
 import cenglisch.hiring.port.adapter.secondary.persistence.interview.InterviewRepositoryAdapter;
 import cenglisch.hiring.port.adapter.secondary.persistence.job.JobRepositoryAdapter;
-import cenglisch.hiring.port.adapter.secondary.messaging.EventPublisherAdapter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,11 +21,10 @@ import org.springframework.context.annotation.Configuration;
 @SuppressWarnings("checkstyle:DesignForExtension")
 public class BeanConfiguration {
 
-    @Autowired
-    private EventPublisherAdapter eventHandler;
+    private final EventPublisherAdapter eventHandler;
 
-    @Autowired
-    private CandidateRepositoryAdapter candidateRepositoryAdapter;
+    private final CandidateRepositoryAdapter candidateRepositoryAdapter;
+    private final InterviewRepositoryAdapter interviewRepositoryAdapter;
 
     @Bean
     CandidateCommandApplicationPort candidateApplicationPort() {
@@ -37,10 +35,7 @@ public class BeanConfiguration {
     CandidateService candidateService() {
         return new CandidateService(candidateRepositoryAdapter, eventHandler);
     }
-
-
-    @Autowired
-    private InterviewRepositoryAdapter interviewRepositoryAdapter;
+    private final JobRepositoryAdapter jobRepositoryAdapter;
 
     @Bean
     InterviewTypeCommandApplicationPort interviewTypeApplicationPort() {
@@ -61,8 +56,17 @@ public class BeanConfiguration {
         return new InterviewService(interviewRepositoryAdapter, eventHandler);
     }
 
-    @Autowired
-    private JobRepositoryAdapter jobRepositoryAdapter;
+    public BeanConfiguration(
+        final EventPublisherAdapter eventHandler,
+        final CandidateRepositoryAdapter candidateRepositoryAdapter,
+        final InterviewRepositoryAdapter interviewRepositoryAdapter,
+        final JobRepositoryAdapter jobRepositoryAdapter
+    ) {
+        this.eventHandler = eventHandler;
+        this.candidateRepositoryAdapter = candidateRepositoryAdapter;
+        this.interviewRepositoryAdapter = interviewRepositoryAdapter;
+        this.jobRepositoryAdapter = jobRepositoryAdapter;
+    }
 
     @Bean
     JobService jobService() {

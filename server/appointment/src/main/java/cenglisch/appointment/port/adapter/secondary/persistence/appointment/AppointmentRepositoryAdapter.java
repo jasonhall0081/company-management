@@ -6,7 +6,6 @@ import cenglisch.appointment.domain.model.appointment.AppointmentRepository;
 import cenglisch.appointment.domain.model.appointment.date.AppointmentDate;
 import cenglisch.appointment.domain.model.appointment.date.AppointmentDateId;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.participant.AppointmentParticipantJpaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,14 +15,21 @@ import java.util.Optional;
 @Service
 public class AppointmentRepositoryAdapter implements AppointmentRepository {
 
-    @Autowired
-    private AppointmentJpaRepository appointmentJpaRepository;
+    private final AppointmentJpaRepository appointmentJpaRepository;
 
-    @Autowired
-    private AppointmentParticipantJpaRepository appointmentParticipantJpaRepository;
+    private final AppointmentParticipantJpaRepository appointmentParticipantJpaRepository;
 
-    @Autowired
-    private AppointmentMapper appointmentMapper;
+    private final AppointmentMapper appointmentMapper;
+
+    public AppointmentRepositoryAdapter(
+        final AppointmentJpaRepository appointmentJpaRepository,
+        final AppointmentParticipantJpaRepository appointmentParticipantJpaRepository,
+        final AppointmentMapper appointmentMapper
+    ) {
+        this.appointmentJpaRepository = appointmentJpaRepository;
+        this.appointmentParticipantJpaRepository = appointmentParticipantJpaRepository;
+        this.appointmentMapper = appointmentMapper;
+    }
 
     public final List<Appointment> findAll() {
         return appointmentMapper.toAppointmentList(appointmentJpaRepository.findAll());
