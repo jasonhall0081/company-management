@@ -1,10 +1,8 @@
 package cenglisch.appointment.domain.model.appointment.date;
 
+import cenglisch.Default;
 import cenglisch.appointment.domain.model.Entity;
 import cenglisch.appointment.domain.model.appointment.AppointmentId;
-
-import java.sql.Date;
-import java.sql.Time;
 
 @org.jmolecules.ddd.annotation.Entity
 public final class AppointmentDate extends Entity {
@@ -21,12 +19,26 @@ public final class AppointmentDate extends Entity {
     private Time endTime;
 
     public AppointmentDate(
+            final AppointmentId appointmentId,
+            final Date date,
+            final Time startTime,
+            final Time endTime
+    ) {
+        setAppointmentId(appointmentId);
+        setDate(date);
+        setStartTime(startTime);
+        setEndTime(endTime);
+    }
+
+    @Default
+    public AppointmentDate(
             final AppointmentDateId appointmentDateId,
             final AppointmentId appointmentId,
             final Date date,
             final Time startTime,
             final Time endTime
     ) {
+        setAppointmentDateId(appointmentDateId);
         setAppointmentId(appointmentId);
         setDate(date);
         setStartTime(startTime);
@@ -39,25 +51,22 @@ public final class AppointmentDate extends Entity {
     }
 
     private void setAppointmentId(final AppointmentId appointmentId) {
-        assertArgumentNotNull(appointmentDateId, "provide a value for appointment Ωid");
+        assertArgumentNotNull(appointmentId, "provide a value for appointment id");
         this.appointmentId = appointmentId;
     }
 
     private void setDate(final Date date) {
         assertArgumentNotNull(date, "provide a value for date");
-        assertArgumentFuture(date, "the date must be in future");
         this.date = date;
     }
 
     private void setStartTime(final Time aStartTime) {
-        assertArgumentNotNull(aStartTime, "provide  a value for start time");
-        assertArgumentFuture(aStartTime, "provide a start time that is in future");
+        assertArgumentNotNull(aStartTime, "provide a value for start time");
         this.startTime = aStartTime;
     }
 
     private void setEndTime(final Time aEndTime) {
         assertArgumentNotNull(aEndTime, "provide a value for end time");
-        assertArgumentFuture(aEndTime, "provide a end time that is in future");
         this.endTime = aEndTime;
     }
 

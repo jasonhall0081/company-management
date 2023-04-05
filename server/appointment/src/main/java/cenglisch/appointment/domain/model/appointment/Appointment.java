@@ -2,6 +2,8 @@ package cenglisch.appointment.domain.model.appointment;
 
 import cenglisch.Default;
 import cenglisch.appointment.domain.model.appointment.date.AppointmentDate;
+import cenglisch.appointment.domain.model.appointment.date.Date;
+import cenglisch.appointment.domain.model.appointment.date.Time;
 import cenglisch.appointment.domain.model.appointment.exception.AppointmentException;
 import cenglisch.domain.model.PersonId;
 
@@ -10,6 +12,7 @@ import java.util.Collection;
 
 @org.jmolecules.ddd.annotation.AggregateRoot
 public final class Appointment {
+
     @org.jmolecules.ddd.annotation.Identity
     private AppointmentId appointmentId;
     private PersonId schedulingParticipant;
@@ -20,27 +23,18 @@ public final class Appointment {
     private AppointmentInformation appointmentInformation;
 
     public Appointment() {
+        appointmentDate = null;
         participants = new ArrayList<>();
     }
 
-    public Appointment(final PersonId participantId) {
-        this();
-        setAppointmentState(AppointmentState.PENDING);
-        setAppointmentType(AppointmentType.COMPULSORY_ATTENDANCE);
-        setSchedulingParticipant(participantId);
-    }
-
     public Appointment(
-            final PersonId participant,
-            final AppointmentDate appointmentDate,
-            final AppointmentType appointmentType,
+            final PersonId schedulingParticipant,
             final AppointmentInformation appointmentInformation
     ) {
         this();
-        setSchedulingParticipant(participant);
-        setAppointmentDate(appointmentDate);
-        setAppointmentType(appointmentType);
-        setAppointmentState(AppointmentState.PENDING);
+        setAppointmentState(AppointmentState.INITIALIZED);
+        setAppointmentType(AppointmentType.COMPULSORY_ATTENDANCE);
+        setSchedulingParticipant(schedulingParticipant);
         setAppointmentInformation(appointmentInformation);
     }
 
@@ -63,14 +57,42 @@ public final class Appointment {
         this.appointmentInformation = appointmentInformation;
     }
 
-    public void rescheduleAppointment(final AppointmentDate appointmentDate) {
+    public void registerAppointment(final String date, final String startTime, final String endTime) {
+        if (!isInitalized() || appointmentDate != null) {
+            throw new AppointmentException("invalid state change for appointment");
+        }
+        setAppointmentDate(
+                new AppointmentDate(
+                        appointmentId,
+                        new Date(date),
+                        new Time(startTime),
+                        new Time(endTime)
+                )
+        );
+        setAppointmentState(
+                AppointmentState.PENDING
+        );
+    }
+
+    public void rescheduleAppointment(final String date, final String startTime, final String endTime) {
         if (isLaunched() || isFinished()) {
             throw new AppointmentException("invalid state change for appointment");
         }
-        if (appointmentDate.equals(this.appointmentDate)) {
+
+        var rescheduleAppointmentDate = new AppointmentDate(
+                appointmentId,
+                new Date(date),
+                new Time(startTime),
+                new Time(endTime)
+        );
+
+        if (appointmentDate.equals(rescheduleAppointmentDate)) {
             return;
         }
-        setAppointmentDate(this.appointmentDate);
+
+        setAppointmentDate(
+                rescheduleAppointmentDate
+        );
     }
 
     public void acceptAppointment() {
@@ -96,7 +118,8 @@ public final class Appointment {
 
     public void finishAppointment() {
         if (!isLaunched()) {
-            throw new AppointmentException("invalid state change for appointment");
+            throw new
+                    AppointmentException("invalid state change for appointment");
         }
         setAppointmentState(AppointmentState.FINISHED);
     }
@@ -116,6 +139,10 @@ public final class Appointment {
 
     public boolean isCompulsoryAttendanceRequired() {
         return appointmentType == AppointmentType.COMPULSORY_ATTENDANCE;
+    }
+
+    public boolean isInitalized() {
+        return appointmentState == AppointmentState.INITIALIZED;
     }
 
     public boolean isPending() {

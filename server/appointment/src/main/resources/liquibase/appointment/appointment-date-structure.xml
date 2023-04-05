@@ -11,9 +11,9 @@
             <column name="id" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column defaultValueComputed="NULL" name="date" type="date"/>
-            <column defaultValueComputed="NULL" name="end_time" type="time"/>
-            <column defaultValueComputed="NULL" name="start_time" type="time"/>
+            <column defaultValueComputed="NULL" name="date" type="VARCHAR(10)"/>
+            <column defaultValueComputed="NULL" name="end_time" type="VARCHAR(5)"/>
+            <column defaultValueComputed="NULL" name="start_time" type="VARCHAR(5)"/>
             <column name="appointment_id" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>

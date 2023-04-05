@@ -1,17 +1,14 @@
 package cenglisch.appointment.port.adapter.secondary.persistence.appointment.date;
 
-import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentEntity;
 import cenglisch.Default;
 
+import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-
-import java.sql.Date;
-import java.sql.Time;
 
 @Entity
 @Table(name = "appointment_date")
@@ -26,13 +23,13 @@ public final class AppointmentDateEntity {
     private AppointmentEntity appointment;
 
     @Column
-    private Date date;
+    private String date;
 
     @Column
-    private Time startTime;
+    private String startTime;
 
     @Column
-    private Time endTime;
+    private String endTime;
 
     public AppointmentDateEntity() {
 
@@ -42,9 +39,9 @@ public final class AppointmentDateEntity {
     public AppointmentDateEntity(
             final String id,
             final AppointmentEntity appointment,
-            final Date date,
-            final Time startTime,
-            final Time endTime
+            final String date,
+            final String startTime,
+            final String endTime
     ) {
         this.id = id;
         this.appointment = appointment;
@@ -61,15 +58,15 @@ public final class AppointmentDateEntity {
         return appointment;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public Time getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public Time getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 }

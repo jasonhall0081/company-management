@@ -3,8 +3,7 @@ package cenglisch.appointment.port.adapter.secondary.persistence.appointment.dat
 import cenglisch.appointment.domain.model.appointment.AppointmentId;
 import cenglisch.appointment.domain.model.appointment.date.AppointmentDate;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentEntity;
-import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentJpaRepository;
-import org.mapstruct.Context;
+
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -18,6 +17,9 @@ public interface AppointmentDateMapper {
 
     @Mapping(target = "appointmentDateId.id", source = "id")
     @Mapping(target = "appointmentId.id", source = "appointment.id")
+    @Mapping(target = "date.date", source = "date")
+    @Mapping(target = "startTime.time", source = "startTime")
+    @Mapping(target = "endTime.time", source = "endTime")
     @Named("toAppointmentDate")
     AppointmentDate toAppointmentDate(AppointmentDateEntity appointmentDateEntity);
 
@@ -27,13 +29,16 @@ public interface AppointmentDateMapper {
         source = "appointmentId",
         qualifiedByName = "fromAppointmentDateToAppointmentEntity"
     )
+    @Mapping(target = "date", source = "date.date")
+    @Mapping(target = "startTime", source = "startTime.time")
+    @Mapping(target = "endTime", source = "endTime.time")
     @Named("toAppointmentDateEntity")
     AppointmentDateEntity toAppointmentDateEntity(
             AppointmentDate appointmentDate
     );
 
     @Named("fromAppointmentDateToAppointmentEntity")
-    default AppointmentEntity fromAppointmentDateToAppointmentEntity(AppointmentId appointmentId){
+    default AppointmentEntity fromAppointmentDateToAppointmentEntity(AppointmentId appointmentId) {
         //TODO prüfen ob die Methode gegen ein direktes Mapping entfernt werden kann
         return new AppointmentEntity(appointmentId.id());
     }

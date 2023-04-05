@@ -30,7 +30,8 @@ public final class AppointmentCommandInterviewApplicationPort {
         appointmentInterviewService.generateAppointmentInterview(
                 generateInterviewAppointment.interviewId(),
                 appointmentService.initializeAppointment(
-                        generateInterviewAppointment.personId()
+                        generateInterviewAppointment.personId(),
+                        new AppointmentInterviewInformation()
                 )
         );
     }

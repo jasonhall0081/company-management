@@ -25,27 +25,39 @@ public final class AppointmentCommandApplicationPort {
         });
     }
 
+    public void initializeAppointment(final InitializeAppointment initializeAppointment) {
+        appointmentService.initializeAppointment(
+                initializeAppointment.schedulingParticipant(),
+                initializeAppointment.appointmentInformation()
+        );
+    }
+
     public void appointmentRegistration(final AppointmentRegistration appointmentRegistration) {
-        appointmentService.appointmentRegistration(
+        appointmentService.registerAppointment(
                 appointmentRegistration.appointmentId(),
-                appointmentRegistration.schedulingParticipant(),
-                appointmentRegistration.appointmentDate(),
-                appointmentRegistration.appointmentType(),
-                appointmentRegistration.appointmentInformation()
+                appointmentRegistration.date(),
+                appointmentRegistration.startTime(),
+                appointmentRegistration.endTime()
         );
     }
 
     public void rescheduleAppointment(final RescheduleAppointment rescheduleAppointment) {
-        //das appointment date muss noch erstellt werden, es existsiert bis jetzt noch nicht in der db
-        //entweder wird von hier aus direkt der service angestoßen
-        // oder man lauscht auf das event, dass ein neues date erstellt wurde
         appointmentService.rescheduleAppointment(
                 rescheduleAppointment.appointmentId(),
-                rescheduleAppointment.appointmentDate()
+                rescheduleAppointment.date(),
+                rescheduleAppointment.startTime(),
+                rescheduleAppointment.endTime()
         );
     }
 
-    public void acceptAppointment(final AcceptAppointment acceptAppointment) {
+    public void addParticipant(final AddParticipant addParticipant) {
+        appointmentService.addParticipant(
+                addParticipant.appointmentId(),
+                addParticipant.participantId()
+        );
+    }
+
+    private void acceptAppointment(final AcceptAppointment acceptAppointment) {
         final Appointment appointment = appointmentService.pickUpAppointment(
                 acceptAppointment.appointmentId()
         ).orElseThrow(AppointmentNotFoundException::new);
@@ -70,13 +82,6 @@ public final class AppointmentCommandApplicationPort {
     public void finishAppointment(final FinishAppointment finishAppointment) {
         appointmentService.finishAppointment(
                 finishAppointment.appointmentId()
-        );
-    }
-
-    public void addParticipant(final AddParticipant addParticipant) {
-        appointmentService.addParticipant(
-                addParticipant.appointmentId(),
-                addParticipant.participantId()
         );
     }
 }

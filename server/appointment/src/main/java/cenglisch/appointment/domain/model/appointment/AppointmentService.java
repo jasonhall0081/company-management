@@ -1,6 +1,5 @@
 package cenglisch.appointment.domain.model.appointment;
 
-import cenglisch.appointment.domain.model.appointment.date.AppointmentDate;
 import cenglisch.appointment.domain.model.appointment.event.*;
 import cenglisch.appointment.domain.model.appointment.exception.AppointmentNotFoundException;
 import cenglisch.domain.model.EventHandler;
@@ -36,40 +35,60 @@ public final class AppointmentService {
         return appointment.allParticipants();
     }
 
-    public AppointmentId initializeAppointment(final PersonId participant) {
-        Appointment appointment = appointmentRepository.save(new Appointment(participant));
+    public AppointmentId initializeAppointment(
+            final PersonId schedulingParticipant,
+            final AppointmentInformation appointmentInformation
+    ) {
+        Appointment appointment = appointmentRepository.save(
+                new Appointment(
+                        schedulingParticipant,
+                        appointmentInformation
+                )
+        );
+
+        eventHandler.publish(new AppointmentCreated(
+                appointment.getAppointmentId(),
+                schedulingParticipant
+        ));
+
         return appointment.getAppointmentId();
     }
 
-    public void appointmentRegistration(
+    public void registerAppointment(
             final AppointmentId appointmentId,
-            final PersonId schedulingParticipant,
-            final AppointmentDate appointmentDate,
-            final AppointmentType appointmentType,
-            final AppointmentInformation appointmentInformation
+            final String date,
+            final String startTime,
+            final String startDate
     ) {
-        Appointment appointment = new Appointment(
-                schedulingParticipant,
-                appointmentDate,
-                appointmentType,
-                appointmentInformation
-        );
-        if (appointmentId != null) {
-            appointment.setAppointmentId(appointmentId);
-        }
-        appointmentRepository.save(appointment);
-        eventHandler.publish(
+        manageAppointment(
+                appointmentId,
+                appointment -> appointment.registerAppointment(
+                        date,
+                        startTime,
+                        startDate
+                ),
                 new AppointmentCreated(
-                        appointment.getAppointmentId(),
-                        schedulingParticipant
+                        appointmentId,
+                        pickUpAppointment(appointmentId)
+                                .orElseThrow(AppointmentNotFoundException::new)
+                                .getSchedulingParticipant()
                 )
         );
     }
 
-    public void rescheduleAppointment(final AppointmentId appointmentId, final AppointmentDate appointmentDate) {
+    public void rescheduleAppointment(
+            final AppointmentId appointmentId,
+            final String date,
+            final String startTime,
+            final String endTime
+    ) {
         manageAppointment(
                 appointmentId,
-                appointment -> appointment.rescheduleAppointment(appointmentDate),
+                appointment -> appointment.rescheduleAppointment(
+                        date,
+                        startTime,
+                        endTime
+                ),
                 new AppointmentRescheduled(appointmentId)
         );
     }
@@ -81,6 +100,7 @@ public final class AppointmentService {
                 new AppointmentCanceled(appointmentId)
         );
     }
+
     public void acceptAppointment(final AppointmentId appointmentId) {
         manageAppointment(
                 appointmentId,
@@ -109,7 +129,10 @@ public final class AppointmentService {
         manageAppointment(
                 appointmentId,
                 appointment -> appointment.addParticipant(participant),
-                new ParticipantAddedToAppointment(appointmentId, participant)
+                new ParticipantAddedToAppointment(
+                        appointmentId,
+                        participant
+                )
         );
     }
 
@@ -118,7 +141,8 @@ public final class AppointmentService {
             final Consumer<Appointment> appointmentConsumer,
             final AppointmentEvent appointmentEvent
     ) {
-        Appointment appointment = pickUpAppointment(appointmentId).orElseThrow(AppointmentNotFoundException::new);
+        Appointment appointment = pickUpAppointment(appointmentId)
+                .orElseThrow(AppointmentNotFoundException::new);
         appointmentConsumer.accept(appointment);
         appointmentRepository.save(appointment);
         eventHandler.publish(appointmentEvent);

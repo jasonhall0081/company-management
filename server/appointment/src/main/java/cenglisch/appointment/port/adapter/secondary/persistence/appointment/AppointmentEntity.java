@@ -1,7 +1,6 @@
 package cenglisch.appointment.port.adapter.secondary.persistence.appointment;
 
 import cenglisch.Default;
-import cenglisch.appointment.domain.model.appointment.AppointmentInformation;
 import cenglisch.appointment.domain.model.appointment.AppointmentState;
 import cenglisch.appointment.domain.model.appointment.AppointmentType;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.date.AppointmentDateEntity;
@@ -40,14 +39,11 @@ public final class AppointmentEntity {
     @Column(nullable = false)
     private AppointmentState appointmentState;
 
-    @Embedded
-    private AppointmentInformation appointmentInformation;
-
     public AppointmentEntity() {
 
     }
 
-    public AppointmentEntity(final String id){
+    public AppointmentEntity(final String id) {
         this.id = id;
     }
 
@@ -58,8 +54,7 @@ public final class AppointmentEntity {
             final Collection<AppointmentParticipantEntity> participants,
             final AppointmentDateEntity publishedAppointmentDate,
             final AppointmentType appointmentType,
-            final AppointmentState appointmentState,
-            final AppointmentInformation appointmentInformation
+            final AppointmentState appointmentState
     ) {
         this.id = id;
         this.schedulingParticipant = schedulingParticipant;
@@ -67,7 +62,6 @@ public final class AppointmentEntity {
         this.publishedAppointmentDate = publishedAppointmentDate;
         this.appointmentType = appointmentType;
         this.appointmentState = appointmentState;
-        this.appointmentInformation = appointmentInformation;
     }
 
     public String getId() {
@@ -92,9 +86,5 @@ public final class AppointmentEntity {
 
     public AppointmentState getAppointmentState() {
         return appointmentState;
-    }
-
-    public AppointmentInformation getAppointmentInformation() {
-        return appointmentInformation;
     }
 }

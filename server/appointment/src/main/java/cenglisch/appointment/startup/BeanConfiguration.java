@@ -11,6 +11,7 @@ import cenglisch.appointment.port.adapter.secondary.messaging.EventPublisherAdap
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentRepositoryAdapter;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.interview.AppointmentInterviewRepositoryAdapter;
 import cenglisch.appointment.port.adapter.secondary.persistence.commitment.CommitmentRepositoryAdapter;
+import cenglisch.domain.model.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -77,6 +78,11 @@ public class BeanConfiguration {
                 commitmentService(),
                 appointmentService()
         );
+    }
+
+    @Bean
+    public EventHandler eventHandler() {
+        return EventPublisherAdapter.getInstance();
     }
 }
 

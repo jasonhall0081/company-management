@@ -10,25 +10,22 @@ public final class AppointmentParticipantEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "appointment_id", referencedColumnName = "id")
     private AppointmentEntity appointment;
 
-    private String personId;
-
-    @Default
+    private String participantId;
     public AppointmentParticipantEntity() {
     }
 
-    public AppointmentParticipantEntity(final AppointmentEntity appointment, final String personId) {
+    public AppointmentParticipantEntity(final AppointmentEntity appointment, final String participantId) {
         this.appointment = appointment;
-        this.personId = personId;
+        this.participantId = participantId;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -36,7 +33,7 @@ public final class AppointmentParticipantEntity {
         return appointment;
     }
 
-    public String getPersonId() {
-        return personId;
+    public String getParticipantId() {
+        return participantId;
     }
 }

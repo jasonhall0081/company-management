@@ -37,7 +37,7 @@ public interface AppointmentMapper {
     @Named("toPersonIds")
     default Collection<PersonId> toPersonIds(Collection<AppointmentParticipantEntity> participants) {
         return participants.stream()
-                .map(AppointmentParticipantEntity::getPersonId)
+                .map(AppointmentParticipantEntity::getParticipantId)
                 .map(PersonId::new)
                 .collect(Collectors.toList());
     }

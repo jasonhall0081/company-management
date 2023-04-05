@@ -50,6 +50,7 @@ public final class CommitmentService {
         eventHandler.publish(
                 commitment.isCommitmentStateConfirmed()
                         ? new ConfirmedCommitment(commitment.getCommitmentId(), appointmentId, participant)
-                        : new RejectedCommitment(commitment.getCommitmentId(), appointmentId, participant));
+                        : new RejectedCommitment(commitment.getCommitmentId(), appointmentId, participant)
+        );
     }
 }
