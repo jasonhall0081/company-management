@@ -31,7 +31,7 @@ public final class CommitmentRepositoryAdapter implements CommitmentRepository {
     }
 
     public Collection<Commitment> findByAppointmentIdAndAppointmentDateId(
-        final AppointmentId appointmentId, final
+        final AppointmentId appointmentId,
         final AppointmentDateId appointmentDateId
     ) {
         return commitmentMapper.toCommitmentCollection(
