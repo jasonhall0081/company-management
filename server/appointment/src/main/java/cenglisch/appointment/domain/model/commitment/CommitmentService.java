@@ -3,14 +3,11 @@ package cenglisch.appointment.domain.model.commitment;
 import cenglisch.appointment.domain.model.appointment.AppointmentId;
 import cenglisch.appointment.domain.model.appointment.date.AppointmentDateId;
 import cenglisch.appointment.domain.model.commitment.event.CommitmentCanceled;
-import cenglisch.appointment.domain.model.commitment.event.CommitmentConfirmed;
 import cenglisch.appointment.domain.model.commitment.event.CommitmentEventFactory;
-import cenglisch.appointment.domain.model.commitment.event.CommitmentRejected;
 import cenglisch.domain.model.EventHandler;
 import cenglisch.domain.model.PersonId;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @org.jmolecules.ddd.annotation.Service
 public final class CommitmentService {

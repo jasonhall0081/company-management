@@ -30,7 +30,10 @@ public final class CommitmentRepositoryAdapter implements CommitmentRepository {
         return commitmentMapper.toCommitmentCollection(commitmentJpaRepository.findByAppointmentId(appointmentId.id()));
     }
 
-    public Collection<Commitment> findByAppointmentIdAndAppointmentDateId(AppointmentId appointmentId, AppointmentDateId appointmentDateId) {
+    public Collection<Commitment> findByAppointmentIdAndAppointmentDateId(
+        final AppointmentId appointmentId, final
+        final AppointmentDateId appointmentDateId
+    ) {
         return commitmentMapper.toCommitmentCollection(
                 commitmentJpaRepository.findByAppointmentIdAndAppointmentDateId(
                         appointmentId.id(),
@@ -60,7 +63,7 @@ public final class CommitmentRepositoryAdapter implements CommitmentRepository {
         return commitment;
     }
 
-    public void saveAll(Collection<Commitment> commitments) {
+    public void saveAll(final Collection<Commitment> commitments) {
         commitmentJpaRepository.saveAll(
                 commitmentMapper.toCommitmentEntityCollection(commitments)
         );

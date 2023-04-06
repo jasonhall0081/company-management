@@ -3,8 +3,6 @@ package cenglisch.appointment.port.adapter.secondary.persistence.commitment;
 import cenglisch.appointment.domain.model.appointment.AppointmentId;
 import cenglisch.appointment.domain.model.commitment.Commitment;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentEntity;
-import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentJpaRepository;
-import org.mapstruct.Context;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;

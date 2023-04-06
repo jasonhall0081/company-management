@@ -3,13 +3,13 @@ package cenglisch.appointment.domain.model.commitment.event;
 
 import cenglisch.appointment.domain.model.commitment.Commitment;
 
-public class CommitmentEventFactory {
+public final class CommitmentEventFactory {
 
-    private CommitmentEventFactory(){
+    private CommitmentEventFactory() {
 
     }
 
-    public static CommitmentEvent make(Commitment commitment){
+    public static CommitmentEvent make(final Commitment commitment) {
         return switch (commitment.getCommitmentState()) {
             case CONFIRMED -> new CommitmentConfirmed(
                     commitment.getCommitmentId(),

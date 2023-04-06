@@ -3,10 +3,9 @@ package cenglisch.appointment.domain.model.commitment;
 import java.time.Instant;
 
 import cenglisch.Default;
-import org.jmolecules.ddd.annotation.ValueObject;
 
-@ValueObject
-public class CommitmentGivenAt {
+@org.jmolecules.ddd.annotation.ValueObject
+public final class CommitmentGivenAt {
 
     private final Instant timestamp;
 
@@ -15,7 +14,7 @@ public class CommitmentGivenAt {
     }
 
     @Default
-    public CommitmentGivenAt(Instant timestamp) {
+    public CommitmentGivenAt(final Instant timestamp) {
         this.timestamp = timestamp;
     }
 

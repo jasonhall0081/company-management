@@ -68,7 +68,7 @@ public final class Commitment {
     private void setAppointmentId(final AppointmentId appointmentId) {
         this.appointmentId = appointmentId;
     }
-    private void setAppointmentDateId(AppointmentDateId appointmentDateId) {
+    private void setAppointmentDateId(final AppointmentDateId appointmentDateId) {
         this.appointmentDateId = appointmentDateId;
     }
 
