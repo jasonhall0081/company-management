@@ -21,6 +21,7 @@ public class BeanConfiguration {
     private final EventPublisherAdapter eventPublisherAdapter;
 
     private final AppointmentRepositoryAdapter appointmentRepositoryAdapter;
+
     private final AppointmentInterviewRepositoryAdapter appointmentInterviewRepositoryAdapter;
 
     @Bean
@@ -80,7 +81,8 @@ public class BeanConfiguration {
     public CommitmentApplicationPort commitmentApplicationPort() {
         return new CommitmentApplicationPort(
                 commitmentService(),
-                appointmentService()
+                appointmentService(),
+                eventPublisherAdapter
         );
     }
 }

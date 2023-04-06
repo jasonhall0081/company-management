@@ -63,7 +63,8 @@ public final class AppointmentCommandApplicationPort {
         ).orElseThrow(AppointmentNotFoundException::new);
 
         final boolean allParticipantAcceptedCommitment = commitmentService.allParticipantAcceptedCommitment(
-                acceptAppointment.appointmentId(),
+                appointment.getAppointmentId(),
+                appointment.getAppointmentDate().getAppointmentDateId(),
                 appointment.getParticipants().size()
         );
 

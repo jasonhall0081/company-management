@@ -91,7 +91,10 @@ public final class Appointment {
         }
 
         setAppointmentDate(
-                rescheduleAppointmentDate
+            rescheduleAppointmentDate
+        );
+        setAppointmentState(
+            AppointmentState.PENDING
         );
     }
 

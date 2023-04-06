@@ -13,7 +13,9 @@
             </column>
             <column name="commitment_state" type="VARCHAR(255)"/>
             <column name="appointment_id" type="VARCHAR(255)"/>
+            <column name="appointment_date_id" type="VARCHAR(255)"/>
             <column name="participant_id" type="VARCHAR(255)"/>
+            <column name="commitment_given_at" type="TIMESTAMP"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

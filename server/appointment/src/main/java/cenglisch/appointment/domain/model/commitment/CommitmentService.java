@@ -1,12 +1,16 @@
 package cenglisch.appointment.domain.model.commitment;
 
 import cenglisch.appointment.domain.model.appointment.AppointmentId;
+import cenglisch.appointment.domain.model.appointment.date.AppointmentDateId;
+import cenglisch.appointment.domain.model.commitment.event.CommitmentCanceled;
 import cenglisch.appointment.domain.model.commitment.event.CommitmentConfirmed;
+import cenglisch.appointment.domain.model.commitment.event.CommitmentEventFactory;
 import cenglisch.appointment.domain.model.commitment.event.CommitmentRejected;
 import cenglisch.domain.model.EventHandler;
 import cenglisch.domain.model.PersonId;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @org.jmolecules.ddd.annotation.Service
 public final class CommitmentService {
@@ -22,35 +26,53 @@ public final class CommitmentService {
         this.eventHandler = eventHandler;
     }
 
-    public boolean allParticipantAcceptedCommitment(final AppointmentId appointmentId, final int numberOfParticipants) {
+    public boolean allParticipantAcceptedCommitment(
+        final AppointmentId appointmentId,
+        final AppointmentDateId appointmentDateId,
+        final int numberOfParticipants
+    ) {
+        Collection<Commitment> commitments = commitmentRepository.findByAppointmentIdAndAppointmentDateId(
+                appointmentId,
+                appointmentDateId
+        );
+
+        return commitments.size() == numberOfParticipants && commitments.stream().noneMatch(Commitment::isRejected);
+    }
+
+    public void cancelCommitments(final AppointmentId appointmentId) {
         Collection<Commitment> commitments = commitmentRepository.findByAppointmentId(appointmentId);
-        if (commitments.size() != numberOfParticipants) {
-            return false;
+        if (commitments.isEmpty()) {
+            return;
         }
-        for (Commitment commitment : commitments) {
-            if (commitment.isCommitmentStateRejected()) {
-                return false;
-            }
-        }
-        return true;
+
+        commitments.forEach(Commitment::cancel);
+        commitmentRepository.saveAll(commitments);
+
+        commitments.forEach(
+            commitment -> eventHandler.publish(
+                    new CommitmentCanceled(
+                            commitment.getCommitmentId()
+                    )
+            )
+        );
     }
 
     public void giveCommitment(
             final AppointmentId appointmentId,
+            final AppointmentDateId appointmentDateId,
             final PersonId participant,
             final CommitmentState commitmentState
     ) {
         Commitment commitment = commitmentRepository.save(
                 new Commitment(
                         appointmentId,
+                        appointmentDateId,
                         participant,
                         commitmentState
                 )
         );
         eventHandler.publish(
-                commitment.isCommitmentStateConfirmed()
-                        ? new CommitmentConfirmed(commitment.getCommitmentId(), appointmentId, participant)
-                        : new CommitmentRejected(commitment.getCommitmentId(), appointmentId, participant)
+                CommitmentEventFactory.make(commitment)
         );
     }
 }

@@ -23,6 +23,7 @@ public interface CommitmentMapper {
     @Mapping(target = "commitmentId.id", source = "id")
     @Mapping(target = "appointmentId.id", source = "appointment.id")
     @Mapping(target = "participant.id", source = "participant")
+    @Mapping(target = "commitmentGivenAt.timestamp", source = "commitmentGivenAt")
     @Named("toCommitment")
     Commitment toCommitment(CommitmentEntity commitmentEntity);
 
@@ -32,17 +33,19 @@ public interface CommitmentMapper {
     @Mapping(target = "id", source = "commitmentId.id")
     @Mapping(target = "appointment", source = "appointmentId", qualifiedByName = "mapAppointmentIdToAppointmentEntity")
     @Mapping(target = "participant", source = "participant.id")
+    @Mapping(target = "commitmentGivenAt", source = "commitmentGivenAt.timestamp")
     CommitmentEntity toCommitmentEntity(
-            Commitment commitment,
-            @Context AppointmentJpaRepository appointmentRepository
+            Commitment commitment
     );
+
+    @IterableMapping(qualifiedByName = "toCommitmentEntity")
+    Collection<CommitmentEntity> toCommitmentEntityCollection(Collection<Commitment> commitments);
 
     @Named("mapAppointmentIdToAppointmentEntity")
     default AppointmentEntity mapAppointmentIdToAppointmentEntity(
-            AppointmentId appointmentId,
-            @Context AppointmentJpaRepository appointmentRepository
+            AppointmentId appointmentId
     ) {
-        return appointmentRepository.findById(appointmentId.id()).orElse(null);
+        return new AppointmentEntity(appointmentId.id());
     }
 
     default Collection<Commitment> toCommitmentCollection(Collection<CommitmentEntity> commitmentEntityCollection) {

@@ -6,6 +6,8 @@ import cenglisch.appointment.domain.model.appointment.interview.event.Appointmen
 import cenglisch.appointment.domain.model.appointment.interview.event.AppointmentInterviewGenerated;
 import cenglisch.domain.model.EventHandler;
 
+import java.util.Optional;
+
 @org.jmolecules.ddd.annotation.Service
 public final class AppointmentInterviewService {
 
@@ -33,13 +35,16 @@ public final class AppointmentInterviewService {
             final AppointmentId appointmentId,
             final AppointmentState appointmentState
     ) {
-        AppointmentInterview appointmentInterview = appointmentInterviewRepository
-                .findByAppointmentId(appointmentId)
-                .orElseThrow(AppointmentInterviewNotFoundException::new);
+        Optional<AppointmentInterview> appointmentInterview = appointmentInterviewRepository
+                .findByAppointmentId(appointmentId);
+
+        if (appointmentInterview.isEmpty()) {
+            return;
+        }
 
         eventHandler.publish(
                 AppointmentInterviewEventFactory.make(
-                        appointmentInterview.appointmentInterviewId(),
+                        appointmentInterview.get().appointmentInterviewId(),
                         appointmentState
                 )
         );
