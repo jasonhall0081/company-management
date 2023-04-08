@@ -22,20 +22,24 @@ public class AppointmentRepositoryAdapter implements AppointmentRepository {
     private final AppointmentMapper appointmentMapper;
 
     public AppointmentRepositoryAdapter(
-        final AppointmentJpaRepository appointmentJpaRepository,
-        final AppointmentParticipantJpaRepository appointmentParticipantJpaRepository,
-        final AppointmentMapper appointmentMapper
+            final AppointmentJpaRepository appointmentJpaRepository,
+            final AppointmentParticipantJpaRepository appointmentParticipantJpaRepository,
+            final AppointmentMapper appointmentMapper
     ) {
         this.appointmentJpaRepository = appointmentJpaRepository;
         this.appointmentParticipantJpaRepository = appointmentParticipantJpaRepository;
         this.appointmentMapper = appointmentMapper;
     }
 
-    public final List<Appointment> findAll() {
+    @Transactional(readOnly = true)
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public List<Appointment> findAll() {
         return appointmentMapper.toAppointmentList(appointmentJpaRepository.findAll());
     }
 
-    public final Optional<Appointment> find(final AppointmentId appointmentId) {
+    @Transactional(readOnly = true)
+    @SuppressWarnings("checkstyle:DesignForExtension")
+    public Optional<Appointment> find(final AppointmentId appointmentId) {
         Optional<AppointmentEntity> optionalAppointment = appointmentJpaRepository.findById(appointmentId.id());
         return optionalAppointment.map(appointmentEntity -> appointmentMapper.toAppointment(appointmentEntity));
     }

@@ -39,15 +39,12 @@ public final class AppointmentEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AppointmentState appointmentState;
-
     public AppointmentEntity() {
 
     }
-
     public AppointmentEntity(final String id) {
         this.id = id;
     }
-
     @Default
     public AppointmentEntity(
             final String id,

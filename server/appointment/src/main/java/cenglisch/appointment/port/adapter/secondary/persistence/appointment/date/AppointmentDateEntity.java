@@ -35,6 +35,10 @@ public final class AppointmentDateEntity {
 
     }
 
+    public AppointmentDateEntity(final String id) {
+        this.id = id;
+    }
+
     @Default
     public AppointmentDateEntity(
             final String id,

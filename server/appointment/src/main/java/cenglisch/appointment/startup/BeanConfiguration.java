@@ -24,6 +24,20 @@ public class BeanConfiguration {
 
     private final AppointmentInterviewRepositoryAdapter appointmentInterviewRepositoryAdapter;
 
+    private final CommitmentRepositoryAdapter commitmentRepositoryAdapter;
+
+    public BeanConfiguration(
+        final EventPublisherAdapter eventPublisherAdapter,
+        final AppointmentRepositoryAdapter appointmentRepositoryAdapter,
+        final AppointmentInterviewRepositoryAdapter appointmentInterviewRepositoryAdapter,
+        final CommitmentRepositoryAdapter commitmentRepositoryAdapter
+    ) {
+        this.eventPublisherAdapter = eventPublisherAdapter;
+        this.appointmentRepositoryAdapter = appointmentRepositoryAdapter;
+        this.appointmentInterviewRepositoryAdapter = appointmentInterviewRepositoryAdapter;
+        this.commitmentRepositoryAdapter = commitmentRepositoryAdapter;
+    }
+
     @Bean
     public AppointmentService appointmentService() {
         return new AppointmentService(appointmentRepositoryAdapter, eventPublisherAdapter);
@@ -37,7 +51,6 @@ public class BeanConfiguration {
                 eventPublisherAdapter
         );
     }
-    private final CommitmentRepositoryAdapter commitmentRepositoryAdapter;
 
     @Bean
     public AppointmentInterviewService appointmentInterviewService() {
@@ -58,18 +71,6 @@ public class BeanConfiguration {
         return new AppointmentQueryApplicationPort(
                 appointmentRepositoryAdapter
         );
-    }
-
-    public BeanConfiguration(
-        final EventPublisherAdapter eventPublisherAdapter,
-        final AppointmentRepositoryAdapter appointmentRepositoryAdapter,
-        final AppointmentInterviewRepositoryAdapter appointmentInterviewRepositoryAdapter,
-        final CommitmentRepositoryAdapter commitmentRepositoryAdapter
-    ) {
-        this.eventPublisherAdapter = eventPublisherAdapter;
-        this.appointmentRepositoryAdapter = appointmentRepositoryAdapter;
-        this.appointmentInterviewRepositoryAdapter = appointmentInterviewRepositoryAdapter;
-        this.commitmentRepositoryAdapter = commitmentRepositoryAdapter;
     }
 
     @Bean

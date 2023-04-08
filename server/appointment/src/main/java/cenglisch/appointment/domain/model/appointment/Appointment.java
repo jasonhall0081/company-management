@@ -28,8 +28,8 @@ public final class Appointment {
     }
 
     public Appointment(
-            final PersonId scheduler,
-            final AppointmentInformation appointmentInformation
+        final PersonId scheduler,
+        final AppointmentInformation appointmentInformation
     ) {
         this();
         setAppointmentState(AppointmentState.INITIALIZED);
@@ -40,13 +40,13 @@ public final class Appointment {
 
     @Default
     public Appointment(
-            final AppointmentId appointmentId,
-            final PersonId scheduler,
-            final Collection<PersonId> participants,
-            final AppointmentDate appointmentDate,
-            final AppointmentType appointmentType,
-            final AppointmentState appointmentState,
-            final AppointmentInformation appointmentInformation
+        final AppointmentId appointmentId,
+        final PersonId scheduler,
+        final Collection<PersonId> participants,
+        final AppointmentDate appointmentDate,
+        final AppointmentType appointmentType,
+        final AppointmentState appointmentState,
+        final AppointmentInformation appointmentInformation
     ) {
         this.appointmentId = appointmentId;
         this.scheduler = scheduler;
@@ -58,7 +58,7 @@ public final class Appointment {
     }
 
     public void registerAppointment(final String date, final String startTime, final String endTime) {
-        if (!isInitalized() || appointmentDate != null) {
+        if (!isInitialized() || appointmentDate != null) {
             throw new AppointmentException("invalid state change for appointment");
         }
         setAppointmentDate(
@@ -70,7 +70,7 @@ public final class Appointment {
                 )
         );
         setAppointmentState(
-                AppointmentState.PENDING
+            AppointmentState.PENDING
         );
     }
 
@@ -144,7 +144,7 @@ public final class Appointment {
         return appointmentType == AppointmentType.COMPULSORY_ATTENDANCE;
     }
 
-    public boolean isInitalized() {
+    public boolean isInitialized() {
         return appointmentState == AppointmentState.INITIALIZED;
     }
 
