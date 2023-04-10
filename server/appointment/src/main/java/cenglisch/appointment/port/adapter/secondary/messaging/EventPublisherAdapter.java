@@ -24,7 +24,7 @@ public final class EventPublisherAdapter extends AbstractEventPublisher {
                 .log(Level.INFO, String.valueOf(domainEvent.getClass()));
 
         streamBridge.send(
-                domainEvent.topic(),
+            domainEvent.topic(),
             domainEvent
         );
     }

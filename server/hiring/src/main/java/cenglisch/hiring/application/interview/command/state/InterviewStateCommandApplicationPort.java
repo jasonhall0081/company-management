@@ -14,9 +14,6 @@ import cenglisch.hiring.domain.model.interview.exception.InterviewException;
 import cenglisch.hiring.domain.model.interview.exception.InterviewNotFoundException;
 import cenglisch.hiring.domain.model.interview.state.InterviewState;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public final class InterviewStateCommandApplicationPort {
 
     private final InterviewService interviewService;
@@ -59,8 +56,11 @@ public final class InterviewStateCommandApplicationPort {
     }
 
     public void acceptInterview(final AcceptInterview acceptInterview) {
-        candidateApplicationMustBeApproved(acceptInterview.interviewId());
-        interviewService.changeInterviewState(acceptInterview.interviewId(), InterviewState.ACCEPTED);
+        candidateApplicationMustBeApproved(acceptInterview.appointmentInterviewId());
+        interviewService.changeInterviewState(
+                acceptInterview.appointmentInterviewId(),
+                InterviewState.ACCEPTED
+        );
     }
 
     public void launchInterview(final LaunchInterview launchInterview) {
