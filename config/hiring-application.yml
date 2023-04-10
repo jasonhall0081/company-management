@@ -1,3 +1,10 @@
+server:
+  port: 8080
+  forward-headers-strategy: framework
+
+springdoc:
+  packagesToScan: cenglisch.hiring.port.adapter.primary
+
 spring:
   application:
     name: hiring
@@ -83,9 +90,3 @@ spring:
                 exchange-name: appointment-interview-exchange
                 exchange-durable: true
                 exchange-type: topic
-
-server:
-  forward-headers-strategy: framework
-
-springdoc:
-  packagesToScan: cenglisch.hiring.port.adapter.primary
