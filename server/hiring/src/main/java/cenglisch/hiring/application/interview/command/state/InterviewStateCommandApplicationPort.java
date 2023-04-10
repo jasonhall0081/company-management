@@ -15,9 +15,7 @@ import cenglisch.hiring.domain.model.interview.exception.InterviewNotFoundExcept
 import cenglisch.hiring.domain.model.interview.state.InterviewState;
 
 public final class InterviewStateCommandApplicationPort {
-
     private final InterviewService interviewService;
-
     private final CandidateService candidateService;
 
     public InterviewStateCommandApplicationPort(
@@ -64,13 +62,8 @@ public final class InterviewStateCommandApplicationPort {
     }
 
     public void launchInterview(final LaunchInterview launchInterview) {
-        try {
-            candidateApplicationMustBeApproved(launchInterview.interviewId());
-            interviewService.changeInterviewState(launchInterview.interviewId(), InterviewState.LAUNCHED);
-        } catch (Throwable throwable) {
-            var logger = Logger.getLogger("wasd");
-            logger.log(Level.WARNING, throwable.getMessage());
-        }
+        candidateApplicationMustBeApproved(launchInterview.interviewId());
+        interviewService.changeInterviewState(launchInterview.interviewId(), InterviewState.LAUNCHED);
     }
 
     public void endInterviewExecution(final EndInterviewExecution endInterviewExecution) {
