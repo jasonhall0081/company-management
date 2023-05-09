@@ -19,10 +19,10 @@ public final class AppointmentDate extends Entity {
     private Time endTime;
 
     public AppointmentDate(
-            final AppointmentId appointmentId,
-            final Date date,
-            final Time startTime,
-            final Time endTime
+        final AppointmentId appointmentId,
+        final Date date,
+        final Time startTime,
+        final Time endTime
     ) {
         setAppointmentId(appointmentId);
         setDate(date);
@@ -32,11 +32,11 @@ public final class AppointmentDate extends Entity {
 
     @Default
     public AppointmentDate(
-            final AppointmentDateId appointmentDateId,
-            final AppointmentId appointmentId,
-            final Date date,
-            final Time startTime,
-            final Time endTime
+        final AppointmentDateId appointmentDateId,
+        final AppointmentId appointmentId,
+        final Date date,
+        final Time startTime,
+        final Time endTime
     ) {
         setAppointmentDateId(appointmentDateId);
         setAppointmentId(appointmentId);

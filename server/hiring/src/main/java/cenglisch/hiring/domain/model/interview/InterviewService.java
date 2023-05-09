@@ -21,8 +21,8 @@ public final class InterviewService {
     private final EventHandler eventHandler;
 
     public InterviewService(
-            final InterviewRepository interviewRepository,
-            final EventHandler eventHandler
+        final InterviewRepository interviewRepository,
+        final EventHandler eventHandler
     ) {
         this.interviewRepository = interviewRepository;
         this.eventHandler = eventHandler;
@@ -41,16 +41,15 @@ public final class InterviewService {
         return interview.getInterviewState() == interviewState;
     }
 
-    public void newInterview(final CandidateId candidateId, final PersonId personId) {
+    public void newInterview(final CandidateId candidateId) {
         findByCandidateId(candidateId).ifPresent(s -> {
             throw new InterviewException("candidate already assigned to interview");
         });
         Interview interview = interviewRepository.save(new Interview(candidateId));
         eventHandler.publish(
-                new InterviewGenerated(
-                        interview.getInterviewId(),
-                        personId
-                )
+            new InterviewGenerated(
+                    interview.getInterviewId()
+            )
         );
     }
 

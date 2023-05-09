@@ -7,6 +7,7 @@ import cenglisch.domain.model.PersonId;
 
 import java.util.List;
 
+@org.jmolecules.ddd.annotation.Repository
 public interface CandidateRepository extends Repository<Candidate, CandidateId> {
     boolean existsByJobId(JobId jobId);
 

@@ -4,7 +4,6 @@ import cenglisch.appointment.domain.model.appointment.interview.AppointmentInter
 import cenglisch.domain.model.PersonId;
 
 public record GenerateInterviewAppointment(
-    AppointmentInterviewId interviewId,
-    PersonId personId
+    AppointmentInterviewId interviewId
 ) {
 }

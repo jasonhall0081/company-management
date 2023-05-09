@@ -5,6 +5,7 @@ import cenglisch.hiring.domain.model.candidate.CandidateId;
 
 import java.util.Optional;
 
+@org.jmolecules.ddd.annotation.Repository
 public interface InterviewRepository extends Repository<Interview, InterviewId> {
     Optional<Interview> findByCandidateId(CandidateId candidateId);
 }

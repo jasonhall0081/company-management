@@ -1,4 +1,5 @@
 package cenglisch.appointment.domain.model.reminder;
 
-public class ReminderId {
+@org.jmolecules.ddd.annotation.ValueObject
+public record ReminderId(String id) {
 }

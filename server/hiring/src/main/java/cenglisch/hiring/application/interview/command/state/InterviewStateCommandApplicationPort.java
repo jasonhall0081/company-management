@@ -37,8 +37,7 @@ public final class InterviewStateCommandApplicationPort {
     private void generateInterview(final CandidateId candidateId) {
         candidateService.find(candidateId).orElseThrow(CandidateNotFoundException::new);
         interviewService.newInterview(
-                candidateId,
-                new PersonId("Christoph Englisch")
+                candidateId
         );
     }
 
