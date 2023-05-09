@@ -16,23 +16,23 @@ import java.util.function.Consumer;
 @org.jmolecules.ddd.annotation.Service
 public final class JobService {
 
-    private final JobRepository jobRepository;
+    private final JobSecondaryPort jobSecondaryPort;
 
     private final EventHandler eventHandler;
 
-    public JobService(final JobRepository jobRepository, final EventHandler eventHandler) {
-        this.jobRepository = jobRepository;
+    public JobService(final JobSecondaryPort jobSecondaryPort, final EventHandler eventHandler) {
+        this.jobSecondaryPort = jobSecondaryPort;
         this.eventHandler = eventHandler;
     }
 
     private Optional<Job> find(final JobId jobId) {
-        return jobRepository.find(jobId);
+        return jobSecondaryPort.find(jobId);
     }
 
     private void manageJob(final JobId jobId, final Consumer<Job> jobConsumer, final JobEventHiring jobEvent) {
         Job job = find(jobId).orElseThrow(JobNotFoundException::new);
         jobConsumer.accept(job);
-        jobRepository.save(job);
+        jobSecondaryPort.save(job);
         eventHandler.publish(jobEvent);
     }
 
@@ -42,7 +42,7 @@ public final class JobService {
     }
 
     public void newJobPosting(final String jobName, final int neededCapacities) {
-        Job job = jobRepository.save(new Job(jobName, neededCapacities));
+        Job job = jobSecondaryPort.save(new Job(jobName, neededCapacities));
         eventHandler.publish(new JobPostingCreated(job.getJobId()));
     }
 
@@ -57,7 +57,7 @@ public final class JobService {
     public void reduceCapacities(final JobId jobId) {
         Job job = find(jobId).orElseThrow(JobNotFoundException::new);
         job.reduceCapacities();
-        jobRepository.save(job);
+        jobSecondaryPort.save(job);
         if (!job.isPublished()) {
             eventHandler.publish(new NoMoreCapacitiesAvailable(job.getJobId()));
         }

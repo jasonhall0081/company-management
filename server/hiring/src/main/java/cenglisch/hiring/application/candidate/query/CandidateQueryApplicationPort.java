@@ -1,20 +1,20 @@
 package cenglisch.hiring.application.candidate.query;
 
 import cenglisch.hiring.domain.model.candidate.Candidate;
-import cenglisch.hiring.domain.model.candidate.CandidateRepository;
+import cenglisch.hiring.domain.model.candidate.CandidateSecondaryPort;
 
 import java.util.List;
 
 public final class CandidateQueryApplicationPort {
 
-    private final CandidateRepository candidateRepository;
+    private final CandidateSecondaryPort candidateSecondaryPort;
 
-    public CandidateQueryApplicationPort(final CandidateRepository candidateRepository) {
-        this.candidateRepository = candidateRepository;
+    public CandidateQueryApplicationPort(final CandidateSecondaryPort candidateSecondaryPort) {
+        this.candidateSecondaryPort = candidateSecondaryPort;
     }
 
     public List<Candidate> showApplicantCandidates(final ShowApplicantCandidates showApplicantCandidates) {
-        return candidateRepository.findByJobId(showApplicantCandidates.jobId());
+        return candidateSecondaryPort.findByJobId(showApplicantCandidates.jobId());
     }
 
     //filter by state

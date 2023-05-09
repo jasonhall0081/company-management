@@ -2,20 +2,20 @@ package cenglisch.hiring.port.adapter.secondary.persistence.job;
 
 import cenglisch.hiring.domain.model.job.Job;
 import cenglisch.hiring.domain.model.job.JobId;
-import cenglisch.hiring.domain.model.job.JobRepository;
+import cenglisch.hiring.domain.model.job.JobSecondaryPort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public final class JobRepositoryAdapter implements JobRepository {
+public final class JobSecondaryPortAdapter implements JobSecondaryPort {
 
     private final JobJpaRepository jobJpaRepository;
 
     private final JobMapper jobMapper;
 
-    public JobRepositoryAdapter(
+    public JobSecondaryPortAdapter(
         final JobJpaRepository jobJpaRepository,
         final JobMapper jobMapper
     ) {

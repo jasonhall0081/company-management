@@ -11,19 +11,19 @@ import java.util.function.Consumer;
 
 @org.jmolecules.ddd.annotation.Service
 public final class AppointmentService {
-    private final AppointmentRepository appointmentRepository;
+    private final AppointmentSecondaryPort appointmentSecondaryPort;
     private final EventHandler eventHandler;
 
     public AppointmentService(
-            final AppointmentRepository appointmentRepository,
+            final AppointmentSecondaryPort appointmentSecondaryPort,
             final EventHandler eventHandler
     ) {
-        this.appointmentRepository = appointmentRepository;
+        this.appointmentSecondaryPort = appointmentSecondaryPort;
         this.eventHandler = eventHandler;
     }
 
     public Optional<Appointment> pickUpAppointment(final AppointmentId appointmentId) {
-        return appointmentRepository.find(appointmentId);
+        return appointmentSecondaryPort.find(appointmentId);
     }
 
     public boolean appointmentExists(final AppointmentId appointmentId) {
@@ -39,7 +39,7 @@ public final class AppointmentService {
             final PersonId scheduler,
             final AppointmentInformation appointmentInformation
     ) {
-        Appointment appointment = appointmentRepository.save(
+        Appointment appointment = appointmentSecondaryPort.save(
                 new Appointment(
                         scheduler,
                         appointmentInformation
@@ -144,7 +144,7 @@ public final class AppointmentService {
         Appointment appointment = pickUpAppointment(appointmentId)
                 .orElseThrow(AppointmentNotFoundException::new);
         appointmentConsumer.accept(appointment);
-        appointmentRepository.save(appointment);
+        appointmentSecondaryPort.save(appointment);
         eventHandler.publish(appointmentEvent);
     }
 }

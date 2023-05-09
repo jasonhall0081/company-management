@@ -11,9 +11,9 @@ import cenglisch.hiring.domain.model.candidate.CandidateService;
 import cenglisch.hiring.domain.model.interview.InterviewService;
 import cenglisch.hiring.domain.model.job.JobService;
 import cenglisch.hiring.port.adapter.secondary.messaging.EventPublisherAdapter;
-import cenglisch.hiring.port.adapter.secondary.persistence.candidate.CandidateRepositoryAdapter;
-import cenglisch.hiring.port.adapter.secondary.persistence.interview.InterviewRepositoryAdapter;
-import cenglisch.hiring.port.adapter.secondary.persistence.job.JobRepositoryAdapter;
+import cenglisch.hiring.port.adapter.secondary.persistence.candidate.CandidateSecondaryPortAdapter;
+import cenglisch.hiring.port.adapter.secondary.persistence.interview.InterviewSecondaryPortAdapter;
+import cenglisch.hiring.port.adapter.secondary.persistence.job.JobSecondaryPortAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,8 +23,8 @@ public class BeanConfiguration {
 
     private final EventPublisherAdapter eventHandler;
 
-    private final CandidateRepositoryAdapter candidateRepositoryAdapter;
-    private final InterviewRepositoryAdapter interviewRepositoryAdapter;
+    private final CandidateSecondaryPortAdapter candidateRepositoryAdapter;
+    private final InterviewSecondaryPortAdapter interviewRepositoryAdapter;
 
     @Bean
     CandidateCommandApplicationPort candidateApplicationPort() {
@@ -35,7 +35,7 @@ public class BeanConfiguration {
     CandidateService candidateService() {
         return new CandidateService(candidateRepositoryAdapter, eventHandler);
     }
-    private final JobRepositoryAdapter jobRepositoryAdapter;
+    private final JobSecondaryPortAdapter jobRepositoryAdapter;
 
     @Bean
     InterviewTypeCommandApplicationPort interviewTypeApplicationPort() {
@@ -58,9 +58,9 @@ public class BeanConfiguration {
 
     public BeanConfiguration(
         final EventPublisherAdapter eventHandler,
-        final CandidateRepositoryAdapter candidateRepositoryAdapter,
-        final InterviewRepositoryAdapter interviewRepositoryAdapter,
-        final JobRepositoryAdapter jobRepositoryAdapter
+        final CandidateSecondaryPortAdapter candidateRepositoryAdapter,
+        final InterviewSecondaryPortAdapter interviewRepositoryAdapter,
+        final JobSecondaryPortAdapter jobRepositoryAdapter
     ) {
         this.eventHandler = eventHandler;
         this.candidateRepositoryAdapter = candidateRepositoryAdapter;

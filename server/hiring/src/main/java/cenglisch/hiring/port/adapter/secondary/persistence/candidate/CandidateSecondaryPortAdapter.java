@@ -3,7 +3,7 @@ package cenglisch.hiring.port.adapter.secondary.persistence.candidate;
 import cenglisch.domain.model.PersonId;
 import cenglisch.hiring.domain.model.candidate.Candidate;
 import cenglisch.hiring.domain.model.candidate.CandidateId;
-import cenglisch.hiring.domain.model.candidate.CandidateRepository;
+import cenglisch.hiring.domain.model.candidate.CandidateSecondaryPort;
 import cenglisch.hiring.domain.model.job.JobId;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public final class CandidateRepositoryAdapter implements CandidateRepository {
+public final class CandidateSecondaryPortAdapter implements CandidateSecondaryPort {
     private final CandidateJpaRepository candidateRepository;
     private final CandidateMapper candidateMapper;
 
-    public CandidateRepositoryAdapter(
+    public CandidateSecondaryPortAdapter(
         final CandidateJpaRepository candidateRepository,
         final CandidateMapper candidateMapper
     ) {

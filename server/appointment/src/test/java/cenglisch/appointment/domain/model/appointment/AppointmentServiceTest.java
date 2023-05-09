@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class AppointmentServiceTest {
     @Mock
-    private AppointmentRepository appointmentRepository;
+    private AppointmentSecondaryPort appointmentSecondaryPort;
     @Mock
     private EventHandler eventHandler;
     @InjectMocks

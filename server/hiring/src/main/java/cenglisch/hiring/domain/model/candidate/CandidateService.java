@@ -11,20 +11,20 @@ import java.util.Optional;
 
 @org.jmolecules.ddd.annotation.Service
 public final class CandidateService {
-    private final CandidateRepository candidateRepository;
+    private final CandidateSecondaryPort candidateSecondaryPort;
 
     private final EventHandler eventHandler;
 
     public CandidateService(
-            final CandidateRepository candidateRepository,
+            final CandidateSecondaryPort candidateSecondaryPort,
             final EventHandler eventHandler
     ) {
-        this.candidateRepository = candidateRepository;
+        this.candidateSecondaryPort = candidateSecondaryPort;
         this.eventHandler = eventHandler;
     }
 
     public Optional<Candidate> find(final CandidateId candidateId) {
-        return candidateRepository.find(candidateId);
+        return candidateSecondaryPort.find(candidateId);
     }
 
     public boolean isCandidateInState(final CandidateId candidateId, final CandidateState candidateState) {
@@ -33,7 +33,7 @@ public final class CandidateService {
     }
 
     private boolean personAlreadyAppliedForJob(final PersonId personId, final JobId jobId) {
-        return candidateRepository.existsByPersonIdAndJobId(personId, jobId);
+        return candidateSecondaryPort.existsByPersonIdAndJobId(personId, jobId);
     }
 
     public void newCandidate(final PersonId personId, final JobId jobId) {
@@ -41,7 +41,7 @@ public final class CandidateService {
             throw new CandidateApplicationException("person has already applied for this job");
         }
 
-        Candidate candidate = candidateRepository.save(new Candidate(personId, jobId));
+        Candidate candidate = candidateSecondaryPort.save(new Candidate(personId, jobId));
         eventHandler.publish(
                 CandidateStateEventFactory.make(
                         candidate.getCandidateId(),
@@ -57,7 +57,7 @@ public final class CandidateService {
         }
         final Candidate candidate = find(candidateId).orElseThrow(CandidateNotFoundException::new);
         candidate.changeCandidateState(candidateState);
-        candidateRepository.save(candidate);
+        candidateSecondaryPort.save(candidate);
         eventHandler.publish(
                 CandidateStateEventFactory.make(candidateId, candidateState, candidate.getJobId())
         );

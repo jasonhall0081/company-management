@@ -27,7 +27,7 @@ public class CandidateServiceTest {
     EventHandler eventHandler;
 
     @Mock
-    CandidateRepository candidateRepository;
+    CandidateSecondaryPort candidateSecondaryPort;
 
     @InjectMocks
     CandidateService candidateService;
@@ -38,18 +38,18 @@ public class CandidateServiceTest {
         var jobId = new JobId("J-12312");
         var candidate = new Candidate(new CandidateId("C-1231"), jobId, personId, CandidateState.APPLICATION_ACCEPTED);
 
-        when(candidateRepository.save(any(Candidate.class))).thenAnswer(invocation -> candidate);
+        when(candidateSecondaryPort.save(any(Candidate.class))).thenAnswer(invocation -> candidate);
 
         candidateService.newCandidate(personId, jobId);
 
-        verify(candidateRepository).save(any(Candidate.class));
+        verify(candidateSecondaryPort).save(any(Candidate.class));
         verify(eventHandler).publish(any(CandidateApplicationAccepted.class));
     }
 
     @Test
     public void testSetCandidateStateCandidateNotFound() {
         Optional<Candidate> optionalCandidate = Optional.empty();
-        when(candidateRepository.find(any(CandidateId.class))).thenAnswer(invocation -> optionalCandidate);
+        when(candidateSecondaryPort.find(any(CandidateId.class))).thenAnswer(invocation -> optionalCandidate);
 
         Exception exception = assertThrows(CandidateNotFoundException.class, () -> {
             candidateService.changeCandidateState(new CandidateId("C-131221"), CandidateState.ADOPTED);
@@ -64,10 +64,10 @@ public class CandidateServiceTest {
                         new JobId("J-12312")
                 )
         );
-        when(candidateRepository.find(any(CandidateId.class))).thenAnswer(invocation -> optionalCandidate);
+        when(candidateSecondaryPort.find(any(CandidateId.class))).thenAnswer(invocation -> optionalCandidate);
 
         candidateService.changeCandidateState(new CandidateId("C1231"), CandidateState.APPLICATION_APPROVED);
-        verify(candidateRepository).save(any(Candidate.class));
+        verify(candidateSecondaryPort).save(any(Candidate.class));
         verify(eventHandler).publish(any(CandidateApplicationApproved.class));
     }
 }

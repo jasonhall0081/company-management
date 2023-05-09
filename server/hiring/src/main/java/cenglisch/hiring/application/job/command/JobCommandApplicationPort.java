@@ -1,7 +1,7 @@
 package cenglisch.hiring.application.job.command;
 
 import cenglisch.domain.model.EventHandler;
-import cenglisch.hiring.domain.model.candidate.CandidateRepository;
+import cenglisch.hiring.domain.model.candidate.CandidateSecondaryPort;
 import cenglisch.hiring.domain.model.candidate.event.CandidateAdopted;
 import cenglisch.hiring.domain.model.job.exception.JobException;
 import cenglisch.hiring.domain.model.job.JobId;
@@ -10,15 +10,15 @@ import cenglisch.hiring.domain.model.job.JobService;
 public final class JobCommandApplicationPort {
     private final JobService jobService;
 
-    private final CandidateRepository candidateRepository;
+    private final CandidateSecondaryPort candidateSecondaryPort;
 
     public JobCommandApplicationPort(
         final JobService jobService,
-        final CandidateRepository candidateRepository,
+        final CandidateSecondaryPort candidateSecondaryPort,
         final EventHandler eventHandler
     ) {
         this.jobService = jobService;
-        this.candidateRepository = candidateRepository;
+        this.candidateSecondaryPort = candidateSecondaryPort;
         eventHandler.subscribe(
                 CandidateAdopted.class, event -> {
                     reduceCapacities(new ReduceCapacities(event.jobId()));
@@ -28,7 +28,7 @@ public final class JobCommandApplicationPort {
 
     private boolean jobAlreadyHasApplicants(final JobId jobId) {
         //TODO move to Query Application Port
-        return candidateRepository.existsByJobId(jobId);
+        return candidateSecondaryPort.existsByJobId(jobId);
     }
 
     public void newJobPosting(final NewJobPosting newJobPosting) {

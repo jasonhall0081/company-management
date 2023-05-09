@@ -2,7 +2,7 @@ package cenglisch.appointment.port.adapter.secondary.persistence.calendar;
 
 import cenglisch.appointment.domain.model.calendar.Calendar;
 import cenglisch.appointment.domain.model.calendar.CalendarId;
-import cenglisch.appointment.domain.model.calendar.CalendarRepository;
+import cenglisch.appointment.domain.model.calendar.CalendarSecondaryPort;
 import cenglisch.domain.model.PersonId;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public final class CalendarRepositoryAdapter implements CalendarRepository {
+public final class CalendarSecondaryPortAdapter implements CalendarSecondaryPort {
     private final CalendarJpaRepository calendarJpaRepository;
 
     private final CalendarMapper calendarMapper;
 
-    public CalendarRepositoryAdapter(
+    public CalendarSecondaryPortAdapter(
         final CalendarJpaRepository calendarJpaRepository,
         final CalendarMapper calendarMapper
     ) {

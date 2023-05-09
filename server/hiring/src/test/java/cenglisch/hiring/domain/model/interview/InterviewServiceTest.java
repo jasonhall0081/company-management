@@ -29,7 +29,7 @@ public class InterviewServiceTest {
     EventHandler eventHandler;
 
     @Mock
-    InterviewRepository interviewRepository;
+    InterviewSecondaryPort interviewSecondaryPort;
 
     @InjectMocks
     InterviewService interviewService;
@@ -38,7 +38,7 @@ public class InterviewServiceTest {
     public void testChangeInterviewTypeToOnline() {
         final InterviewId interviewId = new InterviewId("I-121");
         Optional<Interview> optionalInterview = Optional.of(new Interview(interviewId, new CandidateId("c-12312"), InterviewState.ACCEPTED, InterviewType.OFFLINE));
-        when(interviewRepository.find(any(InterviewId.class))).thenAnswer(invocation -> optionalInterview);
+        when(interviewSecondaryPort.find(any(InterviewId.class))).thenAnswer(invocation -> optionalInterview);
 
         Interview interview = optionalInterview.get();
         assertEquals(
@@ -54,7 +54,7 @@ public class InterviewServiceTest {
                 InterviewType.ONLINE,
                 interview.getInterviewType()
         );
-        verify(interviewRepository).save(any(Interview.class));
+        verify(interviewSecondaryPort).save(any(Interview.class));
         verify(eventHandler).publish(any(InterviewHeldOnline.class));
     }
 
@@ -62,7 +62,7 @@ public class InterviewServiceTest {
     public void testChangeInterviewTypeToOffline() {
         final InterviewId interviewId = new InterviewId("I-121");
         Optional<Interview> optionalInterview = Optional.of(new Interview(interviewId, new CandidateId("c-12312"), InterviewState.ACCEPTED, InterviewType.ONLINE));
-        when(interviewRepository.find(any(InterviewId.class))).thenAnswer(invocation -> optionalInterview);
+        when(interviewSecondaryPort.find(any(InterviewId.class))).thenAnswer(invocation -> optionalInterview);
 
         Interview interview = optionalInterview.get();
         assertEquals(
@@ -78,7 +78,7 @@ public class InterviewServiceTest {
                 InterviewType.OFFLINE,
                 interview.getInterviewType()
         );
-        verify(interviewRepository).save(any(Interview.class));
+        verify(interviewSecondaryPort).save(any(Interview.class));
         verify(eventHandler).publish(any(InterviewHeldOffline.class));
     }
 
@@ -86,7 +86,7 @@ public class InterviewServiceTest {
     public void testChangeInterviewState() {
         final InterviewId interviewId = new InterviewId("I-121");
         Optional<Interview> optionalInterview = Optional.of(new Interview(interviewId, new CandidateId("c-12312"), InterviewState.GENERATED, InterviewType.ONLINE));
-        when(interviewRepository.find(any(InterviewId.class))).thenAnswer(invocation -> optionalInterview);
+        when(interviewSecondaryPort.find(any(InterviewId.class))).thenAnswer(invocation -> optionalInterview);
 
         Interview interview = optionalInterview.get();
         assertEquals(
@@ -101,7 +101,7 @@ public class InterviewServiceTest {
                 InterviewState.ACCEPTED,
                 interview.getInterviewState()
         );
-        verify(interviewRepository).save(any(Interview.class));
+        verify(interviewSecondaryPort).save(any(Interview.class));
         verify(eventHandler).publish(any(InterviewAccepted.class));
     }
 }

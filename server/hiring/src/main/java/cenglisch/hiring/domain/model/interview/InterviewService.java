@@ -1,7 +1,6 @@
 package cenglisch.hiring.domain.model.interview;
 
 import cenglisch.domain.model.EventHandler;
-import cenglisch.domain.model.PersonId;
 import cenglisch.hiring.domain.model.candidate.CandidateId;
 import cenglisch.hiring.domain.model.interview.exception.InterviewException;
 import cenglisch.hiring.domain.model.interview.exception.InterviewNotFoundException;
@@ -17,23 +16,23 @@ import java.util.Optional;
 @org.jmolecules.ddd.annotation.Service
 public final class InterviewService {
 
-    private final InterviewRepository interviewRepository;
+    private final InterviewSecondaryPort interviewSecondaryPort;
     private final EventHandler eventHandler;
 
     public InterviewService(
-        final InterviewRepository interviewRepository,
+        final InterviewSecondaryPort interviewSecondaryPort,
         final EventHandler eventHandler
     ) {
-        this.interviewRepository = interviewRepository;
+        this.interviewSecondaryPort = interviewSecondaryPort;
         this.eventHandler = eventHandler;
     }
 
     public Optional<Interview> find(final InterviewId interviewId) {
-        return interviewRepository.find(interviewId);
+        return interviewSecondaryPort.find(interviewId);
     }
 
     public Optional<Interview> findByCandidateId(final CandidateId candidateId) {
-        return interviewRepository.findByCandidateId(candidateId);
+        return interviewSecondaryPort.findByCandidateId(candidateId);
     }
 
     public boolean isInterviewInState(final CandidateId candidateId, final InterviewState interviewState) {
@@ -45,7 +44,7 @@ public final class InterviewService {
         findByCandidateId(candidateId).ifPresent(s -> {
             throw new InterviewException("candidate already assigned to interview");
         });
-        Interview interview = interviewRepository.save(new Interview(candidateId));
+        Interview interview = interviewSecondaryPort.save(new Interview(candidateId));
         eventHandler.publish(
             new InterviewGenerated(
                     interview.getInterviewId()
@@ -56,7 +55,7 @@ public final class InterviewService {
     public void changeInterviewType(final InterviewId interviewId, final InterviewType interviewType) {
         Interview interview = find(interviewId).orElseThrow(InterviewNotFoundException::new);
         interview.changeInterviewType(interviewType);
-        interviewRepository.save(interview);
+        interviewSecondaryPort.save(interview);
         eventHandler.publish(
                 interviewType == InterviewType.ONLINE
                         ? new InterviewHeldOnline(interviewId)
@@ -67,7 +66,7 @@ public final class InterviewService {
     public void changeInterviewState(final InterviewId interviewId, final InterviewState interviewState) {
         Interview interview = find(interviewId).orElseThrow(InterviewNotFoundException::new);
         interview.changeInterviewState(interviewState);
-        interviewRepository.save(interview);
+        interviewSecondaryPort.save(interview);
         eventHandler.publish(InterviewStateEventFactory.make(interviewId, interviewState));
     }
 }

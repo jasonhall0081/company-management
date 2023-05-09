@@ -25,7 +25,7 @@ public class JobServiceTest {
     EventHandler eventHandler;
 
     @Mock
-    JobRepository jobRepository;
+    JobSecondaryPort jobSecondaryPort;
 
     @InjectMocks
     JobService jobService;
@@ -35,13 +35,13 @@ public class JobServiceTest {
     @Test
     public void testReduceCapacitiesNoMoreAvailable(){
         Optional<Job> optionalJob = Optional.of(new Job("Anwendungsentwickler", 1));
-        when(jobRepository.find(any(JobId.class))).thenAnswer(invocation -> optionalJob);
+        when(jobSecondaryPort.find(any(JobId.class))).thenAnswer(invocation -> optionalJob);
 
         Job job = optionalJob.get();
         assertTrue(job.isPublished());
         jobService.reduceCapacities(jobId);
 
-        verify(jobRepository).save(any(Job.class));
+        verify(jobSecondaryPort).save(any(Job.class));
         verify(eventHandler).publish(any(NoMoreCapacitiesAvailable.class));
         assertFalse(job.isPublished());
     }
@@ -49,14 +49,14 @@ public class JobServiceTest {
     @Test
     public void testReduceCapacitiesMoreAvailable(){
         Optional<Job> optionalJob = Optional.of(new Job("Anwendungsentwickler", 2));
-        when(jobRepository.find(any(JobId.class))).thenAnswer(invocation -> optionalJob);
+        when(jobSecondaryPort.find(any(JobId.class))).thenAnswer(invocation -> optionalJob);
 
         Job job = optionalJob.get();
 
         assertTrue(job.isPublished());
         jobService.reduceCapacities(jobId);
 
-        verify(jobRepository).save(any(Job.class));
+        verify(jobSecondaryPort).save(any(Job.class));
         verify(eventHandler).publish(any(JobCapacitiesReduced.class));
         assertTrue(job.isPublished());
     }
@@ -64,14 +64,14 @@ public class JobServiceTest {
     @Test
     public void testAddResponsibleEmployee(){
         Optional<Job> optionalJob = Optional.of(new Job("Anwendungsentwickler", 2));
-        when(jobRepository.find(any(JobId.class))).thenAnswer(invocation -> optionalJob);
+        when(jobSecondaryPort.find(any(JobId.class))).thenAnswer(invocation -> optionalJob);
 
         Job job = optionalJob.get();
         assertEquals(0, job.getResponsibleEmployees().size());
         jobService.addResponsibleEmployee(new JobId("dasdasd"), new ResponsibleEmployee(new PersonId("1231")));
         assertEquals(1, job.getResponsibleEmployees().size());
 
-        verify(jobRepository).save(any(Job.class));
+        verify(jobSecondaryPort).save(any(Job.class));
         verify(eventHandler).publish(any(AddedResponsibleEmployee.class));
     }
 }

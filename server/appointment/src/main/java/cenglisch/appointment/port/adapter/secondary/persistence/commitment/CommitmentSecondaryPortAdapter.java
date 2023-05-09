@@ -4,7 +4,7 @@ import cenglisch.appointment.domain.model.appointment.AppointmentId;
 import cenglisch.appointment.domain.model.appointment.date.AppointmentDateId;
 import cenglisch.appointment.domain.model.commitment.Commitment;
 import cenglisch.appointment.domain.model.commitment.CommitmentId;
-import cenglisch.appointment.domain.model.commitment.CommitmentRepository;
+import cenglisch.appointment.domain.model.commitment.CommitmentSecondaryPort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public final class CommitmentRepositoryAdapter implements CommitmentRepository {
+public final class CommitmentSecondaryPortAdapter implements CommitmentSecondaryPort {
 
     private final CommitmentJpaRepository commitmentJpaRepository;
 
     private final CommitmentMapper commitmentMapper;
 
-    public CommitmentRepositoryAdapter(
+    public CommitmentSecondaryPortAdapter(
         final CommitmentJpaRepository commitmentJpaRepository,
         final CommitmentMapper commitmentMapper
     ) {

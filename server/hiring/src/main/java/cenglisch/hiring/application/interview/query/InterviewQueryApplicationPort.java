@@ -1,20 +1,20 @@
 package cenglisch.hiring.application.interview.query;
 
 import cenglisch.hiring.domain.model.interview.Interview;
-import cenglisch.hiring.domain.model.interview.InterviewRepository;
+import cenglisch.hiring.domain.model.interview.InterviewSecondaryPort;
 
 import java.util.List;
 
 public final class InterviewQueryApplicationPort {
 
-    private final InterviewRepository interviewRepository;
+    private final InterviewSecondaryPort interviewSecondaryPort;
 
 
-    public InterviewQueryApplicationPort(final InterviewRepository interviewRepository) {
-        this.interviewRepository = interviewRepository;
+    public InterviewQueryApplicationPort(final InterviewSecondaryPort interviewSecondaryPort) {
+        this.interviewSecondaryPort = interviewSecondaryPort;
     }
 
     public List<Interview> showInterviews() {
-        return interviewRepository.findAll();
+        return interviewSecondaryPort.findAll();
     }
 }

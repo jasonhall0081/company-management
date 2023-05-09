@@ -12,14 +12,14 @@ import java.util.Collection;
 @org.jmolecules.ddd.annotation.Service
 public final class CommitmentService {
 
-    private final CommitmentRepository commitmentRepository;
+    private final CommitmentSecondaryPort commitmentSecondaryPort;
     private final EventHandler eventHandler;
 
     public CommitmentService(
-            final CommitmentRepository commitmentRepository,
+            final CommitmentSecondaryPort commitmentSecondaryPort,
             final EventHandler eventHandler
     ) {
-        this.commitmentRepository = commitmentRepository;
+        this.commitmentSecondaryPort = commitmentSecondaryPort;
         this.eventHandler = eventHandler;
     }
 
@@ -28,7 +28,7 @@ public final class CommitmentService {
         final AppointmentDateId appointmentDateId,
         final int numberOfParticipants
     ) {
-        Collection<Commitment> commitments = commitmentRepository.findByAppointmentIdAndAppointmentDateId(
+        Collection<Commitment> commitments = commitmentSecondaryPort.findByAppointmentIdAndAppointmentDateId(
                 appointmentId,
                 appointmentDateId
         );
@@ -37,13 +37,13 @@ public final class CommitmentService {
     }
 
     public void cancelCommitments(final AppointmentId appointmentId) {
-        Collection<Commitment> commitments = commitmentRepository.findByAppointmentId(appointmentId);
+        Collection<Commitment> commitments = commitmentSecondaryPort.findByAppointmentId(appointmentId);
         if (commitments.isEmpty()) {
             return;
         }
 
         commitments.forEach(Commitment::cancel);
-        commitmentRepository.saveAll(commitments);
+        commitmentSecondaryPort.saveAll(commitments);
 
         commitments.forEach(
             commitment -> eventHandler.publish(
@@ -60,7 +60,7 @@ public final class CommitmentService {
             final PersonId participant,
             final CommitmentState commitmentState
     ) {
-        Commitment commitment = commitmentRepository.save(
+        Commitment commitment = commitmentSecondaryPort.save(
                 new Commitment(
                         appointmentId,
                         appointmentDateId,

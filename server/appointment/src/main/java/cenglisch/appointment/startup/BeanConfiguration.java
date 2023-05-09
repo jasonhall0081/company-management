@@ -8,9 +8,9 @@ import cenglisch.appointment.domain.model.appointment.AppointmentService;
 import cenglisch.appointment.domain.model.appointment.interview.AppointmentInterviewService;
 import cenglisch.appointment.domain.model.commitment.CommitmentService;
 import cenglisch.appointment.port.adapter.secondary.messaging.EventPublisherAdapter;
-import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentRepositoryAdapter;
+import cenglisch.appointment.port.adapter.secondary.persistence.appointment.AppointmentSecondaryPortAdapter;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.interview.AppointmentInterviewRepositoryAdapter;
-import cenglisch.appointment.port.adapter.secondary.persistence.commitment.CommitmentRepositoryAdapter;
+import cenglisch.appointment.port.adapter.secondary.persistence.commitment.CommitmentSecondaryPortAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,17 +20,17 @@ public class BeanConfiguration {
 
     private final EventPublisherAdapter eventPublisherAdapter;
 
-    private final AppointmentRepositoryAdapter appointmentRepositoryAdapter;
+    private final AppointmentSecondaryPortAdapter appointmentRepositoryAdapter;
 
     private final AppointmentInterviewRepositoryAdapter appointmentInterviewRepositoryAdapter;
 
-    private final CommitmentRepositoryAdapter commitmentRepositoryAdapter;
+    private final CommitmentSecondaryPortAdapter commitmentRepositoryAdapter;
 
     public BeanConfiguration(
         final EventPublisherAdapter eventPublisherAdapter,
-        final AppointmentRepositoryAdapter appointmentRepositoryAdapter,
+        final AppointmentSecondaryPortAdapter appointmentRepositoryAdapter,
         final AppointmentInterviewRepositoryAdapter appointmentInterviewRepositoryAdapter,
-        final CommitmentRepositoryAdapter commitmentRepositoryAdapter
+        final CommitmentSecondaryPortAdapter commitmentRepositoryAdapter
     ) {
         this.eventPublisherAdapter = eventPublisherAdapter;
         this.appointmentRepositoryAdapter = appointmentRepositoryAdapter;

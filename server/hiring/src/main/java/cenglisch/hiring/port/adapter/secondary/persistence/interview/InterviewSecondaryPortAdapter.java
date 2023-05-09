@@ -3,20 +3,20 @@ package cenglisch.hiring.port.adapter.secondary.persistence.interview;
 import cenglisch.hiring.domain.model.candidate.CandidateId;
 import cenglisch.hiring.domain.model.interview.Interview;
 import cenglisch.hiring.domain.model.interview.InterviewId;
-import cenglisch.hiring.domain.model.interview.InterviewRepository;
+import cenglisch.hiring.domain.model.interview.InterviewSecondaryPort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public final class InterviewRepositoryAdapter implements InterviewRepository {
+public final class InterviewSecondaryPortAdapter implements InterviewSecondaryPort {
 
     private final InterviewJpaRepository interviewRepository;
 
     private final InterviewMapper interviewMapper;
 
-    public InterviewRepositoryAdapter(
+    public InterviewSecondaryPortAdapter(
         final InterviewJpaRepository interviewRepository,
         final InterviewMapper interviewMapper
     ) {

@@ -7,7 +7,7 @@ import cenglisch.domain.model.Repository;
 import java.util.Collection;
 
 @org.jmolecules.ddd.annotation.Repository
-public interface CommitmentRepository extends Repository<Commitment, CommitmentId> {
+public interface CommitmentSecondaryPort extends Repository<Commitment, CommitmentId> {
 
     Collection<Commitment> findByAppointmentId(AppointmentId appointmentId);
 

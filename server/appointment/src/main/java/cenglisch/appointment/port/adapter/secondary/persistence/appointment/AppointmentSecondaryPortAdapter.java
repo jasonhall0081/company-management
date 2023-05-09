@@ -2,7 +2,7 @@ package cenglisch.appointment.port.adapter.secondary.persistence.appointment;
 
 import cenglisch.appointment.domain.model.appointment.Appointment;
 import cenglisch.appointment.domain.model.appointment.AppointmentId;
-import cenglisch.appointment.domain.model.appointment.AppointmentRepository;
+import cenglisch.appointment.domain.model.appointment.AppointmentSecondaryPort;
 import cenglisch.appointment.domain.model.appointment.date.AppointmentDate;
 import cenglisch.appointment.domain.model.appointment.date.AppointmentDateId;
 import cenglisch.appointment.port.adapter.secondary.persistence.appointment.participant.AppointmentParticipantJpaRepository;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AppointmentRepositoryAdapter implements AppointmentRepository {
+public class AppointmentSecondaryPortAdapter implements AppointmentSecondaryPort {
 
     private final AppointmentJpaRepository appointmentJpaRepository;
 
@@ -21,7 +21,7 @@ public class AppointmentRepositoryAdapter implements AppointmentRepository {
 
     private final AppointmentMapper appointmentMapper;
 
-    public AppointmentRepositoryAdapter(
+    public AppointmentSecondaryPortAdapter(
             final AppointmentJpaRepository appointmentJpaRepository,
             final AppointmentParticipantJpaRepository appointmentParticipantJpaRepository,
             final AppointmentMapper appointmentMapper
