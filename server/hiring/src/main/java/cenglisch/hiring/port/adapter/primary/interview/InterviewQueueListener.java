@@ -1,21 +1,18 @@
-package cenglisch.hiring.port.adapter.primary.interview.state;
+package cenglisch.hiring.port.adapter.primary.interview;
 
 import cenglisch.hiring.application.interview.command.state.AcceptInterview;
 import cenglisch.hiring.application.interview.command.state.EndInterviewExecution;
 import cenglisch.hiring.application.interview.command.state.InterviewStateCommandApplicationPort;
 import cenglisch.hiring.application.interview.command.state.LaunchInterview;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.function.Consumer;
 
-@Configuration
-@SuppressWarnings("checkstyle:DesignForExtension")
-public class InterviewStateQueueListener {
+public class InterviewQueueListener {
 
     private final InterviewStateCommandApplicationPort interviewStateCommandApplicationPort;
 
-    public InterviewStateQueueListener(
+    public InterviewQueueListener(
             final InterviewStateCommandApplicationPort interviewStateCommandApplicationPort
     ) {
         this.interviewStateCommandApplicationPort = interviewStateCommandApplicationPort;
@@ -35,4 +32,9 @@ public class InterviewStateQueueListener {
     public Consumer<EndInterviewExecution> endInterviewExecution() {
         return interviewStateCommandApplicationPort::endInterviewExecution;
     }
+
+    /*    public void interviewAppointmentGenerated(InterviewAppointment interviewAppointment){
+        //TODO in query layer auslagern
+        syncPersonsFromInterviewToAppointment();
+    }*/
 }
