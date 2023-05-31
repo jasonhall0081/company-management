@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("v1/commitment")
+@RequestMapping("v1/commitments")
 @Tag(name = "Commitment", description = "APIs für die Abgabe von Vereinbarungen.")
 public final class V1CommitmentCommandRestAdapter {
 

@@ -20,9 +20,12 @@ public final class AppointmentCommandApplicationPort {
         this.appointmentService = appointmentService;
         this.commitmentService = commitmentService;
 
-        eventHandler.subscribe(CommitmentConfirmed.class, commitmentConfirmed -> {
-            acceptAppointment(new AcceptAppointment(commitmentConfirmed.appointmentId()));
-        });
+        eventHandler.subscribe(
+            CommitmentConfirmed.class,
+            commitmentConfirmed ->
+                acceptAppointment(new AcceptAppointment(commitmentConfirmed.appointmentId())
+            )
+        );
     }
 
     public void initializeAppointment(final InitializeAppointment initializeAppointment) {
@@ -34,19 +37,19 @@ public final class AppointmentCommandApplicationPort {
 
     public void appointmentRegistration(final AppointmentRegistration appointmentRegistration) {
         appointmentService.registerAppointment(
-                appointmentRegistration.appointmentId(),
-                appointmentRegistration.date(),
-                appointmentRegistration.startTime(),
-                appointmentRegistration.endTime()
+            appointmentRegistration.appointmentId(),
+            appointmentRegistration.date(),
+            appointmentRegistration.startTime(),
+            appointmentRegistration.endTime()
         );
     }
 
     public void rescheduleAppointment(final RescheduleAppointment rescheduleAppointment) {
         appointmentService.rescheduleAppointment(
-                rescheduleAppointment.appointmentId(),
-                rescheduleAppointment.date(),
-                rescheduleAppointment.startTime(),
-                rescheduleAppointment.endTime()
+            rescheduleAppointment.appointmentId(),
+            rescheduleAppointment.date(),
+            rescheduleAppointment.startTime(),
+            rescheduleAppointment.endTime()
         );
     }
 

@@ -27,13 +27,12 @@ public final class AppointmentCommandInterviewApplicationPort {
     }
 
     public void generateAppointmentInterview(final GenerateInterviewAppointment generateInterviewAppointment) {
-        appointmentInterviewService.generateAppointmentInterview(
+        /*appointmentInterviewService.generateAppointmentInterview(
                 generateInterviewAppointment.interviewId(),
                 appointmentService.initializeAppointment(
-
                         new AppointmentInterviewInformation()
                 )
-        );
+        );*/
     }
 
     private void acceptAppointmentInterview(final AppointmentAccepted appointmentAccepted) {

@@ -1,4 +1,4 @@
-package cenglisch.appointment.port.adapter.primary.appointment.interview;
+package cenglisch.appointment.port.adapter.primary.appointment;
 
 
 import cenglisch.appointment.application.appointment.command.interview.AppointmentCommandInterviewApplicationPort;
@@ -10,11 +10,11 @@ import java.util.function.Consumer;
 
 @Configuration
 @SuppressWarnings("checkstyle:DesignForExtension")
-public class AppointmentInterviewQueueListener {
+public class AppointmentQueueListener {
 
     private final AppointmentCommandInterviewApplicationPort appointmentCommandInterviewApplicationPort;
 
-    public AppointmentInterviewQueueListener(
+    public AppointmentQueueListener(
             final AppointmentCommandInterviewApplicationPort appointmentCommandInterviewApplicationPort
     ) {
         this.appointmentCommandInterviewApplicationPort = appointmentCommandInterviewApplicationPort;
